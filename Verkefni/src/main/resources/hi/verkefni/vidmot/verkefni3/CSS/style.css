@@ -1,0 +1,40 @@
+/* main */
+
+.mainButtons {
+    /* Útlit af takarnar okkar */
+    -fx-background-color: silver;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+
+    /* Setjum radíus í textan okkar */
+    -fx-border-radius: 10%;
+    -fx-background-radius: 25%;
+}
+
+.tripList {
+    -fx-border-color: red;
+    -fx-background-color: lightgrey;
+}
+
+.
+
+/* delete */
+
+.deleteConfirm {
+    -fx-background-color: crimson;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.deleteTitle {
+    -fx-font-weight: bold;
+}
+
+.warningDeleteLabels {
+    -fx-fill: red;
+    -fx-font-weight: bolder;
+    -fx-underline: true;
+}
+
+/* create */
+
