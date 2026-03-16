@@ -1,14 +1,14 @@
-package hi.verkefni.vidmot.verkefni3.switcher;
+package hi.verkefni.vidmot.switcher;
 /**
  * @author Almas Baimagambetov (almaslvl@gmail.com)
  *
  * viðbætur fyrir Ferdaplan verkefni
  */
 public enum View {
-    MAIN("/hi/verkefni/vidmot/verkefni3/main-view.fxml"),
-    NEWTRIP("/hi/verkefni/vidmot/verkefni3/new-trip.fxml"),
-    DELETE("/hi/verkefni/vidmot/verkefni3/confirm-delete.fxml"),
-    VIEWTRIP("/hi/verkefni/vidmot/verkefni3/view-trip.fxml");
+    MAIN("/hi/verkefni/vidmot/main-view.fxml"),
+    NEWTRIP("/hi/verkefni/vidmot/new-trip.fxml"),
+    DELETE("/hi/verkefni/vidmot/confirm-delete.fxml"),
+    VIEWTRIP("/hi/verkefni/vidmot/view-trip.fxml");
 
     private String fileName;
 

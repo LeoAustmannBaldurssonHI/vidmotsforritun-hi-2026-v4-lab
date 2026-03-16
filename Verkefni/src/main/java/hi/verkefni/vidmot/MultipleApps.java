@@ -1,7 +1,7 @@
-package hi.verkefni.vidmot.verkefni3;
+package hi.verkefni.vidmot;
 
-import hi.verkefni.vidmot.verkefni3.switcher.Switcher;
-import hi.verkefni.vidmot.verkefni3.switcher.View;
+import hi.verkefni.vidmot.switcher.Switcher;
+import hi.verkefni.vidmot.switcher.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +17,7 @@ public class MultipleApps extends Application {
             System.out.println("Starting app...");
 
             var url = getClass().getResource(
-                    "/hi/verkefni/vidmot/verkefni3/main-view.fxml"
+                    "/hi/verkefni/vidmot/main-view.fxml"
             );
 
             System.out.println("FXML URL = " + url);
@@ -26,10 +26,10 @@ public class MultipleApps extends Application {
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
-            hi.verkefni.vidmot.verkefni3.switcher.Switcher.setScene(scene);
+            hi.verkefni.vidmot.switcher.Switcher.setScene(scene);
 
             stage.setScene(scene);
-            stage.setTitle("Verkefni 3");
+            stage.setTitle("Verkefni 4");
             stage.show();
 
             System.out.println("Stage shown.");

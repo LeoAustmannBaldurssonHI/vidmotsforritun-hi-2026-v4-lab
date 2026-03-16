@@ -1,4 +1,4 @@
-package hi.verkefni.vidmot.verkefni3.controllers;
+package hi.verkefni.vidmot.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -6,8 +6,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.DatePicker;
 
-import hi.verkefni.vidmot.verkefni3.switcher.Switcher;
-import hi.verkefni.vidmot.verkefni3.switcher.View;
+import hi.verkefni.vidmot.switcher.Switcher;
+import hi.verkefni.vidmot.switcher.View;
 
 import hi.verkefni.vidmot.vinnsla.*;
 

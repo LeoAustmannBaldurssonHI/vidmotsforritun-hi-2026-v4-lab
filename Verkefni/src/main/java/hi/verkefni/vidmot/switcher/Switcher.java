@@ -1,6 +1,6 @@
-package hi.verkefni.vidmot.verkefni3.switcher;
+package hi.verkefni.vidmot.switcher;
 
-import hi.verkefni.vidmot.verkefni3.dataInterface.DataInterface;
+import hi.verkefni.vidmot.dataInterface.DataInterface;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

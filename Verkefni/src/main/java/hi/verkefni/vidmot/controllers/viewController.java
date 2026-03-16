@@ -1,11 +1,11 @@
-package hi.verkefni.vidmot.verkefni3.controllers;
+package hi.verkefni.vidmot.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-import hi.verkefni.vidmot.verkefni3.switcher.Switcher;
-import hi.verkefni.vidmot.verkefni3.switcher.View;
-import hi.verkefni.vidmot.verkefni3.dataInterface.DataInterface;
+import hi.verkefni.vidmot.switcher.Switcher;
+import hi.verkefni.vidmot.switcher.View;
+import hi.verkefni.vidmot.dataInterface.DataInterface;
 
 import hi.verkefni.vidmot.vinnsla.Trip;
 import hi.verkefni.vidmot.vinnsla.TripPlan;

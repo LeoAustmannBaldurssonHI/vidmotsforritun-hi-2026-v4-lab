@@ -1,4 +1,4 @@
-package hi.verkefni.vidmot.verkefni3.dataInterface;
+package hi.verkefni.vidmot.dataInterface;
 
 /******************************************************************************
  *  Nafn    : Ebba Þóra Hvannberg

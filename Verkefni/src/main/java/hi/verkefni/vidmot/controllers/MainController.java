@@ -1,4 +1,4 @@
-package hi.verkefni.vidmot.verkefni3.controllers;
+package hi.verkefni.vidmot.controllers;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -11,8 +11,8 @@ import javafx.beans.binding.*;
 import hi.verkefni.vidmot.vinnsla.Trip;
 import hi.verkefni.vidmot.vinnsla.TripPlan;
 
-import hi.verkefni.vidmot.verkefni3.switcher.Switcher;
-import hi.verkefni.vidmot.verkefni3.switcher.View;
+import hi.verkefni.vidmot.switcher.Switcher;
+import hi.verkefni.vidmot.switcher.View;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.text.Text;
 
