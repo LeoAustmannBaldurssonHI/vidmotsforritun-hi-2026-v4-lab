@@ -1,10 +1,9 @@
 package hi.verkefni.vidmot.controllers;
 
+
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
 import javafx.beans.binding.*;
 
@@ -13,15 +12,15 @@ import hi.verkefni.vidmot.vinnsla.TripPlan;
 
 import hi.verkefni.vidmot.switcher.Switcher;
 import hi.verkefni.vidmot.switcher.View;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.text.Text;
 
 import java.util.Optional;
-
 
 public class MainController {
     @FXML
     private ListView<Trip> tripListView;
+
+    @FXML
+    private Label selectedTrip;
 
     @FXML
     private Button mainDeleteButton, mainViewButton, mainUpdateButton;
@@ -37,6 +36,13 @@ public class MainController {
                     }
                 }
         ); // Þessi er bara hér til að fylgjast með user changes á ferð */
+
+        selectedTrip.textProperty().bind(
+                Bindings
+                        .when(tripListView.getSelectionModel().selectedItemProperty().isNull())
+                        .then("")
+                        .otherwise(tripListView.getSelectionModel().selectedItemProperty().asString())
+        );
 
         // disable mainDeleteButton when there is 0 items in our stack
         mainDeleteButton.disableProperty().bind(
@@ -100,6 +106,12 @@ public class MainController {
         }
     }
 
+    /**
+     * Þessi (hluti af bónus verk) virkar þanning að notendi getur breytt eitthvað um þeirra ferðalag.
+     * Ef notendi til dæmis sláði inn vitlausa dagsetningu getur hann einfaldlega ýtt á hnapp tengd við
+     * þessari aðferð og velji "date" option við að breyta.
+     * @param event ónotað í þessari tilfelli
+     */
     @FXML
     private void editTrip(ActionEvent event) {
         Trip selected = tripListView.getSelectionModel().getSelectedItem();
@@ -108,46 +120,59 @@ public class MainController {
             return;
         }
 
+        /* Debugger
+
         String selectedTitle = selected.getTitle();
-        String selectedDestination = selected.getDestination();
-        String selectedDate = selected.getDate();
+        String selectedDestination = " " + selected.getDestination();
+        String selectedDate = " " + selected.getDate();
 
-        // Debugger (check if we get the selectedData)
-        System.out.println("Selected title: " + selectedTitle);
-        System.out.println("Selected destination: " + selectedDestination);
-        System.out.println("Selected date: " + selectedDate);
+        System.out.println("Title: " + selectedTitle);
+        System.out.println("Destination: " + selectedDestination);
+        System.out.println("Date: " + selectedDate);
 
-        TextInputDialog dialog = new TextInputDialog();
+         */
 
-        Optional<String> result = dialog.showAndWait();
+        // Í stað fyrir texta input, við ætlum að nota buttons
+        Dialog<ButtonType>  dialog = new Dialog<>();
+
+        ButtonType titleButton = new ButtonType("Title", ButtonBar.ButtonData.OK_DONE); // Þessi verður alltaf default, engan hugmynd hvernig á að slökkva á því :sob:
+        ButtonType dateButton = new ButtonType("Date", ButtonBar.ButtonData.OK_DONE);
+        ButtonType destinationButton = new ButtonType("Destination", ButtonBar.ButtonData.OK_DONE);
+        ButtonType is_cancelButton = new ButtonType("Hætta", ButtonBar.ButtonData.CANCEL_CLOSE); // Cancel en á íslensku
+
+        dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL); // Tökum út default takarnar
+        dialog.getDialogPane().getButtonTypes().addAll(titleButton, destinationButton, dateButton, is_cancelButton); // Notum okkar frekar
+
+        // Útlit af dialog
+        dialog.setHeaderText("Þú ert að fara breyta:\n" + selected.toString());
+        dialog.setTitle("Trip editor");
+        dialog.setContentText("Vinsamlegast veldu einn af hnöpparnar fyrir neðan til að byrja");
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
         if(result.isPresent()) {
-            Trip trip = new Trip();
-            if(result.get().equals("title")) {
-                // building a new dialog
-                TextInputDialog title =  new TextInputDialog();
-                title.setTitle("Edit - Title");
+            if(result.get() == titleButton) {
+                TextInputDialog title = new TextInputDialog(selected.getTitle());
+                title.setTitle("Editing: Title");
+                title.setHeaderText("Sláðu inn texta til að uppfæra titilinn af þessari ferðalag.");
                 Optional<String> titleResult = title.showAndWait();
-                if(titleResult.isEmpty()) return;
-
-                // setter (bug)
-                trip.setTitle(titleResult.get());
-            } else if(result.get().equals("destination")) {
-                TextInputDialog destination = new TextInputDialog();
-                destination.setTitle("Edit - Destination");
-               Optional<String> destinationResult = destination.showAndWait();
-               if(destinationResult.isEmpty()) return;
-
-               // setter (bug)
-                trip.setDestination(destinationResult.get());
-            } else if (result.get().equals("date")) {
-                TextInputDialog datePicker = new TextInputDialog();
-                datePicker.setTitle("Edit - Date");
+                titleResult.ifPresent(value -> selected.setTitle(value));
+            } else if(result.get() ==  destinationButton) {
+                TextInputDialog destination = new TextInputDialog(selected.getDestination());
+                destination.setTitle("Editing: Destination");
+                destination.setContentText("Sláðu inn áfangastað sem þú áætlar til");
+                Optional<String> destinationResult = destination.showAndWait();
+                destinationResult.ifPresent(value -> selected.setDestination(value));
+            } else if(result.get() ==  dateButton) {
+                TextInputDialog datePicker = new TextInputDialog(selected.getDate());
+                datePicker.setTitle("Editing: Date");
+                datePicker.setContentText("Sláðu inn dagsetningu (DD.MM.YYYY)");
                 Optional<String> dateResult = datePicker.showAndWait();
-                if(dateResult.isEmpty()) return;
-
-                // setter (bug)
-                trip.setDate(dateResult.get());
+                dateResult.ifPresent(value -> selected.setDate(value));
+            } else {
+                System.out.println("User selected to go back, returning to main-view.fxml");
             }
+            tripListView.refresh(); // endurræsir kerfið eftir að breyta, án þess þarf að ýta eitthvert til að fá nýja gögnin að byrtast.
         }
     }
 }
