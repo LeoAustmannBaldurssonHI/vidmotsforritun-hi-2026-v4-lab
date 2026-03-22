@@ -1,40 +1,23 @@
-/* main */
+/* Project system */
 
-.mainButtons {
-    /* Útlit af takarnar okkar */
-    -fx-background-color: silver;
-    -fx-border-color: black;
-    -fx-border-width: 2px;
-
-    /* Setjum radíus í textan okkar */
-    -fx-border-radius: 10%;
-    -fx-background-radius: 25%;
+.root {
+    -fx-font-family: "American Typewriter";
 }
 
-.tripList {
-    -fx-border-color: red;
-    -fx-background-color: lightgrey;
+/* main page */
+
+.userHeader {
+    -fx-background-color: #5E859F;
+    -fx-background-size: 100;
 }
 
-.
-
-/* delete */
-
-.deleteConfirm {
-    -fx-background-color: crimson;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
+.userHeader_accButton {
+    -fx-background-image: url("Images/accChange.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 40;
+    -fx-background-color: #5E859F;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
 }
-
-.deleteTitle {
-    -fx-font-weight: bold;
-}
-
-.warningDeleteLabels {
-    -fx-fill: red;
-    -fx-font-weight: bolder;
-    -fx-underline: true;
-}
-
-/* create */
-

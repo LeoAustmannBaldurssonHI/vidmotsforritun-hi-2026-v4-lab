@@ -11,12 +11,12 @@ public class Account {
     private final ObjectMapper map = new ObjectMapper();
     private final File file = new File("src/main/resources/data.json");
 
-    private ObjectNode accounts;
+    private ArrayNode accounts;
     private JsonNode accountRoot;
 
     public Account() throws IOException {
         accountRoot = map.readTree(file);
-        accounts = (ObjectNode) accountRoot.get("Accounts");
+        accounts = (ArrayNode) accountRoot.get("Accounts");
     }
 
     public int accountSize() {

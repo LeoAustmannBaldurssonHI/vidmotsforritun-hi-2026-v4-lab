@@ -27,13 +27,13 @@ public class TimeManager {
      * Checks how long is still the time.
      * @return
      */
-    public LocalDate isTimeSoon() {
-        return currentTime.isAfter(LocalDate.now());
+    /*public LocalDate isTimeSoon() {
+        //return currentTime.isAfter(LocalDate.now());
     }
 
     @Override
     public String toString() {
-        String formattedDate = currentTime.format(formatter);
-        return "Current time: " + formattedDate;
-    }
+        //String formattedDate = currentTime.format(formatter);
+        //return "Current time: " + formattedDate;
+    }*/
 }

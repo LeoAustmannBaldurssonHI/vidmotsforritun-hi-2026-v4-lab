@@ -46,11 +46,11 @@ public class newController {
     private void registerTrip() {
         String title = tripTitleInput.getText();
         String destination = destinationInput.getText();
-        String date = dateSelect.getValue().toString();
+        // String date = dateSelect.getValue().toString();
 
-        TripPlan.getInstance().addNewTrip(title, destination, date);
+        // TripPlan.getInstance().addNewTrip(title, destination, date);
         System.out.println("Trip registered to the system, transferring user");
 
-        Switcher.switchTo(View.MAIN, false, null); // fer til baka eftir að skrá ferð
+        // Switcher.switchTo(View.MAIN, false, null); // fer til baka eftir að skrá ferð
     }
 }

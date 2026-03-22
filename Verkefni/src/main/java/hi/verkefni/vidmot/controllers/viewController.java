@@ -30,7 +30,7 @@ public class viewController implements DataInterface {
             // Bæta út öll texta
             trip_viewTitle.textProperty().bind(trip.titleProperty());
             trip_viewDestination.textProperty().bind(trip.destinationProperty());
-            trip_viewDate.textProperty().bind(trip.dateProperty());
+            //trip_viewDate.textProperty().bind(trip.dateProperty());
         }
     }
 

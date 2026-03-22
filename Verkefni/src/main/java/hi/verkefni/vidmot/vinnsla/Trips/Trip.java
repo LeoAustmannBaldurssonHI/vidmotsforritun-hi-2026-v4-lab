@@ -12,18 +12,6 @@ public class Trip {
         // should never be initialised
     }
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public String getDestination() {
-        return destination.get();
-    }
-
     public String getTitle() {
         return title.get();
     }
@@ -38,7 +26,11 @@ public class Trip {
     }
 
     public void setStartDate(String date) {
-        this.date.set(date);
+        this.startDate = LocalDate.parse(date);
+    }
+
+    public void setEndDate(String date) {
+        this.endDate = LocalDate.parse(date);
     }
 
     public void setDestination(String destination) {
@@ -47,10 +39,6 @@ public class Trip {
 
     public StringProperty destinationProperty() {
         return destination;
-    }
-
-    public StringProperty dateProperty() {
-        return date;
     }
 
     public BooleanProperty carProperty() { return car; }
@@ -64,13 +52,12 @@ public class Trip {
     public Trip(String title, String destination, String start, String end) {
         this.title = new SimpleStringProperty(title);
         this.destination = new SimpleStringProperty(destination);
-        this.startDate = new LocalDate(start);
-        this.endDate = new LocalDate(end);
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
     }
 
-    @Override
-    public String toString() {
-        return getTitle() + " - " + getDestination() + " (" + getDate() + ")";
-    }
-
+    //@Override
+   // public String toString() {
+        // return getTitle() + " - " + getDestination() + " (" + getDate() + ")";
+    //}
 }

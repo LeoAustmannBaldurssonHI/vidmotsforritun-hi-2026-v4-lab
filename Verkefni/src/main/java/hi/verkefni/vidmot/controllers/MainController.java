@@ -26,6 +26,10 @@ public class MainController {
     @FXML
     private Button mainDeleteButton, mainViewButton, mainUpdateButton;
 
+    /*
+
+    Disabled temp
+
     @FXML
     public void initialize() {
         tripListView.setItems(TripPlan.getInstance().getTrips());
@@ -36,7 +40,7 @@ public class MainController {
                         System.out.println("Selected: " + newValue);
                     }
                 }
-        ); // Þessi er bara hér til að fylgjast með user changes á ferð */
+        ); // Þessi er bara hér til að fylgjast með user changes á ferð
 
         selectedTrip.textProperty().bind(
                 Bindings
@@ -69,7 +73,7 @@ public class MainController {
         mainUpdateButton.disableProperty().bind(
            tripListView.getSelectionModel().selectedItemProperty().isNull()
         );
-    }
+    }*/
 
     @FXML
     public void loginDialog() throws IOException {
@@ -78,9 +82,6 @@ public class MainController {
 
         ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         ButtonType signUp = new ButtonType("Sign up", ButtonBar.ButtonData.OTHER);
-
-        dialog.getDialogPane().getButtonTypes().removeAll(ButtonData.OK);
-        dialog.getDialogPane().getButtonTypes().addAll(confirm, signUp);
     }
 
     @FXML
@@ -89,9 +90,6 @@ public class MainController {
         dialog.setTitle("Sign up");
 
         ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-
-        dialog.getDialogPane().getButtonTypes().removeAll(ButtonData.OK);
-        dialog.getDialogPane().getButtonTypes().addAll(confirm);
     }
 
     /**
