@@ -11,6 +11,9 @@
     -fx-background-size: 100;
 }
 
+/**
+* Þessi fyrir neðan er fyrir takan sem verður fyrir notendabreytingu
+*/
 .userHeader_accButton {
     -fx-background-image: url("Images/accChange.png");
     -fx-background-repeat: no-repeat;

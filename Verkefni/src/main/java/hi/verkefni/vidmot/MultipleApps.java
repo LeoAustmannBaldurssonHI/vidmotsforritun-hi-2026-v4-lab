@@ -29,7 +29,7 @@ public class MultipleApps extends Application {
             hi.verkefni.vidmot.switcher.Switcher.setScene(scene);
 
             stage.setScene(scene);
-            stage.setTitle("Verkefni 4");
+            stage.setTitle("Java Trip Assistance");
             stage.show();
 
             System.out.println("Stage shown.");

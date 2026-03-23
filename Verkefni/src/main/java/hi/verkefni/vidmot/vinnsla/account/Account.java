@@ -1,70 +1,132 @@
 package hi.verkefni.vidmot.vinnsla;
 
+// IO imports
 import java.io.File;
 import java.io.IOException;
+
+// Util imports
+import java.util.Iterator;
+import java.util.Map;
+
+// fasterxml imports
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class Account {
     private final ObjectMapper map = new ObjectMapper();
     private final File file = new File("src/main/resources/data.json");
 
-    private ArrayNode accounts;
+    private ObjectNode accounts;
     private JsonNode accountRoot;
+    private JsonNode currentSignedAccount;
 
+    private boolean isAccountSignedIn = false;
+
+    /**
+     * Constructs a default account.
+     * @throws IOException
+     */
     public Account() throws IOException {
         accountRoot = map.readTree(file);
-        accounts = (ArrayNode) accountRoot.get("Accounts");
+        accounts = (ObjectNode) accountRoot.get("Accounts");
+        currentSignedAccount = null;
     }
 
+    /**
+     * Gets the size of the entire json account system
+     * @return accounts
+     */
     public int accountSize() {
         return accounts.size();
     }
 
+    /**
+     * This method is used for the program to check if the current account name given is in the system or not.
+     * @param name of the username to check
+     * @return true or false of the account
+     */
     public boolean isAccountAvailable(String name) {
         name = name.toLowerCase();
-        for(JsonNode acc : accounts) {
+        for (JsonNode acc : accounts) {
             String checker = acc.get("AccountInfo").get("name").asText().toLowerCase();
-            if(checker.equals(name))
+            if (checker.equals(name))
                 return true;
         }
         return false;
     }
 
+    public boolean signIn(String username, String password) {
+        for (JsonNode acc : accounts) {
+            JsonNode info = acc.get("AccountInfo");
+            String storedUser = info.get("name").asText();
+            String storedPass = info.get("password").asText();
+
+            if (storedUser.equals(username) && storedPass.equals(password)) {
+                currentSignedAccount = acc;
+                isAccountSignedIn = true;
+                return true;
+            }
+        }
+        isAccountSignedIn = false;
+        return false;
+    }
+
+    public void logOut() throws IOException {
+        if (currentSignedAccount != null && isAccountSignedIn) {
+            currentSignedAccount = null;
+            return;
+        } else {
+            System.out.println("System error: attempted to sign out but account cannot be found");
+            return;
+        }
+    }
+
     /**
-     * Bætir til nýja reiking í kerfinu okkar
-     * @param account
-     * @param password
+     * Adds a brand new account to the system. There is a security system added to make sure that the password passes
+     * the current security regulations.
+     * @param account of the account to add
+     * @param password of the account to add
      * @throws IOException
      */
     public void newAccount(String account, String password) throws IOException {
         String specialChars = "!@#$%^&*()_+-=[]{}|;:'\",.<>/?";
         String numbers = "0123456789";
-        ObjectNode newUser = map.createObjectNode();
         boolean hasSpecial = false;
         boolean hasNumber = false;
 
-        if(password.length() >= 6) {
+        if (password.length() >= 6) {
             for (int i = 0; i < password.length(); i++) {
-                if(specialChars.indexOf(password.charAt(i)) != -1) {
+                if (specialChars.indexOf(password.charAt(i)) != -1) {
                     hasSpecial = true;
                 }
-                if(numbers.indexOf(password.charAt(i)) != -1) {
+                if (numbers.indexOf(password.charAt(i)) != -1) {
                     hasNumber = true;
                 }
             }
 
-            if(hasSpecial && hasNumber) {
+            if (hasSpecial && hasNumber) {
                 System.out.println("Valid password created");
 
-                newUser.put("name", account);
-                newUser.put("password", password);
+                ObjectNode accountInfo = map.createObjectNode();
+                accountInfo.put("name", account);
+                accountInfo.put("password", password);
 
-                accounts.add(newUser);
+                ObjectNode newAccountInfo = map.createObjectNode();
+                newAccountInfo.put("AccountInfo", accountInfo);
+                newAccountInfo.put("Trips", map.createObjectNode());
+
+                String nextId = String.valueOf(accounts.size() + 1);
+                accounts.put(nextId, newAccountInfo);
+
                 map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
-                // direct to main-view with the current account
+                // Did the account get added?
+                if(!isAccountAvailable(account)) {
+                    System.err.println("CRITICAL ERROR: Account creation failed!");
+                    System.exit(1);
+                }
+
+                signIn(account, password);
                 return;
             } else {
                 System.out.println("Invalid password created");
@@ -76,10 +138,31 @@ public class Account {
     }
 
     /**
-     * Checks if the user can be found in the system
-     * @param username
+     * Checks if the account is currently signed in or not. Used for some scenarios where we wanna for example add an
+     * account.
+     * @return to see if the account is in or not
      */
-    public void checkAccount(String username) {
-        // add later
+    public String getSignedAcccount() {
+        if (currentSignedAccount == null || !isAccountSignedIn) {
+            return "No account found";
+        }
+        return currentSignedAccount.get("AccountInfo").get("name").asText();
     }
-}
+
+    public void deleteAccount(String account) throws IOException {
+        Iterator<Map.Entry<String, JsonNode>> fields = accounts.fields();
+        while (fields.hasNext()) {
+            Map.Entry<String, JsonNode> entry = fields.next();
+            JsonNode accountInfo = entry.getValue().get("AccountInfo");
+            if(accountInfo == null || accountInfo.get("name") == null) return;
+            String storedUser = accountInfo.get("name").asText();
+
+            if(storedUser.equals(account)) {
+                accounts.remove(entry.getKey());
+                map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
+                System.out.println("Account deleted");
+                return;
+            }
+        }
+    }
+}}

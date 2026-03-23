@@ -5,10 +5,9 @@ package hi.verkefni.vidmot.switcher;
  * viðbætur fyrir Ferdaplan verkefni
  */
 public enum View {
-    MAIN("/hi/verkefni/vidmot/main-view.fxml"),
-    NEWTRIP("/hi/verkefni/vidmot/new-trip.fxml"),
-    DELETE("/hi/verkefni/vidmot/confirm-delete.fxml"),
-    VIEWTRIP("/hi/verkefni/vidmot/view-trip.fxml");
+    MAIN("/verkefni/vidmot/main-view.fxml"),
+    VIEWTRIP("/hi/verkefni/vidmot/view-trip.fxml"),
+    EDIT("/hi/verkefni/vidmot/edit-trip.fxml");
 
     private String fileName;
 

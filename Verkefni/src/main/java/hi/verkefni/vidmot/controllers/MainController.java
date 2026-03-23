@@ -12,6 +12,8 @@ import hi.verkefni.vidmot.vinnsla.TripPlan;
 import hi.verkefni.vidmot.switcher.Switcher;
 import hi.verkefni.vidmot.switcher.View;
 
+import hi.verkefni.vidmot.vinnsla.account.Account;
+
 import java.util.Optional;
 
 import java.io.IOException;
@@ -22,6 +24,9 @@ public class MainController {
 
     @FXML
     private Label selectedTrip;
+
+    @FXML
+    private Label userHeader;
 
     @FXML
     private Button mainDeleteButton, mainViewButton, mainUpdateButton;
@@ -80,8 +85,57 @@ public class MainController {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Log in");
 
+        TextField usernameField = new TextField();
+        PasswordField passwordField = new PasswordField();
+
+        usernameField.setPromptText("Username");
+        passwordField.setPromptText("Password");
+
+        VBox box = new Vbox(10, usernameField, passwordField);
+        dialog.getDialogPane().setContent(box);
+
         ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         ButtonType signUp = new ButtonType("Sign up", ButtonBar.ButtonData.OTHER);
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL);
+
+        dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL);
+        dialog.getDialogPane().getButtonTypes().addAll(confirm, signUp, cancel);
+
+        boolean isDone = false;
+
+        while (!isDone) {
+            Optional<ButtonType> result = dialog.showAndWait();
+            if(result.get().isEmpty() || result.get() == cancel) {
+                done = true;
+            } else if(result.get() == signUp) {
+                signUpDialog(); // transfer to the sign up dialog
+            } else if(result.get() == confirm) {
+                try {
+                    Account acc = new Account();
+                    String attemptedUser = userNameField.getText();
+                    String attemptedPassword = passwordField.getText();
+                    boolean signInStatus = acc.signIn(attemptedUser, attemptedPassword);
+
+                    if(!signInStatus) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Login failed");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Wrong username or password.");
+                        alert.showAndWait();
+                    } else {
+                        userHeader.setText("Hello, " + acc.getSignedAcccount());
+                        done = true;
+                    }
+                } catch (Exception e) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Something went wrong during login.");
+                    e.printStackTrace();
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -96,29 +150,12 @@ public class MainController {
      * Fer til viðmót scene sem býr til nýja ferðalög
      */
     @FXML
-    private void openNewTrip() {
-        /*
-        * TODO: Uppfæra þessari method til að fá hann að opna dialog í staðinn
-        *  og að ná í gögn
-        * */
-        Switcher.switchTo(View.NEWTRIP, false, null);
-    }
+    private void openNewTrip(ActionEvent event) {
+        Dialog<ButtonType> dialog = new Dialog();
 
-    /**
-     * Fer til viðmót scene sem eyðir út <strong><u>SELECTED</u></strong> ferðina.
-     * @param event
-     */
-    @FXML
-    private void openDeleteTrip(ActionEvent event) {
-        Trip selected = tripListView.getSelectionModel().getSelectedItem();
+        currentSignedUser = null;
 
-        if(selected != null) {
-            Switcher.switchTo(View.DELETE, false, selected); // fer til delete scene og færir yfir upplýsing um ferðin sem notendi valdi.
-            return;
-        } else {
-            System.err.println("Veldu ferð fyrst!"); // Örrygis check
-            return;
-        }
+        dialog.setTitle("Adding a new trip")
     }
 
     /**

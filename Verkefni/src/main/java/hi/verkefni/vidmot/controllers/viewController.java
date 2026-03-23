@@ -35,6 +35,29 @@ public class viewController implements DataInterface {
     }
 
     /**
+     * Fer til viðmót scene sem eyðir út <strong><u>SELECTED</u></strong> ferðina.
+     * @param event
+     */
+    @FXML
+    private void deleteTrip(ActionEvent event) {
+        Trip selected = tripListView.getSelectionModel().getSelectedItem();
+
+        if(selected == null) return;
+
+        Dialog<ButtonType> dialog = new Dialog();
+        dialog.setTitle("Confirm Deleteion");
+        dialog.setContextText("You are about to delete" + selected.toString()); // toString needs to be updated
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if(result.isPresent() && result.get() == "Confirm") {
+            TripPlan.getInstance().removeTrip(selected);
+        } else {
+            dialog.close(); // terminates
+        }
+    }
+
+    /**
      * Fer til baka til main-view.fxml (eða annarsvegar ef breytt)
      */
     @FXML
