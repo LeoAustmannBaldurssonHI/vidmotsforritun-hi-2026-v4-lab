@@ -24,22 +24,21 @@ import java.io.IOException;
 public class MainController {
     @FXML
     private ListView<Trip> tripListView;
-
     @FXML
     private Label selectedTrip;
-
     @FXML
     private Label userHeader;
-
     @FXML
-    private Button mainDeleteButton, mainViewButton, mainUpdateButton;
+    private Button accountButton;
+
+    private String user;
 
     @FXML
     public void initialize() {
         Platform.runLater(() -> {
             try {
                 loginController login = new loginController();
-                String user = login.loginDialog();
+                user = login.loginDialog();
                 if (user != null) {
                     String name = "";
                     // if the name is too long, we need to cut it off so it doesn't overflow
@@ -91,6 +90,14 @@ public class MainController {
             System.err.println("Veldu ferð fyrst!"); // error handler
             return;
         }
+    }
+
+    /**
+     * add later
+     */
+    @FXML
+    private void accountChange() {
+        //user.logOut();
     }
 
     /**
