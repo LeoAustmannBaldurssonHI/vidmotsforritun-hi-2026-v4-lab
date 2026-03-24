@@ -3,6 +3,11 @@ package hi.verkefni.vidmot.vinnsla.Trips;
 import javafx.beans.property.*; // frekar að import allt en hafa 5 sitthvort imports.
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+
 public class Trip {
     private StringProperty title, destination;
     private LocalDate startDate, endDate;
