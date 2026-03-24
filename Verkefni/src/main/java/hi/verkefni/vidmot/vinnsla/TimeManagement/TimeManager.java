@@ -1,4 +1,4 @@
-package hi.verkefni.vidmot.vinnsla;
+package hi.verkefni.vidmot.vinnsla.TimeManagement;
 
 // Java lang + util import
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package hi.verkefni.vidmot.vinnsla;
+package hi.verkefni.vidmot.vinnsla.Trips;
 
 import javafx.beans.property.*; // frekar að import allt en hafa 5 sitthvort imports.
 import java.time.LocalDate;

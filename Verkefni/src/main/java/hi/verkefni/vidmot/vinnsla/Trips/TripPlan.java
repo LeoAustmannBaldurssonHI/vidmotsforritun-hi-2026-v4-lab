@@ -1,4 +1,4 @@
-package hi.verkefni.vidmot.vinnsla;
+package hi.verkefni.vidmot.vinnsla.Trips;
 
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;

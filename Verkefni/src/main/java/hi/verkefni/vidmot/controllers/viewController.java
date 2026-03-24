@@ -7,8 +7,8 @@ import hi.verkefni.vidmot.switcher.Switcher;
 import hi.verkefni.vidmot.switcher.View;
 import hi.verkefni.vidmot.dataInterface.DataInterface;
 
-import hi.verkefni.vidmot.vinnsla.Trip;
-import hi.verkefni.vidmot.vinnsla.TripPlan;
+import hi.verkefni.vidmot.vinnsla.Trips.Trip;
+import hi.verkefni.vidmot.vinnsla.Trips.TripPlan;
 
 public class viewController implements DataInterface {
     private Trip selectedTrip;
@@ -31,29 +31,6 @@ public class viewController implements DataInterface {
             trip_viewTitle.textProperty().bind(trip.titleProperty());
             trip_viewDestination.textProperty().bind(trip.destinationProperty());
             //trip_viewDate.textProperty().bind(trip.dateProperty());
-        }
-    }
-
-    /**
-     * Fer til viðmót scene sem eyðir út <strong><u>SELECTED</u></strong> ferðina.
-     * @param event
-     */
-    @FXML
-    private void deleteTrip(ActionEvent event) {
-        Trip selected = tripListView.getSelectionModel().getSelectedItem();
-
-        if(selected == null) return;
-
-        Dialog<ButtonType> dialog = new Dialog();
-        dialog.setTitle("Confirm Deleteion");
-        dialog.setContextText("You are about to delete" + selected.toString()); // toString needs to be updated
-
-        Optional<ButtonType> result = dialog.showAndWait();
-
-        if(result.isPresent() && result.get() == "Confirm") {
-            TripPlan.getInstance().removeTrip(selected);
-        } else {
-            dialog.close(); // terminates
         }
     }
 

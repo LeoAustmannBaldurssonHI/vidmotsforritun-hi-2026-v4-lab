@@ -1,4 +1,4 @@
-package hi.verkefni.vidmot.vinnsla;
+package hi.verkefni.vidmot.vinnsla.account;
 
 // IO imports
 import java.io.File;
@@ -46,7 +46,7 @@ public class Account {
      * @param name of the username to check
      * @return true or false of the account
      */
-    public boolean isAccountAvailable(String name) {
+    public boolean accountExists(String name) {
         name = name.toLowerCase();
         for (JsonNode acc : accounts) {
             String checker = acc.get("AccountInfo").get("name").asText().toLowerCase();
@@ -72,9 +72,10 @@ public class Account {
         return false;
     }
 
-    public void logOut() throws IOException {
+    public void logOut() {
         if (currentSignedAccount != null && isAccountSignedIn) {
             currentSignedAccount = null;
+            isAccountSignedIn = false;
             return;
         } else {
             System.out.println("System error: attempted to sign out but account cannot be found");
@@ -94,6 +95,12 @@ public class Account {
         String numbers = "0123456789";
         boolean hasSpecial = false;
         boolean hasNumber = false;
+
+        // prevent dupe accounts
+        if(accountExists(account)) {
+            System.out.println("Account already exists");
+            return;
+        }
 
         if (password.length() >= 6) {
             for (int i = 0; i < password.length(); i++) {
@@ -121,9 +128,9 @@ public class Account {
 
                 map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
                 // Did the account get added?
-                if(!isAccountAvailable(account)) {
+                if(!accountExists(account)) {
                     System.err.println("CRITICAL ERROR: Account creation failed!");
-                    System.exit(1);
+                    throw new IOException("Account creation failed!");
                 }
 
                 signIn(account, password);
@@ -142,7 +149,7 @@ public class Account {
      * account.
      * @return to see if the account is in or not
      */
-    public String getSignedAcccount() {
+    public String getSignedAccount() {
         if (currentSignedAccount == null || !isAccountSignedIn) {
             return "No account found";
         }
@@ -165,4 +172,4 @@ public class Account {
             }
         }
     }
-}}
+}
