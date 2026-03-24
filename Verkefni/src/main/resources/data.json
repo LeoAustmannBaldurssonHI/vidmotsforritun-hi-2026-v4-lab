@@ -6,7 +6,12 @@
         "password": "icesave2006"
       },
       "Trips": {
-
+        "1": {
+          "title": "Slagur við einhvern",
+          "destination": "Pyongyang, Norður Kórea",
+          "startDate": "21.06.2025",
+          "endDate": "22.06.2025"
+        }
       }
     },
     "2": {
