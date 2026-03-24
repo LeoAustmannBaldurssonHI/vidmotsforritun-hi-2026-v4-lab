@@ -49,10 +49,11 @@ public class Trip {
     public BooleanProperty carProperty() { return car; }
 
     /**
-     * Býr til nýja ferðalag áætlun.
-     * @param date
+     * Creates a new mandatory trip for the users to go after.
      * @param title
      * @param destination
+     * @param start
+     * @param end
      */
     public Trip(String title, String destination, String start, String end) {
         this.title = new SimpleStringProperty(title);
