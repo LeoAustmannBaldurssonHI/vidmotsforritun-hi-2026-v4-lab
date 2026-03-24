@@ -45,7 +45,7 @@ public class MainController {
                     // if the name is too long, we need to cut it off so it doesn't overflow
                     if (user.length() > 32) {
                         int i = 0;
-                        while (name.length() != 16) {
+                        while (name.length() != 32) {
                             name = name + user.charAt(i);
                             i++;
                         }
