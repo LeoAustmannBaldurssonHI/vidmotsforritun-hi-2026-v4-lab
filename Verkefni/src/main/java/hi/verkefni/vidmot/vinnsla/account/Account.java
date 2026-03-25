@@ -34,11 +34,18 @@ public class Account {
     }
 
     /**
-     * Gets the size of the entire json account system
-     * @return accounts
+     * User constructor that allows us to specify which user is actually signed in.
+     * Should only be used if the program is confident on who is supposed to be logged in.
+     * @param user
+     * @throws IOException
      */
-    public int accountSize() {
-        return accounts.size();
+    public Account(String user) throws IOException {
+        this();
+
+        if(accountExists(user)){
+            currentSignedAccount = accounts.get(user);
+            isAccountSignedIn = true;
+        }
     }
 
     /**
@@ -50,12 +57,17 @@ public class Account {
         name = name.toLowerCase();
         for (JsonNode acc : accounts) {
             String checker = acc.get("AccountInfo").get("name").asText().toLowerCase();
-            if (checker.equals(name))
-                return true;
+            if (checker.equals(name)) return true;
         }
         return false;
     }
 
+    /**
+     *
+     * @param username of the account
+     * @param password of the account
+     * @return user being logged in (true or false)
+     */
     public boolean signIn(String username, String password) {
         for (JsonNode acc : accounts) {
             JsonNode info = acc.get("AccountInfo");
@@ -65,6 +77,7 @@ public class Account {
             if (storedUser.equals(username) && storedPass.equals(password)) {
                 currentSignedAccount = acc;
                 isAccountSignedIn = true;
+                System.out.println(isAccountSignedIn);
                 return true;
             }
         }
@@ -73,6 +86,9 @@ public class Account {
     }
 
     public void logOut() {
+        System.out.println("currentSignedAccount = " + currentSignedAccount);
+        System.out.println("isAccountSignedIn = " + isAccountSignedIn);
+
         if (currentSignedAccount != null && isAccountSignedIn) {
             currentSignedAccount = null;
             isAccountSignedIn = false;
@@ -84,8 +100,14 @@ public class Account {
     }
 
     /**
-     * Adds a brand new account to the system. There is a security system added to make sure that the password passes
-     * the current security regulations.
+     * Adds a new account to the system.
+     *  <p>
+     *  The password must meet the following security requirements:
+     *  <ul>
+     *      <li>At least 6 characters long</li>
+     *      <li>Contains at least one special character</li>
+     *      <li>Contains at least one number</li>
+     *  </ul>
      * @param account of the account to add
      * @param password of the account to add
      * @throws IOException

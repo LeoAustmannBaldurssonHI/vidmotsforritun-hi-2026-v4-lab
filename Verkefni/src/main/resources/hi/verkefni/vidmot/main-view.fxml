@@ -19,7 +19,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="accountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="69.0" prefWidth="79.0" styleClass="userHeader_accButton" stylesheets="@CSS/style.css">
+            <Button fx:id="accountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#accountChange" prefHeight="69.0" prefWidth="79.0" styleClass="userHeader_accButton" stylesheets="@CSS/style.css">
                <font>
                   <Font size="18.0" />
                </font>
@@ -35,7 +35,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="New Trip" translateY="5.0" />
+                  <Button fx:id="newButton_main" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="New Trip" translateY="5.0" />
                </children>
             </StackPane>
             <StackPane layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="334.0">
@@ -45,7 +45,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="View Trip" translateY="5.0" />
+                  <Button fx:id="viewButton_main" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="View Trip" translateY="5.0" />
                </children>
             </StackPane>
             <StackPane layoutX="311.0" layoutY="10.0" prefHeight="60.0" prefWidth="333.0">
@@ -55,7 +55,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="Edit Trip" translateY="5.0" />
+                  <Button fx:id="editButton_main" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" text="Edit Trip" translateY="5.0" />
                </children>
             </StackPane>
          </children>
@@ -64,7 +64,7 @@
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="92.0" prefWidth="400.0" styleClass="userSelect_main" text="You have selected: NULL">
+                  <Label alignment="CENTER" prefHeight="92.0" prefWidth="400.0" styleClass="userSelect_main" text="You have selected: NULL" textAlignment="CENTER">
                      <font>
                         <Font size="24.0" />
                      </font>

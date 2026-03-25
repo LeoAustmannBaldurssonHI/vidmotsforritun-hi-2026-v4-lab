@@ -31,6 +31,7 @@ public class MainController {
     @FXML
     private Button accountButton;
 
+    private Account acc;
     private String user;
 
     @FXML
@@ -38,19 +39,17 @@ public class MainController {
         Platform.runLater(() -> {
             try {
                 loginController login = new loginController();
-                user = login.loginDialog();
-                if (user != null) {
-                    String name = "";
-                    // if the name is too long, we need to cut it off so it doesn't overflow the header bar
-                    if (user.length() > 32) {
-                        int i = 0;
-                        while (name.length() != 32) {
-                            name = name + user.charAt(i);
-                            i++;
-                        }
-                        user = name + "...";
+                acc = login.loginDialog();
+
+                if (acc != null) {
+                    user = acc.getSignedAccount();
+                    String name = user;
+
+                    if (name.length() > 32) {
+                        name = name.substring(0, 32) + "...";
                     }
-                    userHeader.setText("Hello, " + user + ". Welcome to your Trip Planner");
+
+                    userHeader.setText("Hello, " + name + ". Welcome to your Trip Planner");
                 }
             } catch(IOException e) {
                 e.printStackTrace();
@@ -96,8 +95,27 @@ public class MainController {
      * add later
      */
     @FXML
-    private void accountChange() {
-        //user.logOut();
+    private void accountChange() throws IOException {
+        if (acc == null) {
+            System.err.println("Critical error, no user authenticated for us to be able to log out");
+            return;
+        }
+
+        acc.logOut();
+
+        loginController login = new loginController();
+        acc = login.loginDialog();
+
+        if (acc != null) {
+            user = acc.getSignedAccount();
+            String name = user;
+
+            if (name.length() > 32) {
+                name = name.substring(0, 32) + "...";
+            }
+
+            userHeader.setText("Hello, " + name + ". Welcome to your Trip Planner");
+        }
     }
 
     /**

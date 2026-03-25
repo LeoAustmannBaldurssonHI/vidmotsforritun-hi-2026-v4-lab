@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class loginController {
     @FXML
-    public String loginDialog() throws IOException {
+    public Account loginDialog() throws IOException {
         boolean isDone = false;
         while (!isDone) {
             Dialog<ButtonType> dialog = new Dialog<>();
@@ -46,8 +46,9 @@ public class loginController {
                 SignUpController signUpControl = new SignUpController();
                 String user = signUpControl.signUpDialog();
                 if(user != null) {
+                    Account acc = new Account();
                     isDone = true;
-                    return user;
+                    return acc;
                 } else {
                     isDone = false;
                 }
@@ -68,7 +69,7 @@ public class loginController {
                     } else {
                         dialog.close();
                         isDone = true;
-                        return acc.getSignedAccount();
+                        return acc;
                     }
                 } catch (Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -77,6 +78,7 @@ public class loginController {
                     alert.setContentText("Something went wrong during login.");
                     e.printStackTrace();
                     alert.showAndWait();
+                    System.exit(1);
                 }
             }
         }
