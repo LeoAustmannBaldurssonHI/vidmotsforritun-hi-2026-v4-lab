@@ -48,18 +48,14 @@ public class TripPlan {
     }
 
     /**
-     * Bætir nýr basic ferðalag fyrir notenda.
+     * TODO: Connect the add trip
+     * New trip adder handler
      * @param date
      * @param title
      * @param destination
      */
     public void addNewTrip(String title, String destination, String start, String end) {
-        plannedTrips.add(new Trip(title, destination, start, end));
-    }
-
-
-    public void addNewTrip(String title, String blank ) {
-
+        // N/A
     }
 
     /**
@@ -71,7 +67,8 @@ public class TripPlan {
     }
 
     /**
-     * Lista af ferðalögum sem notendi er með
+     * TODO: Update this method to better accomdate for the user
+     * List of trips that the user has.
      * @return Ferðalög lista (plannedTrips)
      */
     public ObservableList<Trip> getTrips() {

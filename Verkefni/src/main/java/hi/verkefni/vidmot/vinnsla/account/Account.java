@@ -34,7 +34,7 @@ public class Account {
     }
 
     /**
-     * User constructor that allows us to specify which user is actually signed in.
+     * User specified constructor that allows us to specify which user is actually signed in.
      * Should only be used if the program is confident on who is supposed to be logged in.
      * @param user
      * @throws IOException

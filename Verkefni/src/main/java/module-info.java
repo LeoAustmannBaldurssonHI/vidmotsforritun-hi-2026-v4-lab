@@ -4,6 +4,7 @@ module hi.verkefni.vidmot {
 
     requires org.controlsfx.controls;
     requires com.fasterxml.jackson.databind;
+    requires javafx.media;
 
     opens hi.verkefni.vidmot.controllers to javafx.fxml;
     opens hi.verkefni.vidmot.switcher to javafx.fxml;
