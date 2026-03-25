@@ -41,7 +41,7 @@ public class MainController {
                 user = login.loginDialog();
                 if (user != null) {
                     String name = "";
-                    // if the name is too long, we need to cut it off so it doesn't overflow
+                    // if the name is too long, we need to cut it off so it doesn't overflow the header bar
                     if (user.length() > 32) {
                         int i = 0;
                         while (name.length() != 32) {

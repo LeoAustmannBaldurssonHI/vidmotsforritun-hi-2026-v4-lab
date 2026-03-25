@@ -90,7 +90,7 @@ public class Account {
      * @param password of the account to add
      * @throws IOException
      */
-    public void newAccount(String account, String password) throws IOException {
+    public boolean newAccount(String account, String password) throws IOException {
         String specialChars = "!@#$%^&*()_+-=[]{}|;:'\",.<>/?";
         String numbers = "0123456789";
         boolean hasSpecial = false;
@@ -99,7 +99,7 @@ public class Account {
         // prevent dupe accounts
         if(accountExists(account)) {
             System.out.println("Account already exists");
-            return;
+            return false;
         }
 
         if (password.length() >= 6) {
@@ -134,13 +134,14 @@ public class Account {
                 }
 
                 signIn(account, password);
-                return;
+                return true;
             } else {
                 System.out.println("Invalid password created");
-                return;
+                return false;
             }
         } else {
             System.out.println("Password too short");
+            return false;
         }
     }
 
@@ -156,6 +157,11 @@ public class Account {
         return currentSignedAccount.get("AccountInfo").get("name").asText();
     }
 
+    /**
+     * Deletes the current user account upon request.
+     * @param account to delete
+     * @throws IOException
+     */
     public void deleteAccount(String account) throws IOException {
         Iterator<Map.Entry<String, JsonNode>> fields = accounts.fields();
         while (fields.hasNext()) {

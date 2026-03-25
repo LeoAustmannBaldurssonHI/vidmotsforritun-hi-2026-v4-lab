@@ -1,36 +1,32 @@
 {
-  "Accounts": {
-    "1": {
-      "AccountInfo": {
-        "name": "Leó Austmann Baldursson",
-        "password": "icesave2006"
+  "Accounts" : {
+    "1" : {
+      "AccountInfo" : {
+        "name" : "Leó Austmann Baldursson",
+        "password" : "icesave2006"
       },
-      "Trips": {
-        "1": {
-          "title": "Slagur við einhvern",
-          "destination": "Pyongyang, Norður Kórea",
-          "startDate": "21.06.2025",
-          "endDate": "22.06.2025"
+      "Trips" : {
+        "1" : {
+          "title" : "Slagur við einhvern",
+          "destination" : "Pyongyang, Norður Kórea",
+          "startDate" : "21.06.2025",
+          "endDate" : "22.06.2025"
         }
       }
     },
-    "2": {
-      "AccountInfo": {
-        "name": "Ebba Þóra Hvannberg",
-        "password": "hbv201g"
+    "2" : {
+      "AccountInfo" : {
+        "name" : "Ebba Þóra Hvannberg",
+        "password" : "hbv201g"
       },
-      "Trips": {
-
-      }
+      "Trips" : { }
     },
-    "3": {
-      "AccountInfo": {
-        "name": "Jón Jónsson",
-        "password": "passowrd"
+    "3" : {
+      "AccountInfo" : {
+        "name" : "Jón Jónsson",
+        "password" : "passowrd"
       },
-      "Trips": {
-
-      }
+      "Trips" : { }
     }
   }
 }

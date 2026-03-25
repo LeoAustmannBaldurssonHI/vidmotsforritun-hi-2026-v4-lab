@@ -17,34 +17,41 @@ import java.io.IOException;
 public class loginController {
     @FXML
     public String loginDialog() throws IOException {
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Log in");
-
-        TextField usernameField = new TextField();
-        PasswordField passwordField = new PasswordField();
-
-        usernameField.setPromptText("Username");
-        passwordField.setPromptText("Password");
-
-        VBox box = new VBox(10, usernameField, passwordField);
-        dialog.getDialogPane().setContent(box);
-
-        ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-        ButtonType signUp = new ButtonType("Sign up", ButtonBar.ButtonData.OTHER);
-        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL);
-        dialog.getDialogPane().getButtonTypes().addAll(confirm, signUp, cancel);
-
         boolean isDone = false;
-
         while (!isDone) {
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle("Log in");
+
+            TextField usernameField = new TextField();
+            PasswordField passwordField = new PasswordField();
+
+            usernameField.setPromptText("Username");
+            passwordField.setPromptText("Password");
+
+            VBox box = new VBox(10, usernameField, passwordField);
+            dialog.getDialogPane().setContent(box);
+
+            ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+            ButtonType signUp = new ButtonType("Sign up", ButtonBar.ButtonData.OTHER);
+            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            dialog.getDialogPane().getButtonTypes().addAll(confirm, signUp, cancel);
+
             Optional<ButtonType> result = dialog.showAndWait();
+            System.out.println(result.get());
             if(result.isEmpty() || result.get() == cancel) {
                 isDone = true;
                 System.exit(0);
             } else if(result.get() == signUp) {
-                // set up later...
+                SignUpController signUpControl = new SignUpController();
+                String user = signUpControl.signUpDialog();
+                if(user != null) {
+                    isDone = true;
+                    return user;
+                } else {
+                    isDone = false;
+                }
+                continue;
             } else if(result.get() == confirm) {
                 try {
                     Account acc = new Account();
