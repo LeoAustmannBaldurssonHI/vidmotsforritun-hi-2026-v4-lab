@@ -27,6 +27,13 @@
         "password" : "passowrd"
       },
       "Trips" : { }
+    },
+    "4": {
+      "AccountInfo": {
+        "name": "admin",
+        "password": "admin"
+      },
+      "Trips": { }
     }
   }
 }

@@ -4,9 +4,10 @@ import javafx.fxml.FXML;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import javafx.beans.binding.*;
+import javafx.beans.property.*;
 
 import hi.verkefni.vidmot.vinnsla.Trips.Trip;
 import hi.verkefni.vidmot.vinnsla.Trips.TripPlan;
@@ -30,9 +31,13 @@ public class MainController {
     private Label userHeader;
     @FXML
     private Button accountButton;
+    @FXML
+    private AnchorPane mainPane;
 
     private Account acc;
     private String user;
+
+    private BooleanProperty userLogged = new SimpleBooleanProperty(false);
 
     @FXML
     public void initialize() {
@@ -46,13 +51,16 @@ public class MainController {
                     String name = user;
 
                     if (name.length() > 32) {
+                        System.out.println("Username overflow.");
                         name = name.substring(0, 32) + "...";
                     }
 
                     userHeader.setText("Hello, " + name + ". Welcome to your Trip Planner");
+                    userLogged.set(true);
                 }
             } catch(IOException e) {
                 e.printStackTrace();
+                userLogged.set(false);
             }
         });
 
@@ -63,6 +71,9 @@ public class MainController {
                     }
                 }
         ); // Þessi er bara hér til að fylgjast með user changes á ferð */
+
+        mainPane.visibleProperty().bind(userLogged);
+        mainPane.managedProperty().bind(userLogged);
     }
 
     /**
@@ -102,6 +113,8 @@ public class MainController {
         }
 
         acc.logOut();
+
+        userLogged.set(false);
 
         loginController login = new loginController();
         acc = login.loginDialog();

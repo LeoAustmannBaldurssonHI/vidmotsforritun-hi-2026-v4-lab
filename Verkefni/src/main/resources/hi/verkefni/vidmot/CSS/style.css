@@ -12,7 +12,7 @@
 }
 
 /**
-* Þessi fyrir neðan er fyrir takan sem verður fyrir notendabreytingu
+* Þessi fyrir neðan er fyrir takan sem verður fyrir notendabreytingu eða eyðingu
 */
 .userHeader_accButton {
     -fx-background-image: url("Images/accChange.png");

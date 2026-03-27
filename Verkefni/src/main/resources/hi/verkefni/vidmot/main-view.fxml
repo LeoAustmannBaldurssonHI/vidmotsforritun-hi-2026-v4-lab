@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni.vidmot.controllers.MainController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni.vidmot.controllers.MainController">
    <children>
       <ListView fx:id="tripListView" layoutX="15.0" layoutY="73.0" prefHeight="274.0" prefWidth="969.0" styleClass="tripList" />
-      <HBox prefHeight="60.0" prefWidth="1000.0">
+      <HBox fx:id="fxHeader" prefHeight="60.0" prefWidth="1000.0">
          <children>
             <Label fx:id="userHeader" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="931.0" styleClass="userHeader" stylesheets="@CSS/style.css" text="Hello, {username}. Welcome to your Trip Planner.">
                <font>
@@ -60,7 +60,7 @@
             </StackPane>
          </children>
       </HBox>
-      <VBox layoutX="300.0" layoutY="375.0" prefHeight="89.0" prefWidth="400.0">
+      <VBox fx:id="fxSelector" layoutX="300.0" layoutY="375.0" prefHeight="89.0" prefWidth="400.0">
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
