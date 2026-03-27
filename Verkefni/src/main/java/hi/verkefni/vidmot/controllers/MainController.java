@@ -72,7 +72,11 @@ public class MainController {
                 }
         ); // Þessi er bara hér til að fylgjast með user changes á ferð */
 
-        mainPane.visibleProperty().bind(userLogged);
+        mainPane.visibleProperty().bind(userLogged); // changes if the layout should be visible or not
+
+        /* a rule that prevents the fxml document from never opening when the visibleProperty is false.
+         in short this just takes in consideration if the layout -
+         (set by the fxml document) should be taken in consideration or not. */
         mainPane.managedProperty().bind(userLogged);
     }
 
