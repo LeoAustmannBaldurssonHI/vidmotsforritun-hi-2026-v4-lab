@@ -33,7 +33,7 @@ public class TimeManager {
     /**
      * Returns a sorted list of dates. If the dates are out of the current time, they wlll not be accepted
      * @param dates to sort
-     * @return
+     * @return sorted list of dates
      */
     public List<LocalDate> getSortedDates(List<LocalDate> dates) {
         return dates.stream().filter(date -> !date.isBefore(LocalDate.now())).sorted().toList();

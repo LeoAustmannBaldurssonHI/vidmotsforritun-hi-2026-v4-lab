@@ -19,6 +19,13 @@ public class Trip {
         // should never be initialised
     }
 
+    public Trip(String title, String destination, LocalDate startDate, LocalDate endDate) {
+        this.title = new SimpleStringProperty(title);
+        this.destination = new SimpleStringProperty(destination);
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     // Properties
     public StringProperty titleProperty() {
         return title;

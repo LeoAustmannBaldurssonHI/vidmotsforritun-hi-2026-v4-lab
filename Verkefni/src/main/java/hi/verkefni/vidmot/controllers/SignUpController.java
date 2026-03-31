@@ -3,7 +3,8 @@ package hi.verkefni.vidmot.controllers;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.geometry.VPos;
 
 import javafx.beans.binding.*;
 
@@ -15,6 +16,9 @@ import java.util.Optional;
 import java.io.IOException;
 
 public class SignUpController {
+    private final int HEIGHTCUTOFF = 50;
+    private final int WIDTHCUTFOFF = 300;
+
     @FXML
     public String signUpDialog() {
         boolean isDone = false;
@@ -24,9 +28,28 @@ public class SignUpController {
 
             TextField username = new TextField();
             PasswordField password = new PasswordField();
+            Label usernameLabel = new Label();
+            Label passwordLabel = new Label();
 
-            VBox box = new VBox(10, username, password);
-            dialog.getDialogPane().setContent(box);
+            username.setPromptText("Username");
+            usernameLabel.setText("test");
+            password.setPromptText("Password");
+            passwordLabel.setText("test2");
+
+            GridPane rootGrid = new GridPane();
+
+            rootGrid.add(usernameLabel, 0, 0);
+            rootGrid.add(username, 1, 0);
+
+            rootGrid.add(passwordLabel, 0, 1);
+            rootGrid.add(password, 1, 1);
+
+            username.setPrefWidth(WIDTHCUTFOFF);
+            rootGrid.setPrefHeight(HEIGHTCUTOFF);
+
+            rootGrid.setHgap(10);
+
+            dialog.getDialogPane().setContent(rootGrid);
 
             ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);

@@ -39,6 +39,13 @@ public class MainController {
 
     private BooleanProperty userLogged = new SimpleBooleanProperty(false);
 
+    private String nameOverflow(String name) {
+        if(name.length() > 32) {
+            name = name.substring(0, 32) + "...";
+        }
+        return name;
+    }
+
     @FXML
     public void initialize() {
         Platform.runLater(() -> {
@@ -50,12 +57,7 @@ public class MainController {
                     user = acc.getSignedAccount();
                     String name = user;
 
-                    if (name.length() > 32) {
-                        System.out.println("Username overflow.");
-                        name = name.substring(0, 32) + "...";
-                    }
-
-                    userHeader.setText("Hello, " + name + ". Welcome to your Trip Planner");
+                    userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
                     userLogged.set(true);
                 }
             } catch(IOException e) {
@@ -127,11 +129,7 @@ public class MainController {
             user = acc.getSignedAccount();
             String name = user;
 
-            if (name.length() > 32) {
-                name = name.substring(0, 32) + "...";
-            }
-
-            userHeader.setText("Hello, " + name + ". Welcome to your Trip Planner");
+            userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
         }
     }
 

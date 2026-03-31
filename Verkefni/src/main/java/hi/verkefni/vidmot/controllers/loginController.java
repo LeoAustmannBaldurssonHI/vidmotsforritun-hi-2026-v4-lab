@@ -3,7 +3,7 @@ package hi.verkefni.vidmot.controllers;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import javafx.beans.binding.*;
 
@@ -15,6 +15,9 @@ import java.util.Optional;
 import java.io.IOException;
 
 public class loginController {
+    private final int HEIGHTCUTOFF = 50;
+    private final int WIDTHCUTFOFF = 300;
+
     @FXML
     public Account loginDialog() throws IOException {
         boolean isDone = false;
@@ -25,11 +28,30 @@ public class loginController {
             TextField usernameField = new TextField();
             PasswordField passwordField = new PasswordField();
 
-            usernameField.setPromptText("Username");
-            passwordField.setPromptText("Password");
+            TextField username = new TextField();
+            PasswordField password = new PasswordField();
+            Label usernameLabel = new Label();
+            Label passwordLabel = new Label();
 
-            VBox box = new VBox(10, usernameField, passwordField);
-            dialog.getDialogPane().setContent(box);
+            username.setPromptText("Username");
+            usernameLabel.setText("test");
+            password.setPromptText("Password");
+            passwordLabel.setText("test2");
+
+            GridPane rootGrid = new GridPane();
+
+            rootGrid.add(usernameLabel, 0, 0);
+            rootGrid.add(username, 1, 0);
+
+            rootGrid.add(passwordLabel, 0, 1);
+            rootGrid.add(password, 1, 1);
+
+            rootGrid.setHgap(10);
+
+            username.setPrefWidth(WIDTHCUTFOFF);
+            rootGrid.setPrefHeight(HEIGHTCUTOFF);
+
+            dialog.getDialogPane().setContent(rootGrid);
 
             ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
             ButtonType signUp = new ButtonType("Sign up", ButtonBar.ButtonData.OTHER);

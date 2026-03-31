@@ -21,7 +21,7 @@ public class Account {
     private JsonNode accountRoot;
     private JsonNode currentSignedAccount;
 
-    private boolean isAccountSignedIn = false;
+    private boolean AccountSignedIn = false;
 
     /**
      * Constructs a default account.
@@ -44,7 +44,7 @@ public class Account {
 
         if(accountExists(user)){
             currentSignedAccount = accounts.get(user);
-            isAccountSignedIn = true;
+            AccountSignedIn = true;
         }
     }
 
@@ -63,7 +63,53 @@ public class Account {
     }
 
     /**
-     *
+     * Checks if the account is currently signed in or not. Used for some scenarios where we wanna for example add an
+     * account.
+     * @return to see if the account is in or not
+     */
+    public String getSignedAccount() {
+        if (currentSignedAccount == null || !AccountSignedIn) {
+            return "No account found";
+        }
+        return currentSignedAccount.get("AccountInfo").get("name").asText();
+    }
+
+    /**
+     * <p>
+     * The password must meet the following security requirements: </p>
+     * <ul>
+     *   <li>At least 6 characters long</li>
+     *   <li>Contains at least one special character</li>
+     *   <li>Contains at least one number</li>
+     * </ul>
+     * @param password
+     * @return true or false
+     */
+    private boolean passwordValidator(String password) {
+        String specialChars = "!@#$%^&*()_+-=[]{}|;:'\",.<>/?";
+        String numbers = "0123456789";
+        boolean hasSpecial = false;
+        boolean hasNumber = false;
+
+        if(password.length() < 6) return false;
+        for(int charCheck = 0; charCheck < password.length(); charCheck++) {
+            if (specialChars.indexOf(password.charAt(charCheck)) != -1) {
+                hasSpecial = true;
+            }
+            if (numbers.indexOf(password.charAt(charCheck)) != -1) {
+                hasNumber = true;
+            }
+        }
+
+        if(hasSpecial && hasNumber){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Authneticates a user information to be able to access the system
      * @param username of the account
      * @param password of the account
      * @return user being logged in (true or false)
@@ -76,22 +122,25 @@ public class Account {
 
             if (storedUser.equals(username) && storedPass.equals(password)) {
                 currentSignedAccount = acc;
-                isAccountSignedIn = true;
-                System.out.println(isAccountSignedIn);
+                AccountSignedIn = true;
+                System.out.println(AccountSignedIn);
                 return true;
             }
         }
-        isAccountSignedIn = false;
+        AccountSignedIn = false;
         return false;
     }
 
+    /**
+     * Logs the current user out of the system
+     */
     public void logOut() {
         System.out.println("currentSignedAccount = " + currentSignedAccount);
-        System.out.println("isAccountSignedIn = " + isAccountSignedIn);
+        System.out.println("isAccountSignedIn = " + AccountSignedIn);
 
-        if (currentSignedAccount != null && isAccountSignedIn) {
+        if (currentSignedAccount != null && AccountSignedIn) {
             currentSignedAccount = null;
-            isAccountSignedIn = false;
+            AccountSignedIn = false;
             return;
         } else {
             System.out.println("System error: attempted to sign out but account cannot be found");
@@ -101,40 +150,20 @@ public class Account {
 
     /**
      * Adds a new account to the system.
-     *  <p>
-     *  The password must meet the following security requirements:
-     *  <ul>
-     *      <li>At least 6 characters long</li>
-     *      <li>Contains at least one special character</li>
-     *      <li>Contains at least one number</li>
-     *  </ul>
      * @param account of the account to add
      * @param password of the account to add
      * @throws IOException
      */
     public boolean newAccount(String account, String password) throws IOException {
-        String specialChars = "!@#$%^&*()_+-=[]{}|;:'\",.<>/?";
-        String numbers = "0123456789";
-        boolean hasSpecial = false;
-        boolean hasNumber = false;
-
         // prevent dupe accounts
         if(accountExists(account)) {
             System.out.println("Account already exists");
             return false;
         }
 
-        if (password.length() >= 6) {
-            for (int i = 0; i < password.length(); i++) {
-                if (specialChars.indexOf(password.charAt(i)) != -1) {
-                    hasSpecial = true;
-                }
-                if (numbers.indexOf(password.charAt(i)) != -1) {
-                    hasNumber = true;
-                }
-            }
+        boolean validPassoword = passwordValidator(password);
 
-            if (hasSpecial && hasNumber) {
+            if (validPassoword) {
                 System.out.println("Valid password created");
 
                 ObjectNode accountInfo = map.createObjectNode();
@@ -149,6 +178,7 @@ public class Account {
                 accounts.put(nextId, newAccountInfo);
 
                 map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
+
                 // Did the account get added?
                 if(!accountExists(account)) {
                     System.err.println("CRITICAL ERROR: Account creation failed!");
@@ -161,22 +191,6 @@ public class Account {
                 System.out.println("Invalid password created");
                 return false;
             }
-        } else {
-            System.out.println("Password too short");
-            return false;
-        }
-    }
-
-    /**
-     * Checks if the account is currently signed in or not. Used for some scenarios where we wanna for example add an
-     * account.
-     * @return to see if the account is in or not
-     */
-    public String getSignedAccount() {
-        if (currentSignedAccount == null || !isAccountSignedIn) {
-            return "No account found";
-        }
-        return currentSignedAccount.get("AccountInfo").get("name").asText();
     }
 
     /**
@@ -196,6 +210,9 @@ public class Account {
                 accounts.remove(entry.getKey());
                 map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
                 System.out.println("Account deleted");
+
+                AccountSignedIn = false;
+
                 return;
             }
         }
