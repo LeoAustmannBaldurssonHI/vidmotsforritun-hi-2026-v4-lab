@@ -10,7 +10,16 @@
           "title" : "Slagur við einhvern",
           "destination" : "Pyongyang, Norður Kórea",
           "startDate" : "21.06.2025",
-          "endDate" : "22.06.2025"
+          "endDate" : "22.06.2025",
+          "optionals": {
+            "hotel": false,
+            "car": false,
+            "flights": true,
+            "work": false,
+            "groupSize": null,
+            "cost": null,
+            "backgroundImg": "resources/hi/Images/LAB/split_background.jpg"
+          }
         }
       }
     },

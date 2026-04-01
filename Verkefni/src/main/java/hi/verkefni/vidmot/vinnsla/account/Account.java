@@ -30,7 +30,6 @@ public class Account {
     public Account() throws IOException {
         accountRoot = map.readTree(file);
         accounts = (ObjectNode) accountRoot.get("Accounts");
-        currentSignedAccount = null;
     }
 
     /**

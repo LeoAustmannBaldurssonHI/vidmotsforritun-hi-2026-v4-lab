@@ -1,9 +1,5 @@
 package hi.verkefni.vidmot.vinnsla.TimeManagement;
 
-// Java lang + util import
-import java.util.ArrayList;
-import java.util.List;
-
 // Java time import
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,11 +13,29 @@ public class TimeManager {
     }
 
     /**
+     *
+     * @param date
+     * @return
+     */
+    public String formatDate(LocalDate date) {
+        return date.format(formatter);
+    }
+
+    /**
+     *
+     * @param input
+     * @return
+     */
+    public static LocalDate parseDate(String input) {
+        return LocalDate.parse(input, formatter);
+    }
+
+    /**
      * Checks if the given input is a valid date
      * @param input of the user date
      * @return true / false
      */
-    public boolean isFormatValid(String input) {
+    public boolean formatValidator(String input) {
         try {
             LocalDate userDate = LocalDate.parse(input, formatter);
             return true;

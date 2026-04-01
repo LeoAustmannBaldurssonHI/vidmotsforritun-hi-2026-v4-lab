@@ -1,12 +1,15 @@
 package hi.verkefni.vidmot.vinnsla.Trips;
 
+import hi.verkefni.vidmot.vinnsla.account.Account;
+
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
 import javafx.beans.property.*;
 
 public class TripPlan {
-    private ObservableList<Trip> plannedTrips = FXCollections.observableArrayList();
+    private Account accounts = new Account();
+    private ObservableList<Trip> plannedTrips = ;
 
     private static final TripPlan instance = new TripPlan();
 
@@ -26,21 +29,25 @@ public class TripPlan {
         /*
         TODO: Setja inn case statements þar sem að hvert notendi er með sitt eigin ferð
          */
+
+        boolean optionalSettings = false;
         
         if(user.equals("Leó Austmann Baldursson")) {
             System.out.println("Leó Austmann Baldursson skráður inn");
 
-            /*plannedTrips.add(new Trip("Ferð til Íran", "Íran", "1.3.2026"));
-            plannedTrips.add(new Trip("Ferð til Selfoss (er ekki til)", "Ísland", "3.3.2026"));
-            plannedTrips.add(new Trip("Ferð til Póllands", "Póllands", "19.6.2028"));*/
+            for(JsonNode acc : accounts) {
+                JsonNode accTrips = acc.get("Trips");
+                String title = accTrips.get("title").asText();
+                String destination = accTrips.get("destination");
+                String startDate = accTrips.get("startDate");
+                String endDate = accTrips.get("endDate");
+
+                if()
+            }
         } else if (user.equals("Ebba Þóra Hvannberg")) {
             System.out.println("Ebba Þóra Hvannberg skráður inn");
-
-            //plannedTrips.add(new Trip("Köbenhavn veisla", "Kaupmannahafn", "21.06.2025"));
         } else if(user.equals("Jón Jónsson")) {
             System.out.println("Ebba Þóra Hvannberg skráður inn");
-
-            //plannedTrips.add(new Trip("Köbenhavn veisla", "Kaupmannahafn", "21.06.2025"));
         } else {
             System.out.println("Óþekktur notendi, engan ferðir verður lagt fram");
             return;
