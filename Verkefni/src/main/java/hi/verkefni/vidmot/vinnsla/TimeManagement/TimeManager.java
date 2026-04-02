@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import java.util.List;
+
 public class TimeManager {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy"); // formatter rule
 
@@ -26,7 +28,7 @@ public class TimeManager {
      * @param input
      * @return
      */
-    public static LocalDate parseDate(String input) {
+    public LocalDate parseDate(String input) {
         return LocalDate.parse(input, formatter);
     }
 

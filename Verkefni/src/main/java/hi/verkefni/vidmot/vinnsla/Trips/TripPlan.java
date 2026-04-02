@@ -5,64 +5,44 @@ import hi.verkefni.vidmot.vinnsla.account.Account;
 import javafx.collections.ObservableList;
 import javafx.collections.FXCollections;
 
-import javafx.beans.property.*;
+import java.io.IOException;
+
 
 public class TripPlan {
-    private Account accounts = new Account();
-    private ObservableList<Trip> plannedTrips = ;
+    private Account account;
+    private ObservableList<Trip> plannedTrips = FXCollections.observableArrayList();
 
-    private static final TripPlan instance = new TripPlan();
+    private static TripPlan instance;
 
     public static TripPlan getInstance() {
+        if (instance == null) {
+            try {
+                instance = new TripPlan();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         return instance;
     }
 
     /**
      * Aðferðin sem raðiðr "ferðalög" í lista.
      */
-    public TripPlan() {
-        System.out.println("System override, engan notendi gat veri fundin né skoðað"); // temp
-        // ekkert
+    public TripPlan() throws IOException {
+        this.account = new Account();
     }
 
-    public TripPlan(String user) {
-        /*
-        TODO: Setja inn case statements þar sem að hvert notendi er með sitt eigin ferð
-         */
-
-        boolean optionalSettings = false;
-        
-        if(user.equals("Leó Austmann Baldursson")) {
-            System.out.println("Leó Austmann Baldursson skráður inn");
-
-            for(JsonNode acc : accounts) {
-                JsonNode accTrips = acc.get("Trips");
-                String title = accTrips.get("title").asText();
-                String destination = accTrips.get("destination");
-                String startDate = accTrips.get("startDate");
-                String endDate = accTrips.get("endDate");
-
-                if()
-            }
-        } else if (user.equals("Ebba Þóra Hvannberg")) {
-            System.out.println("Ebba Þóra Hvannberg skráður inn");
-        } else if(user.equals("Jón Jónsson")) {
-            System.out.println("Ebba Þóra Hvannberg skráður inn");
-        } else {
-            System.out.println("Óþekktur notendi, engan ferðir verður lagt fram");
-            return;
-        }
+    public void getSignedAccountTrips(Account account) {
+        plannedTrips.clear(); // system override
+        plannedTrips.addAll(account.getAccountTrips());
     }
 
     /**
-     * TODO: Connect the add trip
-     * New trip adder handler
-     * @param date
-     * @param title
-     * @param destination
+     * add details little later
+     * @param trip
      */
-    public void addNewTrip(String title, String destination, String start, String end) {
-        // N/A
+    public void newTrip(Trip trip) {
+        plannedTrips.add(trip);
     }
 
     /**
@@ -74,7 +54,6 @@ public class TripPlan {
     }
 
     /**
-     * TODO: Update this method to better accomdate for the user
      * List of trips that the user has.
      * @return Ferðalög lista (plannedTrips)
      */

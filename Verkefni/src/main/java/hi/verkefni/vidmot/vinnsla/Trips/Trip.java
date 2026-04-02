@@ -10,13 +10,21 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class Trip {
-    private StringProperty title, destination;
+    private StringProperty title, destination, groupSize, cost;
     private LocalDate startDate, endDate;
-    private BooleanProperty car, flight;
+    private BooleanProperty car, flight, hotel, work;
     private Media backgroundImg;
 
     public Trip() {
-        // should never be initialised
+        this.title = new SimpleStringProperty();
+        this.destination = new SimpleStringProperty();
+        this.groupSize = new SimpleStringProperty();
+        this.cost = new SimpleStringProperty();
+
+        this.car = new SimpleBooleanProperty(false);
+        this.flight = new SimpleBooleanProperty(false);
+        this.hotel = new SimpleBooleanProperty(false);
+        this.work = new SimpleBooleanProperty(false);
     }
 
     public Trip(String title, String destination, LocalDate startDate, LocalDate endDate) {
@@ -39,9 +47,17 @@ public class Trip {
         return car;
     }
 
-    public BooleanProperty flightPropery() {
+    public BooleanProperty flightProperty() {
         return flight;
     }
+
+    public BooleanProperty hotelProperty() {return hotel; }
+
+    public BooleanProperty workProperty() {return work; }
+
+    public StringProperty groupSizeProperty() {return groupSize; }
+
+    public StringProperty costProperty() { return cost; }
 
     // Getters
     public String getStartDate() {
@@ -68,6 +84,14 @@ public class Trip {
         return flight.get();
     }
 
+    public boolean getHotel() { return hotel.get(); }
+
+    public boolean getWork() { return work.get(); }
+
+    public String getGroupSize() {return groupSize.get(); }
+
+    public String getCost() { return cost.get(); }
+
     // Setters
 
     public void setTitle(String title) {
@@ -92,5 +116,24 @@ public class Trip {
 
     public void setFlight(boolean flight) {
         this.flight.set(flight);
+    }
+
+    public void setHotel(boolean hotel) {this.hotel.set(hotel); }
+
+    public void setWork(boolean work) {
+        this.work.set(work);
+    }
+
+    public void setSize(String groupSize) {
+        this.groupSize.set(groupSize);
+    }
+
+    public void setCost(String cost) {
+        this.cost.set(cost);
+    }
+
+    @Override
+    public String toString() {
+        return getTitle() + "\t".repeat(2)+ getDestination() + "\t".repeat(2) + getStartDate() + "\t".repeat(2) + getEndDate() + "\t".repeat(2) + getCost();
     }
 }

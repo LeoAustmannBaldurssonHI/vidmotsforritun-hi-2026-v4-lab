@@ -8,10 +8,18 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 
+// Collections import
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
+
 // fasterxml imports
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+// package imports
+import hi.verkefni.vidmot.vinnsla.Trips.Trip;
+import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
 public class Account {
     private final ObjectMapper map = new ObjectMapper();
@@ -41,10 +49,17 @@ public class Account {
     public Account(String user) throws IOException {
         this();
 
-        if(accountExists(user)){
-            currentSignedAccount = accounts.get(user);
-            AccountSignedIn = true;
+        for (JsonNode acc : accounts) {
+            String storedUser = acc.get("AccountInfo").get("name").asText();
+            if (storedUser.equals(user)) {
+                currentSignedAccount = acc;
+                AccountSignedIn = true;
+                return;
+            }
         }
+
+        currentSignedAccount = null;
+        AccountSignedIn = false;
     }
 
     /**
@@ -71,6 +86,17 @@ public class Account {
             return "No account found";
         }
         return currentSignedAccount.get("AccountInfo").get("name").asText();
+    }
+
+    /**
+     *
+     * @return
+     */
+    private JsonNode getSignedAccountNode() {
+        if(currentSignedAccount == null || !AccountSignedIn) {
+            return null;
+        }
+        return currentSignedAccount;
     }
 
     /**
@@ -113,22 +139,26 @@ public class Account {
      * @param password of the account
      * @return user being logged in (true or false)
      */
-    public boolean signIn(String username, String password) {
-        for (JsonNode acc : accounts) {
-            JsonNode info = acc.get("AccountInfo");
-            String storedUser = info.get("name").asText();
-            String storedPass = info.get("password").asText();
+        public boolean signIn(String username, String password) {
+            System.out.println(username);
+            System.out.println(password);
 
-            if (storedUser.equals(username) && storedPass.equals(password)) {
-                currentSignedAccount = acc;
-                AccountSignedIn = true;
-                System.out.println(AccountSignedIn);
-                return true;
+            for (JsonNode acc : accounts) {
+                JsonNode info = acc.get("AccountInfo");
+                String storedUser = info.get("name").asText();
+                String storedPass = info.get("password").asText();
+
+                if (storedUser.equals(username) && storedPass.equals(password)) {
+                    currentSignedAccount = acc;
+                    AccountSignedIn = true;
+                    System.out.println(AccountSignedIn);
+                    return true;
+                }
+                System.out.println("could not find account");
             }
+            AccountSignedIn = false;
+            return false;
         }
-        AccountSignedIn = false;
-        return false;
-    }
 
     /**
      * Logs the current user out of the system
@@ -171,7 +201,7 @@ public class Account {
 
                 ObjectNode newAccountInfo = map.createObjectNode();
                 newAccountInfo.put("AccountInfo", accountInfo);
-                newAccountInfo.put("Trips", map.createObjectNode());
+                newAccountInfo.put("Trips", map.createArrayNode());
 
                 String nextId = String.valueOf(accounts.size() + 1);
                 accounts.put(nextId, newAccountInfo);
@@ -215,5 +245,54 @@ public class Account {
                 return;
             }
         }
+    }
+
+    /**
+     *
+     * @return
+     */
+    public ObservableList<Trip> getAccountTrips() {
+        ObservableList<Trip> userTrips = FXCollections.observableArrayList();
+        TimeManager tm = new TimeManager();
+
+        JsonNode currentAccount = getSignedAccountNode();
+        if (currentAccount == null) return userTrips;
+
+        JsonNode tripNodes = currentAccount.get("Trips");
+        if (tripNodes == null) return userTrips;
+
+        for(JsonNode accTrips : tripNodes) {
+            Trip trip = new Trip();
+
+            System.out.println("getting trip");
+
+            trip.setTitle(accTrips.get("title").asText());
+            trip.setDestination(accTrips.get("destination").asText());
+            trip.setStartDate(tm.parseDate(accTrips.get("startDate").asText()));
+            trip.setEndDate(tm.parseDate(accTrips.get("endDate").asText()));
+
+            JsonNode optionals = accTrips.get("optionals");
+            if(optionals != null) {
+                // boolean setters
+                trip.setHotel(optionals.get("hotel").asBoolean());
+                trip.setCar(optionals.get("car").asBoolean());
+                trip.setFlight(optionals.get("flights").asBoolean());
+                trip.setWork(optionals.get("work").asBoolean());
+
+                // text setters
+                trip.setSize(optionals.get("groupSize").asText());
+                trip.setCost(optionals.get("cost").asText());
+
+                // media setter (to do later)
+            }
+
+            System.out.println("trip added");
+            userTrips.add(trip);
+        }
+        if(userTrips.isEmpty()) {
+            System.out.println("No user trips found");
+            return userTrips;
+        }
+        return userTrips;
     }
 }

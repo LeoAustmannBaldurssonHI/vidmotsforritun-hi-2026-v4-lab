@@ -5,23 +5,23 @@
         "name" : "Leó Austmann Baldursson",
         "password" : "icesave2006"
       },
-      "Trips" : {
-        "1" : {
-          "title" : "Slagur við einhvern",
-          "destination" : "Pyongyang, Norður Kórea",
-          "startDate" : "21.06.2025",
-          "endDate" : "22.06.2025",
+      "Trips" : [
+        {
+          "title": "Sabaton skemmtun",
+          "destination": "Split, Króatía",
+          "startDate": "08.06.2026",
+          "endDate": "18.06.2026",
           "optionals": {
-            "hotel": false,
-            "car": false,
+            "hotel": true,
+            "car": true,
             "flights": true,
             "work": false,
-            "groupSize": null,
-            "cost": null,
+            "groupSize": "2",
+            "cost": "660.00kr",
             "backgroundImg": "resources/hi/Images/LAB/split_background.jpg"
           }
         }
-      }
+      ]
     },
     "2" : {
       "AccountInfo" : {
@@ -42,7 +42,23 @@
         "name": "admin",
         "password": "admin"
       },
-      "Trips": { }
+      "Trips": [
+        {
+          "title":  "adminTesting",
+          "destination": "admin city, moderland",
+          "startDate": "12.06.2105",
+          "endDate": "11.07.2106",
+          "optionals": {
+            "hotel": true,
+            "car": true,
+            "flights": true,
+            "work": false,
+            "groupSize": "2",
+            "cost": "210.00kr",
+            "backgroundImg": "resources/hi/Images/LAB/split_background.jpg"
+          }
+        }
+      ]
     }
   }
 }

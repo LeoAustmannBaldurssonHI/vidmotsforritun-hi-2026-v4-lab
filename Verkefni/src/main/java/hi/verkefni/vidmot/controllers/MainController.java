@@ -48,6 +48,7 @@ public class MainController {
 
     @FXML
     public void initialize() {
+        tripListView.setItems(TripPlan.getInstance().getTrips());
         Platform.runLater(() -> {
             try {
                 loginController login = new loginController();
@@ -59,6 +60,7 @@ public class MainController {
 
                     userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
                     userLogged.set(true);
+                    TripPlan.getInstance().getSignedAccountTrips(acc);
                 }
             } catch(IOException e) {
                 e.printStackTrace();
@@ -130,6 +132,9 @@ public class MainController {
             String name = user;
 
             userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
+
+            userLogged.set(true);
+            TripPlan.getInstance().getSignedAccountTrips(acc);
         }
     }
 

@@ -25,9 +25,6 @@ public class loginController {
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle("Log in");
 
-            TextField usernameField = new TextField();
-            PasswordField passwordField = new PasswordField();
-
             TextField username = new TextField();
             PasswordField password = new PasswordField();
             Label usernameLabel = new Label();
@@ -78,8 +75,8 @@ public class loginController {
             } else if(result.get() == confirm) {
                 try {
                     Account acc = new Account();
-                    String attemptedUser = usernameField.getText();
-                    String attemptedPassword = passwordField.getText();
+                    String attemptedUser = username.getText();
+                    String attemptedPassword = password.getText();
                     boolean signInStatus = acc.signIn(attemptedUser, attemptedPassword);
 
                     if(!signInStatus) {
