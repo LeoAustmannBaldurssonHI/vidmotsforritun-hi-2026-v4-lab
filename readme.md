@@ -10,3 +10,11 @@ ___
 og annar notendi fær sínar.
 
 ---
+
+## About
+
+- Q: Hvað á þessari kerfi í raunini að gera?
+> A: x
+
+- Q: Hvernig virkar það?
+> A: x
