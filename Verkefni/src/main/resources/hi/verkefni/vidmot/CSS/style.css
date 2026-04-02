@@ -11,6 +11,17 @@
     -fx-background-size: 100;
 }
 
+.list-cell {
+    -fx-alignment: center; /* Setji gögn í miðjuna af listView töfluna */
+    -fx-text-fill: black;
+    -fx-font-size: 16;
+}
+
+.list-cell:focused {
+    -fx-background-color: #ADADAD;
+    -fx-underline: true;
+}
+
 /**
 * Þessi fyrir neðan er fyrir takan sem verður fyrir notendabreytingu eða eyðingu
 */
