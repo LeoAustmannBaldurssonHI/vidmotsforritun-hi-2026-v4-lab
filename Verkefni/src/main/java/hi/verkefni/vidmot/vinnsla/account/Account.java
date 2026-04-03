@@ -89,8 +89,8 @@ public class Account {
     }
 
     /**
-     *
-     * @return
+     * Gets the signed account JsonNode, helper method for trips
+     * @return JsonNode of the signed account
      */
     private JsonNode getSignedAccountNode() {
         if(currentSignedAccount == null || !AccountSignedIn) {
@@ -140,9 +140,6 @@ public class Account {
      * @return user being logged in (true or false)
      */
         public boolean signIn(String username, String password) {
-            System.out.println(username);
-            System.out.println(password);
-
             for (JsonNode acc : accounts) {
                 JsonNode info = acc.get("AccountInfo");
                 String storedUser = info.get("name").asText();
@@ -248,8 +245,8 @@ public class Account {
     }
 
     /**
-     *
-     * @return
+     * Gets the user current trip lists
+     * @return the trips of the account
      */
     public ObservableList<Trip> getAccountTrips() {
         ObservableList<Trip> userTrips = FXCollections.observableArrayList();

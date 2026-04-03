@@ -15,6 +15,7 @@
     -fx-alignment: center; /* Setji gögn í miðjuna af listView töfluna */
     -fx-text-fill: black;
     -fx-font-size: 16;
+    -fx-border-width: 1;
 }
 
 .list-cell:focused {

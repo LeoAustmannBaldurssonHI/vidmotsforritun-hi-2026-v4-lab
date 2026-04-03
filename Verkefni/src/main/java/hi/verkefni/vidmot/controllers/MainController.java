@@ -76,6 +76,10 @@ public class MainController {
                 }
         ); // Þessi er bara hér til að fylgjast með user changes á ferð */
 
+        tripListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTrip, newTrip) -> {
+            selectedTrip.setText(newTrip == null ? "You have selected: NULL" : "You have selected: " + newTrip.getTitle());
+        });
+
         mainPane.visibleProperty().bind(userLogged); // changes if the layout should be visible or not
 
         /* a rule that prevents the fxml document from never opening when the visibleProperty is false.
@@ -88,10 +92,12 @@ public class MainController {
      * Fer til viðmót scene sem býr til nýja ferðalög
      */
     @FXML
-    private void openNewTrip(ActionEvent event) {
-        Dialog<ButtonType> dialog = new Dialog();
+    private void openNewTrip(ActionEvent event) throws IOException {
+        System.out.println("new trip creation button clicked");
 
-        dialog.setTitle("Adding a new trip");
+        NewController newTrip = new NewController();
+
+        newTrip.createTrip();
     }
 
     /**
@@ -114,28 +120,67 @@ public class MainController {
      * add later
      */
     @FXML
-    private void accountChange() throws IOException {
+    private void accountManage() throws IOException {
         if (acc == null) {
             System.err.println("Critical error, no user authenticated for us to be able to log out");
             return;
         }
+        boolean done = false;
+        while(!done) {
+            Dialog<ButtonType> dialog = new Dialog<>();
 
-        acc.logOut();
+            GridPane grid = new GridPane(); // declared early
 
-        userLogged.set(false);
+            dialog.setTitle("Account Management");
 
-        loginController login = new loginController();
-        acc = login.loginDialog();
+            ButtonType delete = new ButtonType("Delete Account", ButtonBar.ButtonData.OTHER);
+            ButtonType logOut = new ButtonType("Log out", ButtonBar.ButtonData.OTHER);
 
-        if (acc != null) {
-            user = acc.getSignedAccount();
-            String name = user;
+            dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK);
+            dialog.getDialogPane().getButtonTypes().addAll(logOut, delete);
 
-            userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
+            Optional<ButtonType> result = dialog.showAndWait();
 
-            userLogged.set(true);
-            TripPlan.getInstance().getSignedAccountTrips(acc);
+            if(result.get() == delete) {
+                String currentAccount = acc.getSignedAccount();
+
+                Dialog<ButtonType> deleteDialog = new Dialog<>();
+
+                dialog.setTitle("Account Deletion");
+
+            } else if(result.get() == logOut) {
+                acc.logOut();
+
+                userLogged.set(false);
+
+                loginController login = new loginController();
+                acc = login.loginDialog();
+
+                if (acc != null) {
+                    user = acc.getSignedAccount();
+                    String name = user;
+
+                    userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
+
+                    userLogged.set(true);
+                    TripPlan.getInstance().getSignedAccountTrips(acc);
+                }
+            }
         }
+    }
+
+    /**
+     *
+     * @param event ónotað í þessari tilfelli
+     */
+    @FXML
+    private void viewTrip(ActionEvent event) {
+        Trip selected = tripListView.getSelectionModel().getSelectedItem();
+        if(selected == null) {
+            System.out.println("Select a trip to view!");
+            return;
+        }
+        Switcher.switchTo(View.VIEWTRIP, false, selected);
     }
 
     /**
@@ -151,18 +196,6 @@ public class MainController {
             System.out.println("Select a trip to edit!");
             return;
         }
-
-        /* Debugger
-
-        String selectedTitle = selected.getTitle();
-        String selectedDestination = " " + selected.getDestination();
-        String selectedDate = " " + selected.getDate();
-
-        System.out.println("Title: " + selectedTitle);
-        System.out.println("Destination: " + selectedDestination);
-        System.out.println("Date: " + selectedDate);
-
-         */
-
+        Switcher.switchTo(View.EDIT, false, selected);
     }
 }
