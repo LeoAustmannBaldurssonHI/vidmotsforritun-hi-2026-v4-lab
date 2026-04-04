@@ -39,6 +39,12 @@ public class MainController {
 
     private BooleanProperty userLogged = new SimpleBooleanProperty(false);
 
+    /**
+     * Checks if the user's name goes over 32 characters,
+     * if it does then we initilize an "overflow" method to prevent the header text from being too long
+     * @param name
+     * @return name of the user
+     */
     private String nameOverflow(String name) {
         if(name.length() > 32) {
             name = name.substring(0, 32) + "...";
@@ -95,9 +101,11 @@ public class MainController {
     private void openNewTrip(ActionEvent event) throws IOException {
         System.out.println("new trip creation button clicked");
 
+        if(acc == null) return; // security check
+
         NewController newTrip = new NewController();
 
-        newTrip.createTrip();
+        newTrip.createTrip(); // opens the dialog menu
     }
 
     /**
@@ -176,10 +184,12 @@ public class MainController {
     @FXML
     private void viewTrip(ActionEvent event) {
         Trip selected = tripListView.getSelectionModel().getSelectedItem();
+
         if(selected == null) {
             System.out.println("Select a trip to view!");
             return;
         }
+
         Switcher.switchTo(View.VIEWTRIP, false, selected);
     }
 
@@ -192,10 +202,12 @@ public class MainController {
     @FXML
     private void editTrip(ActionEvent event) {
         Trip selected = tripListView.getSelectionModel().getSelectedItem();
+
         if(selected == null) {
             System.out.println("Select a trip to edit!");
             return;
         }
+
         Switcher.switchTo(View.EDIT, false, selected);
     }
 }

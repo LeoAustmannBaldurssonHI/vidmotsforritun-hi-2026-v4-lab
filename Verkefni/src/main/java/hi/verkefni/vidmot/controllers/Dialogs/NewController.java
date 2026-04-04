@@ -81,6 +81,14 @@ public class NewController {
             } else if(result.get() == cancel) {
                 done = true;
                 return null;
+            } else if(result.get() == confirm) {
+                try {
+
+                    return 1;
+                } catch (java.lang.Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
         }
         return null;
