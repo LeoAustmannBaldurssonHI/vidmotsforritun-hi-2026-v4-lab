@@ -30,7 +30,7 @@ public class MainController {
     @FXML
     private Label userHeader;
     @FXML
-    private Button accountButton;
+    private Button accountButton, viewButton_main;
     @FXML
     private AnchorPane mainPane;
 
@@ -57,13 +57,23 @@ public class MainController {
         tripListView.setItems(TripPlan.getInstance().getTrips());
         Platform.runLater(() -> {
             try {
-                loginController login = new loginController();
-                acc = login.loginDialog();
+                if(!Account.activeSession()) {
+                    loginController login = new loginController();
+                    acc = login.loginDialog();
+                }
 
-                if (acc != null) {
-                    user = acc.getSignedAccount();
+                if (Account.activeSession()) {
+                    user = acc.getSignedAccountName();
+                    acc = acc.getCurrentAccount();
+                    System.out.println(acc);
+
+                    // security check - do we currently have an active account session?
+                    if(user == null) {
+                        System.out.println("No account found");
+                        System.exit(1);
+                    }
+
                     String name = user;
-
                     userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
                     userLogged.set(true);
                     TripPlan.getInstance().getSignedAccountTrips(acc);
@@ -73,14 +83,6 @@ public class MainController {
                 userLogged.set(false);
             }
         });
-
-        /* tripListView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        System.out.println("Selected: " + newValue);
-                    }
-                }
-        ); // Þessi er bara hér til að fylgjast með user changes á ferð */
 
         tripListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTrip, newTrip) -> {
             selectedTrip.setText(newTrip == null ? "You have selected: NULL" : "You have selected: " + newTrip.getTitle());
@@ -92,6 +94,15 @@ public class MainController {
          in short this just takes in consideration if the layout -
          (set by the fxml document) should be taken in consideration or not. */
         mainPane.managedProperty().bind(userLogged);
+
+        // Disable properties rules
+        viewButton_main.disableProperty().bind(
+                Bindings.isEmpty(tripListView.getItems())
+        );
+
+        viewButton_main.disableProperty().bind(
+                tripListView.getSelectionModel().selectedItemProperty().isNull()
+        );
     }
 
     /**
@@ -150,7 +161,7 @@ public class MainController {
             Optional<ButtonType> result = dialog.showAndWait();
 
             if(result.get() == delete) {
-                String currentAccount = acc.getSignedAccount();
+                String currentAccount = acc.getSignedAccountName();
 
                 Dialog<ButtonType> deleteDialog = new Dialog<>();
 
@@ -165,7 +176,7 @@ public class MainController {
                 acc = login.loginDialog();
 
                 if (acc != null) {
-                    user = acc.getSignedAccount();
+                    user = acc.getSignedAccountName();
                     String name = user;
 
                     userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");

@@ -27,9 +27,10 @@ public class Account {
 
     private ObjectNode accounts;
     private JsonNode accountRoot;
-    private JsonNode currentSignedAccount;
 
-    private boolean AccountSignedIn = false;
+    private static JsonNode currentSignedAccount;
+    private static boolean AccountSignedIn = false;
+    private static Account currentAccount;
 
     /**
      * Constructs a default account.
@@ -53,6 +54,7 @@ public class Account {
             String storedUser = acc.get("AccountInfo").get("name").asText();
             if (storedUser.equals(user)) {
                 currentSignedAccount = acc;
+                currentAccount = this;
                 AccountSignedIn = true;
                 return;
             }
@@ -68,9 +70,8 @@ public class Account {
      * @return true or false of the account
      */
     public boolean accountExists(String name) {
-        name = name.toLowerCase();
         for (JsonNode acc : accounts) {
-            String checker = acc.get("AccountInfo").get("name").asText().toLowerCase();
+            String checker = acc.get("AccountInfo").get("name").asText();
             if (checker.equals(name)) return true;
         }
         return false;
@@ -81,7 +82,7 @@ public class Account {
      * account.
      * @return to see if the account is in or not
      */
-    public String getSignedAccount() {
+    public static String getSignedAccountName() {
         if (currentSignedAccount == null || !AccountSignedIn) {
             return "No account found";
         }
@@ -92,11 +93,23 @@ public class Account {
      * Gets the signed account JsonNode, helper method for trips
      * @return JsonNode of the signed account
      */
-    private JsonNode getSignedAccountNode() {
+    public JsonNode getSignedAccountNode() {
         if(currentSignedAccount == null || !AccountSignedIn) {
             return null;
         }
         return currentSignedAccount;
+    }
+
+    public static boolean activeSession() {
+        if(currentSignedAccount == null || !AccountSignedIn) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public static Account getCurrentAccount() {
+        return currentAccount;
     }
 
     /**
@@ -148,6 +161,7 @@ public class Account {
                 if (storedUser.equals(username) && storedPass.equals(password)) {
                     currentSignedAccount = acc;
                     AccountSignedIn = true;
+                    currentAccount =  this;
                     System.out.println(AccountSignedIn);
                     return true;
                 }

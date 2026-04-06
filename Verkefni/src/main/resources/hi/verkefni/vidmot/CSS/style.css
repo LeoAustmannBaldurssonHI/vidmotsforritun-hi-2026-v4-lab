@@ -4,6 +4,18 @@
     -fx-font-family: "American Typewriter";
 }
 
+.buttons {
+    -fx-background-color: #5E859F;
+    -fx-border-width: 1;
+    -fx-border-color: black;
+    -fx-border-radius: 10;
+    -fx-background-radius: 11;
+}
+
+.buttons:hover {
+    -fx-background-color: red;
+}
+
 /* main page */
 
 .userHeader {
@@ -14,7 +26,7 @@
 .list-cell {
     -fx-alignment: center; /* Setji gögn í miðjuna af listView töfluna */
     -fx-text-fill: black;
-    -fx-font-size: 16;
+    -fx-font-size: 24;
     -fx-border-width: 1;
 }
 
@@ -36,3 +48,37 @@
     -fx-background-radius: 0;
     -fx-border-radius: 0;
 }
+
+/*
+   view-trip.fxml
+ */
+
+.userHeader_homeButton {
+    -fx-background-image: url("Images/homePage.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 40;
+    -fx-background-color: #5E859F;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tripImage {
+    -fx-background-image: url("Images/airport.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 1000 425;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-opacity: 75%;
+    -fx-border-radius: 0;
+}
+
+/*
+ * dialogs
+ */
+

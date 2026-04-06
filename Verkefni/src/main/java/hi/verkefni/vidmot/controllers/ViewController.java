@@ -20,28 +20,53 @@ import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 import hi.verkefni.vidmot.vinnsla.Trips.Trip;
 import hi.verkefni.vidmot.vinnsla.Trips.TripPlan;
 
-public class viewController implements DataInterface {
+public class ViewController implements DataInterface {
     private Trip selectedTrip;
+    private String currentAccount, currentTripTitle;
+    private Account acc;
 
-    // Labels
     @FXML
-    private Label trip_viewTitle, trip_viewDestination, trip_viewDate;
+    private Label userHeader;
+
+    /**
+     * combines two strings into a singular long string used for the header
+     * @param title of the trip
+     * @param account which is currently logged in
+     * @return header text
+     */
+    private String stringCombo(String title, String account) {
+        return account + ", you're currently viewing: " + title;
+    }
+
+    @FXML
+    public void initialize() {
+        try {
+            acc = new Account();
+        } catch (IOException e) {
+            e.printStackTrace();
+            acc = null;
+        }
+    }
 
     @Override
     public void setGogn(Object data) {
         if(data instanceof Trip trip) {
             this.selectedTrip = trip;
 
-            // Fyrst ætlum við að hreinsa út texta (örrygiskref)
-            trip_viewTitle.textProperty().unbind();
-            trip_viewDestination.textProperty().unbind();
-            trip_viewDate.textProperty().unbind();
+            // missing info
+            if (acc != null) {
+                currentAccount = acc.getSignedAccountName();
+            } else {
+                currentAccount = "Unknown user";
+            }
+            currentTripTitle = trip.getTitle();
 
-            // Bæta út öll texta
-            trip_viewTitle.textProperty().bind(trip.titleProperty());
-            trip_viewDestination.textProperty().bind(trip.destinationProperty());
-            //trip_viewDate.textProperty().bind(trip.dateProperty());
+            userHeader.setText(stringCombo(currentTripTitle, currentAccount));
         }
+    }
+
+    public void deleteTrip() {
+        if(acc != null) {}
     }
 
     /**

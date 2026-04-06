@@ -20,7 +20,7 @@ import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 import hi.verkefni.vidmot.vinnsla.Trips.Trip;
 import hi.verkefni.vidmot.vinnsla.Trips.TripPlan;
 
-public class editController implements DataInterface {
+public class EditController implements DataInterface {
     // some labels here...
 
     private Trip selectedTrip;

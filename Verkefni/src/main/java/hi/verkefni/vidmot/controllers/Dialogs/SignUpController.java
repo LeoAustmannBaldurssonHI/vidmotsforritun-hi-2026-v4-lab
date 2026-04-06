@@ -75,7 +75,7 @@ public class SignUpController {
                     if(adder) {
                         dialog.close();
                         isDone = true;
-                        return acc.getSignedAccount();
+                        return acc.getSignedAccountName();
                     } else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Signup failed");

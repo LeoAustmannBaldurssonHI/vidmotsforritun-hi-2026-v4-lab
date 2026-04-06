@@ -1,61 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni.vidmot.controllers.viewController">
+<AnchorPane fx:id="userLabel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@CSS/style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hi.verkefni.vidmot.controllers.ViewController">
    <children>
-      <Button layoutX="2.0" layoutY="353.0" mnemonicParsing="false" onAction="#goHome" prefHeight="40.0" prefWidth="594.0" text="Go back">
-         <font>
-            <Font name="Candara" size="20.0" />
-         </font>
-      </Button>
-      <VBox layoutX="14.0" layoutY="8.0" prefHeight="200.0" prefWidth="100.0">
+      <VBox layoutY="514.0" prefHeight="72.0" prefWidth="1000.0">
          <children>
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="103.0" style="-fx-background-color: red; -fx-text-fill: white;" text="Title">
-               <VBox.margin>
-                  <Insets bottom="30.0" />
-               </VBox.margin>
-            </Label>
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="101.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="Destination">
-               <VBox.margin>
-                  <Insets bottom="30.0" />
-               </VBox.margin>
-            </Label>
-            <Label alignment="CENTER" prefHeight="40.0" prefWidth="137.0" style="-fx-background-color: green;" text="Date of Trip" />
+            <HBox fx:id="viewButtonsManagementLABELS" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="251.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Want to add a new trip?">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Delete the selected trip?">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Edit the selected trip?">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox fx:id="viewButtonsManagement" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="330.0">
+               <children>
+                  <Button fx:id="view_newTrip" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="New Trip">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="view_deleteTrip" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="Delete Trip">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="view_editTrip" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="Edit Trip">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </VBox>
-      <VBox layoutX="214.0" layoutY="14.0" prefHeight="200.0" prefWidth="371.0">
+      <HBox fx:id="fxHeader" prefHeight="60.0" prefWidth="1000.0">
          <children>
-            <Label fx:id="trip_viewTitle" alignment="CENTER" prefHeight="37.0" prefWidth="374.0" text="TITIL FERÐALAGS (TEMP)" textAlignment="CENTER">
+            <Label fx:id="userHeader" alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="931.0" styleClass="userHeader" stylesheets="@CSS/style.css" text="{username},  you’re currently viewing: {tripTitle}">
                <font>
-                  <Font name="Candara" size="14.0" />
+                  <Font size="24.0" />
                </font>
-               <VBox.margin>
-                  <Insets bottom="30.0" />
-               </VBox.margin>
             </Label>
-            <Label fx:id="trip_viewDestination" alignment="CENTER" prefHeight="37.0" prefWidth="374.0" text="STAÐSETNING FERÐALAGS (TEMP)" textAlignment="CENTER">
+            <Button fx:id="homePage" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goHome" prefHeight="69.0" prefWidth="79.0" styleClass="userHeader_homeButton" stylesheets="@CSS/style.css">
                <font>
-                  <Font name="Candara" size="14.0" />
+                  <Font size="18.0" />
                </font>
-               <VBox.margin>
-                  <Insets bottom="30.0" />
-               </VBox.margin>
-            </Label>
-            <Label fx:id="trip_viewDate" alignment="CENTER" prefHeight="37.0" prefWidth="374.0" text="DAGSETNING FERÐALAGS (TEMP)" textAlignment="CENTER">
-               <font>
-                  <Font name="Candara" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="30.0" />
-               </VBox.margin>
-            </Label>
+            </Button>
          </children>
-      </VBox>
+      </HBox>
+      <AnchorPane layoutY="73.0" prefHeight="425.0" prefWidth="1000.0" styleClass="tripImage" />
+      <AnchorPane layoutX="1.0" layoutY="72.0" prefHeight="425.0" prefWidth="1000.0" styleClass="overlay" />
    </children>
 </AnchorPane>

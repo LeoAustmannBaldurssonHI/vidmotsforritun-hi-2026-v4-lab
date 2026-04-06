@@ -78,13 +78,14 @@ public class NewController {
 
             if(result.get() == optional) {
                 OptionalController addons = new OptionalController();
+
             } else if(result.get() == cancel) {
                 done = true;
                 return null;
             } else if(result.get() == confirm) {
                 try {
 
-                    return 1;
+                    return null;
                 } catch (java.lang.Exception e) {
                     e.printStackTrace();
                     return null;
