@@ -59,6 +59,29 @@
           }
         }
       ]
+    },
+    "5": {
+      "AccountInfo": {
+        "name": "test",
+        "password": "test"
+      },
+      "Trips": [
+        {
+          "title":  "adminTesting",
+          "destination": "admin city, moderland",
+          "startDate": "12.06.2105",
+          "endDate": "11.07.2106",
+          "optionals": {
+            "hotel": true,
+            "car": true,
+            "flights": true,
+            "work": false,
+            "groupSize": "2",
+            "cost": "210.00kr",
+            "backgroundImg": "resources/hi/Images/LAB/split_background.jpg"
+          }
+        }
+      ]
     }
   }
 }

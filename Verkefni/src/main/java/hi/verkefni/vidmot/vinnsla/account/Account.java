@@ -100,6 +100,10 @@ public class Account {
         return currentSignedAccount;
     }
 
+    /**
+     * Check's if the user had an authenticated session before going to a different window.
+     * @return true or false
+     */
     public static boolean activeSession() {
         if(currentSignedAccount == null || !AccountSignedIn) {
             return false;
@@ -108,6 +112,10 @@ public class Account {
         }
     }
 
+    /**
+     * Gets the current user that is signed in for the session
+     * @return current signed account
+     */
     public static Account getCurrentAccount() {
         return currentAccount;
     }
@@ -178,9 +186,10 @@ public class Account {
         System.out.println("currentSignedAccount = " + currentSignedAccount);
         System.out.println("isAccountSignedIn = " + AccountSignedIn);
 
-        if (currentSignedAccount != null && AccountSignedIn) {
+        if (currentSignedAccount != null && AccountSignedIn && currentAccount != null) {
             currentSignedAccount = null;
             AccountSignedIn = false;
+            currentAccount = null;
             return;
         } else {
             System.out.println("System error: attempted to sign out but account cannot be found");
@@ -200,37 +209,35 @@ public class Account {
             System.out.println("Account already exists");
             return false;
         }
+        if (passwordValidator(password)) {
+            System.out.println("Valid password created");
 
-        boolean validPassoword = passwordValidator(password);
+            ObjectNode accountInfo = map.createObjectNode();
+            accountInfo.put("name", account);
+            accountInfo.put("password", password);
 
-            if (validPassoword) {
-                System.out.println("Valid password created");
+            ObjectNode newAccountInfo = map.createObjectNode();
+            newAccountInfo.put("AccountInfo", accountInfo);
+            newAccountInfo.put("Trips", map.createArrayNode());
 
-                ObjectNode accountInfo = map.createObjectNode();
-                accountInfo.put("name", account);
-                accountInfo.put("password", password);
+            String nextId = String.valueOf(accounts.size() + 1);
 
-                ObjectNode newAccountInfo = map.createObjectNode();
-                newAccountInfo.put("AccountInfo", accountInfo);
-                newAccountInfo.put("Trips", map.createArrayNode());
+            accounts.put(nextId, newAccountInfo);
 
-                String nextId = String.valueOf(accounts.size() + 1);
-                accounts.put(nextId, newAccountInfo);
+            map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
 
-                map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
-
-                // Did the account get added?
-                if(!accountExists(account)) {
-                    System.err.println("CRITICAL ERROR: Account creation failed!");
-                    throw new IOException("Account creation failed!");
-                }
-
-                signIn(account, password);
-                return true;
-            } else {
-                System.out.println("Invalid password created");
-                return false;
+            // Did the account get added?
+            if(!accountExists(account)) {
+                System.err.println("CRITICAL ERROR: Account creation failed!");
+                throw new IOException("Account creation failed!");
             }
+
+            signIn(account, password);
+            return true;
+        } else {
+            System.out.println("Invalid password created");
+            return false;
+        }
     }
 
     /**
@@ -247,11 +254,10 @@ public class Account {
             String storedUser = accountInfo.get("name").asText();
 
             if(storedUser.equals(account)) {
+                logOut();
                 accounts.remove(entry.getKey());
                 map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
                 System.out.println("Account deleted");
-
-                AccountSignedIn = false;
 
                 return;
             }

@@ -26,7 +26,7 @@ public class ViewController implements DataInterface {
     private Account acc;
 
     @FXML
-    private Label userHeader;
+    private Label userHeader, tripCountdown;
 
     /**
      * combines two strings into a singular long string used for the header
@@ -46,6 +46,12 @@ public class ViewController implements DataInterface {
             e.printStackTrace();
             acc = null;
         }
+
+        tripCountdown.textProperty().bind(
+                Bindings.when()
+                        .then()
+                        .otherwise()
+        );
     }
 
     @Override

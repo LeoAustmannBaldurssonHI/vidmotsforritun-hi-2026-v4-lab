@@ -55,7 +55,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="editButton_main" mnemonicParsing="false" prefHeight="25.0" prefWidth="179.0" styleClass="buttons" text="Edit Trip" translateY="5.0" />
+                  <Button fx:id="editButton_main" mnemonicParsing="false" onAction="#editTrip" prefHeight="25.0" prefWidth="179.0" styleClass="buttons" text="Edit Trip" translateY="5.0" />
                </children>
             </StackPane>
          </children>

@@ -30,7 +30,7 @@ public class MainController {
     @FXML
     private Label userHeader;
     @FXML
-    private Button accountButton, viewButton_main;
+    private Button accountButton, viewButton_main, editButton_main;
     @FXML
     private AnchorPane mainPane;
 
@@ -46,8 +46,8 @@ public class MainController {
      * @return name of the user
      */
     private String nameOverflow(String name) {
-        if(name.length() > 32) {
-            name = name.substring(0, 32) + "...";
+        if(name.length() > 24) {
+            name = name.substring(0, 24) + "...";
         }
         return name;
     }
@@ -102,6 +102,14 @@ public class MainController {
 
         viewButton_main.disableProperty().bind(
                 tripListView.getSelectionModel().selectedItemProperty().isNull()
+        );
+
+        editButton_main.disableProperty().bind(
+                tripListView.getSelectionModel().selectedItemProperty().isNull()
+        );
+
+        editButton_main.disableProperty().bind(
+                Bindings.isEmpty(tripListView.getItems())
         );
     }
 
@@ -165,8 +173,43 @@ public class MainController {
 
                 Dialog<ButtonType> deleteDialog = new Dialog<>();
 
-                dialog.setTitle("Account Deletion");
+                ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
+                ButtonType cancel = new ButtonType("cancel", ButtonBar.ButtonData.OTHER);
 
+                deleteDialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK);
+                deleteDialog.getDialogPane().getButtonTypes().addAll(logOut, delete);
+
+                deleteDialog.setTitle("Account Deletion");
+                deleteDialog.setContentText("Warning: You're about to do something that is irrversable. If press on " + confirm + ", the account will be deleted from our system permanently and cannot be retrieved.");
+
+                Optional<ButtonType> deleteResult = deleteDialog.showAndWait();
+                if(deleteResult.get() == confirm) {
+                    String deleteAccount = acc.getSignedAccountName();
+                    acc.deleteAccount(deleteAccount);
+                    deleteDialog.close();
+                    dialog.close();
+
+                    userLogged.set(false);
+
+                    loginController login = new loginController();
+                    acc = login.loginDialog();
+
+                    if (acc != null) {
+                        user = acc.getSignedAccountName();
+                        String name = user;
+
+                        userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
+
+                        userLogged.set(true);
+                        TripPlan.getInstance().getSignedAccountTrips(acc);
+
+                        done = true;
+                    }
+                    done = false;
+                } else if(result.get() == cancel) {
+                    deleteDialog.close();
+                    done = true;
+                }
             } else if(result.get() == logOut) {
                 acc.logOut();
 
@@ -183,13 +226,15 @@ public class MainController {
 
                     userLogged.set(true);
                     TripPlan.getInstance().getSignedAccountTrips(acc);
+
+                    done = true;
                 }
             }
         }
     }
 
     /**
-     *
+     * Switches the current document to view-trip.fxml
      * @param event ónotað í þessari tilfelli
      */
     @FXML

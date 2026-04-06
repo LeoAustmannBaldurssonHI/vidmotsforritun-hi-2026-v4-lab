@@ -21,26 +21,63 @@ import hi.verkefni.vidmot.vinnsla.Trips.Trip;
 import hi.verkefni.vidmot.vinnsla.Trips.TripPlan;
 
 public class EditController implements DataInterface {
-    // some labels here...
+    @FXML
+    private Label userHeader;
 
     private Trip selectedTrip;
+    private Account acc;
+    private String currentAccount, currentTripTitle;
+
+    /**
+     * combines two strings into a singular long string used for the header
+     * @param title of the trip
+     * @param account which is currently logged in
+     * @return header text
+     */
+    private String stringCombo(String title, String account) {
+        return account + ", you're currently editing: " + title;
+    }
+
+    @FXML
+    public void initialize() {
+        try {
+            acc = new Account();
+        } catch (IOException e) {
+            e.printStackTrace();
+            acc = null;
+        }
+    }
 
     @Override
     public void setGogn(Object data) {
         if(data instanceof Trip trip) {
             this.selectedTrip = trip;
 
-            // Fyrst ætlum við að hreinsa út texta (örrygiskref)
-            //trip_viewTitle.textProperty().unbind();
+            // missing info
+            if (acc != null) {
+                currentAccount = acc.getSignedAccountName();
+            } else {
+                currentAccount = "Unknown user";
+            }
+            currentTripTitle = trip.getTitle();
 
-            // Bæta út öll texta
-            //trip_viewTitle.textProperty().bind(trip.titleProperty());
+            userHeader.setText(stringCombo(currentTripTitle, currentAccount));
         }
     }
 
     @FXML
-    public void goEdit() {
-        System.out.println("user wants to edit, but i am too dumb to let him"); // temp
+    public void directView() {
+        Switcher.switchTo(View.VIEWTRIP, false, selectedTrip);
+    }
+
+    @FXML
+    public void directNew() {
+        System.out.println("user wants to create a trip");
+    }
+
+    @FXML
+    public void directDelete() {
+        System.out.println("user wants to delete this trip");
     }
 
     @FXML
