@@ -15,7 +15,7 @@ import javafx.collections.FXCollections;
 // fasterxml imports
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.*;
 
 // package imports
 import hi.verkefni.vidmot.vinnsla.Trips.Trip;
@@ -25,7 +25,7 @@ public class Account {
     private final ObjectMapper map = new ObjectMapper();
     private final File file = new File("src/main/resources/data.json");
 
-    private ObjectNode accounts;
+    private ArrayNode accounts;
     private JsonNode accountRoot;
 
     private static JsonNode currentSignedAccount;
@@ -38,7 +38,7 @@ public class Account {
      */
     public Account() throws IOException {
         accountRoot = map.readTree(file);
-        accounts = (ObjectNode) accountRoot.get("Accounts");
+        accounts = (ArrayNode) accountRoot.get("Accounts");
     }
 
     /**
@@ -93,7 +93,7 @@ public class Account {
      * Gets the signed account JsonNode, helper method for trips
      * @return JsonNode of the signed account
      */
-    public JsonNode getSignedAccountNode() {
+    public static JsonNode getSignedAccountNode() {
         if(currentSignedAccount == null || !AccountSignedIn) {
             return null;
         }
@@ -220,9 +220,7 @@ public class Account {
             newAccountInfo.put("AccountInfo", accountInfo);
             newAccountInfo.put("Trips", map.createArrayNode());
 
-            String nextId = String.valueOf(accounts.size() + 1);
-
-            accounts.put(nextId, newAccountInfo);
+            accounts.add(newAccountInfo);
 
             map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
 
@@ -246,19 +244,15 @@ public class Account {
      * @throws IOException
      */
     public void deleteAccount(String account) throws IOException {
-        Iterator<Map.Entry<String, JsonNode>> fields = accounts.fields();
-        while (fields.hasNext()) {
-            Map.Entry<String, JsonNode> entry = fields.next();
-            JsonNode accountInfo = entry.getValue().get("AccountInfo");
-            if(accountInfo == null || accountInfo.get("name") == null) return;
-            String storedUser = accountInfo.get("name").asText();
+        for(int i = 0; i < accounts.size(); i++) {
+            JsonNode accNode = accounts.get(i);
+            JsonNode accInfo = accNode.get("AccountInfo");
 
-            if(storedUser.equals(account)) {
+            String user = accInfo.get("name").asText();
+            if(user.equals(account)) {
                 logOut();
-                accounts.remove(entry.getKey());
+                accounts.remove(i);
                 map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
-                System.out.println("Account deleted");
-
                 return;
             }
         }

@@ -1,6 +1,6 @@
 {
-  "Accounts" : {
-    "1" : {
+  "Accounts" : [
+    {
       "AccountInfo" : {
         "name" : "Leó Austmann Baldursson",
         "password" : "icesave2006"
@@ -21,21 +21,21 @@
         }
       } ]
     },
-    "2" : {
+    {
       "AccountInfo" : {
         "name" : "Ebba Þóra Hvannberg",
         "password" : "hbv201g"
       },
       "Trips" : { }
     },
-    "3" : {
+    {
       "AccountInfo" : {
         "name" : "Jón Jónsson",
         "password" : "passowrd"
       },
       "Trips" : { }
     },
-    "4" : {
+    {
       "AccountInfo" : {
         "name" : "admin",
         "password" : "admin"
@@ -56,5 +56,5 @@
         }
       } ]
     }
-  }
+  ]
 }

@@ -172,9 +172,19 @@ public class MainController {
             dialog.getDialogPane().getButtonTypes().addAll(logOut, delete, cancel);
 
             Button deleteButton = (Button) dialog.getDialogPane().lookupButton(delete);
+            Button logOutButton = (Button) dialog.getDialogPane().lookupButton(logOut);
+            Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancel);
 
             deleteButton.getStyleClass().add(
                     "deleteButtonDialog"
+            );
+
+            cancelButton.getStyleClass().add(
+                    "cancelButtonDialog"
+            );
+
+            logOutButton.getStyleClass().add(
+                    "logOutButtonDialog"
             );
 
             Optional<ButtonType> result = dialog.showAndWait();
@@ -186,8 +196,17 @@ public class MainController {
 
                 Dialog<ButtonType> deleteDialog = new Dialog<>();
 
+                deleteDialog.getDialogPane().getStylesheets().add(
+                        getClass().getResource("/hi/verkefni/vidmot/CSS/style.css").toExternalForm()
+                );
+
                 ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
                 ButtonType deleteCancel = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                Button confirmButton = (Button) deleteDialog.getDialogPane().lookupButton(confirm);
+                Button deleteCancelButton = (Button) deleteDialog.getDialogPane().lookupButton(deleteCancel);
+
+
 
                 deleteDialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK);
                 deleteDialog.getDialogPane().getButtonTypes().addAll(confirm, deleteCancel);
