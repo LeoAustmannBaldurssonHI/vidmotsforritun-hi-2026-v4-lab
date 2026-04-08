@@ -58,7 +58,7 @@ public class MainController {
         Platform.runLater(() -> {
             try {
                 if(!Account.activeSession()) {
-                    loginController login = new loginController();
+                    LoginController login = new LoginController();
                     acc = login.loginDialog();
                 }
 
@@ -156,17 +156,30 @@ public class MainController {
         while(!done) {
             Dialog<ButtonType> dialog = new Dialog<>();
 
+            dialog.getDialogPane().getStylesheets().add(
+                    getClass().getResource("/hi/verkefni/vidmot/CSS/style.css").toExternalForm()
+            );
+
             GridPane grid = new GridPane(); // declared early
 
             dialog.setTitle("Account Management");
 
             ButtonType delete = new ButtonType("Delete Account", ButtonBar.ButtonData.OTHER);
             ButtonType logOut = new ButtonType("Log out", ButtonBar.ButtonData.OTHER);
+            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-            dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK);
-            dialog.getDialogPane().getButtonTypes().addAll(logOut, delete);
+            dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL);
+            dialog.getDialogPane().getButtonTypes().addAll(logOut, delete, cancel);
+
+            Button deleteButton = (Button) dialog.getDialogPane().lookupButton(delete);
+
+            deleteButton.getStyleClass().add(
+                    "deleteButtonDialog"
+            );
 
             Optional<ButtonType> result = dialog.showAndWait();
+
+            if(!result.isPresent()) return;
 
             if(result.get() == delete) {
                 String currentAccount = acc.getSignedAccountName();
@@ -174,39 +187,50 @@ public class MainController {
                 Dialog<ButtonType> deleteDialog = new Dialog<>();
 
                 ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-                ButtonType cancel = new ButtonType("cancel", ButtonBar.ButtonData.OTHER);
+                ButtonType deleteCancel = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
                 deleteDialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK);
-                deleteDialog.getDialogPane().getButtonTypes().addAll(logOut, delete);
+                deleteDialog.getDialogPane().getButtonTypes().addAll(confirm, deleteCancel);
 
                 deleteDialog.setTitle("Account Deletion");
-                deleteDialog.setContentText("Warning: You're about to do something that is irrversable. If press on " + confirm + ", the account will be deleted from our system permanently and cannot be retrieved.");
+                deleteDialog.setContentText("Warning: You're about to do something that is irrversable. If press on " +
+                        "confirm, the account will be deleted from our system permanently and cannot be retrieved.");
 
                 Optional<ButtonType> deleteResult = deleteDialog.showAndWait();
                 if(deleteResult.get() == confirm) {
-                    String deleteAccount = acc.getSignedAccountName();
-                    acc.deleteAccount(deleteAccount);
-                    deleteDialog.close();
-                    dialog.close();
+                    try {
+                        String deleteAccount = acc.getSignedAccountName();
+                        acc.deleteAccount(deleteAccount);
+                        deleteDialog.close();
+                        dialog.close();
 
-                    userLogged.set(false);
+                        userLogged.set(false);
 
-                    loginController login = new loginController();
-                    acc = login.loginDialog();
+                        LoginController login = new LoginController();
+                        acc = login.loginDialog();
 
-                    if (acc != null) {
-                        user = acc.getSignedAccountName();
-                        String name = user;
+                        if (acc != null) {
+                            user = acc.getSignedAccountName();
+                            String name = user;
 
-                        userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
+                            userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
 
-                        userLogged.set(true);
-                        TripPlan.getInstance().getSignedAccountTrips(acc);
+                            userLogged.set(true);
+                            TripPlan.getInstance().getSignedAccountTrips(acc);
 
-                        done = true;
+                            done = true;
+                        } else {
+                            done = false;
+                            System.out.println("Critical error, no account found");
+                            System.exit(1); // failsafe
+                        }
+                    } catch(IOException e) {
+                        e.printStackTrace();
+                        done = false;
+                        return;
                     }
                     done = false;
-                } else if(result.get() == cancel) {
+                } else if(result.isEmpty() || result.get() == cancel) {
                     deleteDialog.close();
                     done = true;
                 }
@@ -215,7 +239,7 @@ public class MainController {
 
                 userLogged.set(false);
 
-                loginController login = new loginController();
+                LoginController login = new LoginController();
                 acc = login.loginDialog();
 
                 if (acc != null) {
@@ -229,6 +253,10 @@ public class MainController {
 
                     done = true;
                 }
+            } else if(result.isEmpty() || result.get() == cancel) {
+                dialog.close();
+                done = true;
+                return;
             }
         }
     }

@@ -47,11 +47,11 @@ public class ViewController implements DataInterface {
             acc = null;
         }
 
-        tripCountdown.textProperty().bind(
+        /*tripCountdown.textProperty().bind(
                 Bindings.when()
                         .then()
                         .otherwise()
-        );
+        );*/
     }
 
     @Override

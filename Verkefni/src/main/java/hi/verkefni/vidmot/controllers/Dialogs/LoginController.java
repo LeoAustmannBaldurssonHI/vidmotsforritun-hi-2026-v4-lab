@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import java.io.IOException;
 
-public class loginController {
+public class LoginController {
     private final int HEIGHTCUTOFF = 50;
     private final int WIDTHCUTFOFF = 300;
 
