@@ -52,40 +52,49 @@ public class MainController {
         return name;
     }
 
+    /**
+     * Simplifies the login process in a singular helper method, rather than having 20 copies
+     * @return is the account logged in or not at the moment?
+     */
+    private boolean ensureLog() {
+        try {
+            if(!Account.activeSession()) {
+                LoginController login = new LoginController();
+                acc = login.loginDialog();
+            } else {
+                acc = Account.getCurrentAccount();
+            }
+
+            if(acc == null || !Account.activeSession()) {
+                userLogged.set(false);
+                return false;
+            }
+
+            user = Account.getSignedAccountName();
+
+            if(user == null) {
+                userLogged.set(false);
+                return false;
+            } else {
+                userHeader.setText("Hello, " + nameOverflow(user) + ". Welcome to your Trip Planner");
+                userLogged.set(true);
+                TripPlan.getInstance().getSignedAccountTrips(acc);
+                return true;
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+            userLogged.set(false);
+            return false;
+        }
+    }
+
     @FXML
     public void initialize() {
         tripListView.setItems(TripPlan.getInstance().getTrips());
-        Platform.runLater(() -> {
-            try {
-                if(!Account.activeSession()) {
-                    LoginController login = new LoginController();
-                    acc = login.loginDialog();
-                }
-
-                if (Account.activeSession()) {
-                    user = acc.getSignedAccountName();
-                    acc = acc.getCurrentAccount();
-                    System.out.println(acc);
-
-                    // security check - do we currently have an active account session?
-                    if(user == null) {
-                        System.out.println("No account found");
-                        System.exit(1);
-                    }
-
-                    String name = user;
-                    userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
-                    userLogged.set(true);
-                    TripPlan.getInstance().getSignedAccountTrips(acc);
-                }
-            } catch(IOException e) {
-                e.printStackTrace();
-                userLogged.set(false);
-            }
-        });
+        Platform.runLater(() -> ensureLog());
 
         tripListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTrip, newTrip) -> {
-            selectedTrip.setText(newTrip == null ? "You have selected: NULL" : "You have selected: " + newTrip.getTitle());
+            selectedTrip.setText(newTrip == null ? "You have selected:" : "You have selected: " + newTrip.getTitle());
         });
 
         mainPane.visibleProperty().bind(userLogged); // changes if the layout should be visible or not
@@ -98,19 +107,14 @@ public class MainController {
         // Disable properties rules
         viewButton_main.disableProperty().bind(
                 Bindings.isEmpty(tripListView.getItems())
-        );
-
-        viewButton_main.disableProperty().bind(
-                tripListView.getSelectionModel().selectedItemProperty().isNull()
-        );
-
-        editButton_main.disableProperty().bind(
-                tripListView.getSelectionModel().selectedItemProperty().isNull()
+                        .or(tripListView.getSelectionModel().selectedItemProperty().isNull())
         );
 
         editButton_main.disableProperty().bind(
                 Bindings.isEmpty(tripListView.getItems())
+                        .or(tripListView.getSelectionModel().selectedItemProperty().isNull())
         );
+
     }
 
     /**
@@ -143,141 +147,19 @@ public class MainController {
         }
     }
 
-    /**
-     * add later
-     */
     @FXML
-    private void accountManage() throws IOException {
-        if (acc == null) {
-            System.err.println("Critical error, no user authenticated for us to be able to log out");
-            return;
+    private void newAccountManage() throws IOException {
+        AccountDialog accountManage = new AccountDialog();
+
+        accountManage.accountDialog();
+
+        if(!Account.activeSession()) userLogged.set(false);
+        else {
+            System.err.println("Critical error: cannot log out of the account");
+            System.exit(1);
         }
-        boolean done = false;
-        while(!done) {
-            Dialog<ButtonType> dialog = new Dialog<>();
 
-            dialog.getDialogPane().getStylesheets().add(
-                    getClass().getResource("/hi/verkefni/vidmot/CSS/style.css").toExternalForm()
-            );
-
-            GridPane grid = new GridPane(); // declared early
-
-            dialog.setTitle("Account Management");
-
-            ButtonType delete = new ButtonType("Delete Account", ButtonBar.ButtonData.OTHER);
-            ButtonType logOut = new ButtonType("Log out", ButtonBar.ButtonData.OTHER);
-            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-            dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL);
-            dialog.getDialogPane().getButtonTypes().addAll(logOut, delete, cancel);
-
-            Button deleteButton = (Button) dialog.getDialogPane().lookupButton(delete);
-            Button logOutButton = (Button) dialog.getDialogPane().lookupButton(logOut);
-            Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancel);
-
-            deleteButton.getStyleClass().add(
-                    "deleteButtonDialog"
-            );
-
-            cancelButton.getStyleClass().add(
-                    "cancelButtonDialog"
-            );
-
-            logOutButton.getStyleClass().add(
-                    "logOutButtonDialog"
-            );
-
-            Optional<ButtonType> result = dialog.showAndWait();
-
-            if(!result.isPresent()) return;
-
-            if(result.get() == delete) {
-                String currentAccount = acc.getSignedAccountName();
-
-                Dialog<ButtonType> deleteDialog = new Dialog<>();
-
-                deleteDialog.getDialogPane().getStylesheets().add(
-                        getClass().getResource("/hi/verkefni/vidmot/CSS/style.css").toExternalForm()
-                );
-
-                ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-                ButtonType deleteCancel = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-                Button confirmButton = (Button) deleteDialog.getDialogPane().lookupButton(confirm);
-                Button deleteCancelButton = (Button) deleteDialog.getDialogPane().lookupButton(deleteCancel);
-
-
-
-                deleteDialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK);
-                deleteDialog.getDialogPane().getButtonTypes().addAll(confirm, deleteCancel);
-
-                deleteDialog.setTitle("Account Deletion");
-                deleteDialog.setContentText("Warning: You're about to do something that is irrversable. If press on " +
-                        "confirm, the account will be deleted from our system permanently and cannot be retrieved.");
-
-                Optional<ButtonType> deleteResult = deleteDialog.showAndWait();
-                if(deleteResult.get() == confirm) {
-                    try {
-                        String deleteAccount = acc.getSignedAccountName();
-                        acc.deleteAccount(deleteAccount);
-                        deleteDialog.close();
-                        dialog.close();
-
-                        userLogged.set(false);
-
-                        LoginController login = new LoginController();
-                        acc = login.loginDialog();
-
-                        if (acc != null) {
-                            user = acc.getSignedAccountName();
-                            String name = user;
-
-                            userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
-
-                            userLogged.set(true);
-                            TripPlan.getInstance().getSignedAccountTrips(acc);
-
-                            done = true;
-                        } else {
-                            done = false;
-                            System.out.println("Critical error, no account found");
-                            System.exit(1); // failsafe
-                        }
-                    } catch(IOException e) {
-                        e.printStackTrace();
-                        done = false;
-                        return;
-                    }
-                    done = false;
-                } else if(result.isEmpty() || result.get() == cancel) {
-                    deleteDialog.close();
-                    done = true;
-                }
-            } else if(result.get() == logOut) {
-                acc.logOut();
-
-                userLogged.set(false);
-
-                LoginController login = new LoginController();
-                acc = login.loginDialog();
-
-                if (acc != null) {
-                    user = acc.getSignedAccountName();
-                    String name = user;
-
-                    userHeader.setText("Hello, " + nameOverflow(name) + ". Welcome to your Trip Planner");
-
-                    userLogged.set(true);
-                    TripPlan.getInstance().getSignedAccountTrips(acc);
-
-                    done = true;
-                }
-            } else if(result.isEmpty() || result.get() == cancel) {
-                dialog.close();
-                done = true;
-                return;
-            }
-        }
+        ensureLog();
     }
 
     /**

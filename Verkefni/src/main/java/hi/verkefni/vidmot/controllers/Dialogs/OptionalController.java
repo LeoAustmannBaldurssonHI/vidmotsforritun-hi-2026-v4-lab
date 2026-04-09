@@ -10,6 +10,8 @@ import javafx.beans.binding.*;
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
+import hi.verkefni.vidmot.vinnsla.Trips.*;
+
 import java.util.Optional;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class OptionalController {
     private final int WIDTHCUTFOFF = 300;
 
     private CheckBox hotelBox, flightBox, carBox, workBox;
+    private TextField groupSize, hotelCost, flightCost, carCost;
 
     /**
      * Prints the status of each checkboxes
@@ -30,7 +33,7 @@ public class OptionalController {
         System.out.println("Work: " + workBox.isSelected());
     }
 
-    public OptionalController() throws IOException {
+    public Trip OptionalController() throws IOException {
         boolean done = false;
         while (!done) {
             Dialog<ButtonType> dialog = new Dialog<>();
@@ -44,10 +47,16 @@ public class OptionalController {
             carBox = new CheckBox();
             workBox = new CheckBox();
 
+            hotelCost = new TextField();
+            flightCost = new TextField();
+            carCost = new TextField();
+            groupSize = new TextField();
+
             Label hotel = new Label();
             Label flight = new Label();
             Label car = new Label();
             Label work = new Label();
+            Label cost = new Label();
 
             grid.add(hotel, 0, 0);
             grid.add(flight, 0, 1);
@@ -57,7 +66,7 @@ public class OptionalController {
             grid.add(hotelBox, 1, 0);
             grid.add(flightBox, 1, 1);
             grid.add(carBox, 1, 2);
-            grid.add(workBox, 1, 3);
+            grid.add(workBox, 2, 2);
 
             dialog.getDialogPane().setContent(grid);
 
@@ -67,6 +76,7 @@ public class OptionalController {
             dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL); // Tökum út default takarnar
             dialog.getDialogPane().getButtonTypes().addAll(confirm, cancel); // Notum okkar frekar
 
+            // debuggers
             hotelBox.selectedProperty().addListener((obs, oldVal, newVal) -> debugStatus());
             flightBox.selectedProperty().addListener((obs, oldVal, newVal) -> debugStatus());
             carBox.selectedProperty().addListener((obs, oldVal, newVal) -> debugStatus());
@@ -77,13 +87,27 @@ public class OptionalController {
             if(result.get() == cancel) {
                 done = true;
                 dialog.close();
-                return;
+                return null;
             } else if(result.get() == confirm) {
-                // add stuff to somewhere
+                Trip trip = new Trip();
+
+                trip.setHotel(hotelBox.isSelected());
+                trip.setCar(carBox.isSelected());
+                trip.setWork(workBox.isSelected());
+                trip.setFlight(flightBox.isSelected());
+
+                trip.setHotelCost(hotelCost.getText());
+                trip.setFlightCost(flightCost.getText());
+                trip.setCarCost(carCost.getText());
+
+                trip.setSize(groupSize.getText());
+
                 done = true;
                 dialog.close();
-                return;
+
+                return trip;
             }
         }
+        return null;
     }
 }

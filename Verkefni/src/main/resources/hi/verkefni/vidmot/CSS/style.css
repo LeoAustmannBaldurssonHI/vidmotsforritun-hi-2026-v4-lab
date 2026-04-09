@@ -28,10 +28,11 @@
     -fx-text-fill: black;
     -fx-font-size: 24;
     -fx-border-width: 1;
+    -fx-background-color: #B4B4B4;
 }
 
 .list-cell:focused {
-    -fx-background-color: #ADADAD;
+    -fx-background-color: #7D7D7D;
     -fx-underline: true;
 }
 

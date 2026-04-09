@@ -72,7 +72,9 @@ public class ViewController implements DataInterface {
     }
 
     public void deleteTrip() {
-        if(acc != null) {}
+        if(acc != null) {
+            // idk?
+        }
     }
 
     /**

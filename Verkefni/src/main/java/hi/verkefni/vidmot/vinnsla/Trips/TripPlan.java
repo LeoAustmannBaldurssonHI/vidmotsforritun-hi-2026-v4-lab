@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 
 import java.io.IOException;
 
-
 public class TripPlan {
     private Account account;
     private ObservableList<Trip> plannedTrips = FXCollections.observableArrayList();

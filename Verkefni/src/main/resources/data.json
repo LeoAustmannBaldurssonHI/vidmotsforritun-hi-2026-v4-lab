@@ -1,60 +1,61 @@
 {
-  "Accounts" : [
-    {
-      "AccountInfo" : {
-        "name" : "Leó Austmann Baldursson",
-        "password" : "icesave2006"
-      },
-      "Trips" : [ {
-        "title" : "Sabaton skemmtun",
-        "destination" : "Split, Króatía",
-        "startDate" : "08.06.2026",
-        "endDate" : "18.06.2026",
-        "optionals" : {
-          "hotel" : true,
-          "car" : true,
-          "flights" : true,
-          "work" : false,
-          "groupSize" : "2",
-          "cost" : "660.00kr",
-          "backgroundImg" : "resources/hi/Images/LAB/split_background.jpg"
+  "Accounts" : [ {
+    "AccountInfo" : {
+      "name" : "Leó Austmann Baldursson",
+      "password" : "icesave2006"
+    },
+    "Trips" : [ {
+      "title" : "Sabaton skemmtun",
+      "destination" : "Split, Króatía",
+      "startDate" : "08.06.2026",
+      "endDate" : "18.06.2026",
+      "optionals" : {
+        "hotel" : true,
+        "car" : true,
+        "flights" : true,
+        "work" : false,
+        "groupSize" : "2",
+        "cost" : {
+          "hotel cost": "0kr",
+          "flight cost": "0kr",
+          "car cost": "0kr"
         }
-      } ]
+      }
+    } ]
+  }, {
+    "AccountInfo" : {
+      "name" : "Ebba Þóra Hvannberg",
+      "password" : "hbv201g"
     },
-    {
-      "AccountInfo" : {
-        "name" : "Ebba Þóra Hvannberg",
-        "password" : "hbv201g"
-      },
-      "Trips" : { }
+    "Trips" : [ ]
+  }, {
+    "AccountInfo" : {
+      "name" : "Jón Jónsson",
+      "password" : "passowrd"
     },
-    {
-      "AccountInfo" : {
-        "name" : "Jón Jónsson",
-        "password" : "passowrd"
-      },
-      "Trips" : { }
+    "Trips" : [ ]
+  }, {
+    "AccountInfo" : {
+      "name" : "admin",
+      "password" : "admin"
     },
-    {
-      "AccountInfo" : {
-        "name" : "admin",
-        "password" : "admin"
-      },
-      "Trips" : [ {
-        "title" : "adminTesting",
-        "destination" : "admin city, moderland",
-        "startDate" : "12.06.2105",
-        "endDate" : "11.07.2106",
-        "optionals" : {
-          "hotel" : true,
-          "car" : true,
-          "flights" : true,
-          "work" : false,
-          "groupSize" : "2",
-          "cost" : "210.00kr",
-          "backgroundImg" : "resources/hi/Images/LAB/split_background.jpg"
+    "Trips" : [ {
+      "title" : "adminTesting",
+      "destination" : "admin city, moderland",
+      "startDate" : "12.06.2105",
+      "endDate" : "11.07.2106",
+      "optionals" : {
+        "hotel" : true,
+        "car" : true,
+        "flights" : true,
+        "work" : false,
+        "groupSize" : "2",
+        "cost" : {
+          "hotel cost": "0kr",
+          "flight cost": "0kr",
+          "car cost": "0kr"
         }
-      } ]
-    }
-  ]
+      }
+    } ]
+  } ]
 }

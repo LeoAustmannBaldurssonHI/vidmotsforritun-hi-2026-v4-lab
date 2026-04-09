@@ -19,7 +19,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="accountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#accountManage" prefHeight="69.0" prefWidth="79.0" styleClass="userHeader_accButton" stylesheets="@CSS/style.css">
+            <Button fx:id="accountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#newAccountManage" prefHeight="69.0" prefWidth="79.0" styleClass="userHeader_accButton" stylesheets="@CSS/style.css">
                <font>
                   <Font size="18.0" />
                </font>

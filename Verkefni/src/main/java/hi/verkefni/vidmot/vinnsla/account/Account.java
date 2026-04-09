@@ -42,29 +42,6 @@ public class Account {
     }
 
     /**
-     * User specified constructor that allows us to specify which user is actually signed in.
-     * Should only be used if the program is confident on who is supposed to be logged in.
-     * @param user
-     * @throws IOException
-     */
-    public Account(String user) throws IOException {
-        this();
-
-        for (JsonNode acc : accounts) {
-            String storedUser = acc.get("AccountInfo").get("name").asText();
-            if (storedUser.equals(user)) {
-                currentSignedAccount = acc;
-                currentAccount = this;
-                AccountSignedIn = true;
-                return;
-            }
-        }
-
-        currentSignedAccount = null;
-        AccountSignedIn = false;
-    }
-
-    /**
      * This method is used for the program to check if the current account name given is in the system or not.
      * @param name of the username to check
      * @return true or false of the account
@@ -183,9 +160,6 @@ public class Account {
      * Logs the current user out of the system
      */
     public void logOut() {
-        System.out.println("currentSignedAccount = " + currentSignedAccount);
-        System.out.println("isAccountSignedIn = " + AccountSignedIn);
-
         if (currentSignedAccount != null && AccountSignedIn && currentAccount != null) {
             currentSignedAccount = null;
             AccountSignedIn = false;
@@ -292,9 +266,13 @@ public class Account {
 
                 // text setters
                 trip.setSize(optionals.get("groupSize").asText());
-                trip.setCost(optionals.get("cost").asText());
 
-                // media setter (to do later)
+                JsonNode costNode = optionals.get("cost");
+                if (costNode != null) {
+                    trip.setFlightCost(costNode.get("flight cost").asText());
+                    trip.setHotelCost(costNode.get("hotel cost").asText());
+                    trip.setCarCost(costNode.get("car cost").asText());
+                }
             }
 
             System.out.println("trip added");

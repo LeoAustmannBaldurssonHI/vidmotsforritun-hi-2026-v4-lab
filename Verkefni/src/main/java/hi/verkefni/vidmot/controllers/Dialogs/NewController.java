@@ -11,15 +11,16 @@ import javafx.beans.binding.*;
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
-import hi.verkefni.vidmot.vinnsla.Trips.Trip;
+import hi.verkefni.vidmot.vinnsla.Trips.*;
 
 import java.util.Optional;
 
 import java.io.IOException;
 
 public class NewController {
-    TimeManager tm = new TimeManager();
-    @FXML
+    private TimeManager tm = new TimeManager();
+    private Trip options = null;
+
     public Trip createTrip() throws IOException {
         boolean done = false;
         while(!done) {
@@ -79,13 +80,38 @@ public class NewController {
             if(result.get() == optional) {
                 OptionalController addons = new OptionalController();
 
-            } else if(result.get() == cancel) {
+                Trip temp = addons.OptionalController();
+
+                if (temp != null) {
+                    options = temp;
+                }
+
+                done = false;
+            } else if(result.isEmpty() || result.get() == cancel) {
                 done = true;
                 return null;
             } else if(result.get() == confirm) {
                 try {
+                    Trip trip = new Trip();
+                    trip.setTitle(title.getText());
+                    trip.setDestination(city.getText() + ", " + countryLabel.getText()); // putting them together as one
+                    trip.setStartDate(start.getValue());
+                    trip.setEndDate(end.getValue());
 
-                    return null;
+                    if(options != null) {
+                        trip.setCar(options.getCar());
+                        trip.setHotel(options.getHotel());
+                        trip.setWork(options.getWork());
+                        trip.setFlight(options.getFlight());
+                        trip.setSize(options.getGroupSize());
+
+                        trip.setHotelCost(options.getHotelCost());
+                        trip.setFlightCost(options.getFlightCost());
+                        trip.setCarCost(options.getCarCost());
+                    }
+
+                    TripPlan.getInstance().getTrips().add(trip);
+                    return trip;
                 } catch (java.lang.Exception e) {
                     e.printStackTrace();
                     return null;
