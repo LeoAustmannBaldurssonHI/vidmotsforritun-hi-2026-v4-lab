@@ -154,10 +154,6 @@ public class MainController {
         accountManage.accountDialog();
 
         if(!Account.activeSession()) userLogged.set(false);
-        else {
-            System.err.println("Critical error: cannot log out of the account");
-            System.exit(1);
-        }
 
         ensureLog();
     }

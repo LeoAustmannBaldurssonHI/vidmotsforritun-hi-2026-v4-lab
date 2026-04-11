@@ -11,20 +11,44 @@ import javafx.beans.binding.*;
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
+import java.time.LocalDate;
+
 import hi.verkefni.vidmot.vinnsla.Trips.*;
 
 import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import java.io.IOException;
 
 public class NewController {
+    private final String CSS = "/hi/verkefni/vidmot/CSS/style.css";
+    // alert cut off
+    private final int HEIGHTCUTOFF = 175;
+    private final int WIDTHCUTFOFF = 300;
+
     private TimeManager tm = new TimeManager();
     private Trip options = null;
 
+    private String savedTitle, savedDestination, savedCity, savedCountry;
+    private LocalDate savedStart, savedEnd;
+
+
     public Trip createTrip() throws IOException {
         boolean done = false;
+
+        savedTitle = "";
+        savedCity = "";
+        savedCountry = "";
+        savedStart = null;
+        savedEnd = null;
+
         while(!done) {
             Dialog<ButtonType> dialog = new Dialog<>();
+
+            dialog.getDialogPane().getStylesheets().add(
+                    getClass().getResource(CSS).toExternalForm()
+            );
 
             dialog.setTitle("Trip creation");
             dialog.setHeaderText("Insert the following information.");
@@ -52,6 +76,12 @@ public class NewController {
             startLabel.setText("Start of Trip: ");
             endLabel.setText("End of Trip: ");
 
+            title.setText(savedTitle);
+            city.setText(savedCity);
+            country.setText(savedCountry);
+            start.setValue(savedStart);
+            end.setValue(savedEnd);
+
             GridPane grid = new GridPane();
 
             grid.add(titleLabel, 0, 0);
@@ -77,7 +107,13 @@ public class NewController {
 
             Optional<ButtonType> result = dialog.showAndWait();
 
-            if(result.get() == optional) {
+            if(result.isPresent() && result.get() == optional) {
+                savedTitle = title.getText();
+                savedCity = city.getText();
+                savedCountry = country.getText();
+                savedStart = start.getValue();
+                savedEnd = end.getValue();
+
                 OptionalController addons = new OptionalController();
 
                 Trip temp = addons.OptionalController();
@@ -87,16 +123,74 @@ public class NewController {
                 }
 
                 done = false;
+                continue;
             } else if(result.isEmpty() || result.get() == cancel) {
                 done = true;
                 return null;
             } else if(result.get() == confirm) {
                 try {
+                    TimeManager tm = new TimeManager();
+                    savedTitle = title.getText();
+                    savedCity = city.getText();
+                    savedCountry = country.getText();
+                    savedStart = start.getValue();
+                    savedEnd = end.getValue();
+
                     Trip trip = new Trip();
-                    trip.setTitle(title.getText());
-                    trip.setDestination(city.getText() + ", " + countryLabel.getText()); // putting them together as one
-                    trip.setStartDate(start.getValue());
-                    trip.setEndDate(end.getValue());
+
+                    if (title.getText().isBlank()
+                            || city.getText().isBlank()
+                            || country.getText().isBlank()
+                            || start.getValue() == null
+                            || end.getValue() == null) {
+                        System.out.println("All required fields must be filled in.");
+
+                        Alert alert = new Alert(AlertType.WARNING);
+
+                        alert.setTitle("Creation error");
+                        alert.setHeaderText("Missing information");
+                        alert.setContentText("You need to fill in all of the fields in this menu before being able to create the trip");
+
+                        alert.getDialogPane().setPrefWidth(WIDTHCUTFOFF);
+                        alert.getDialogPane().setPrefHeight(HEIGHTCUTOFF);
+
+                        alert.showAndWait();
+
+                        continue;
+                    }
+
+                    if(savedStart.isBefore(tm.getCurrentDate())) {
+                        Alert alert = new Alert(AlertType.ERROR);
+
+                        alert.setTitle("Date error");
+                        alert.setHeaderText("Start date error");
+                        alert.setContentText("The start of date you gave has already expired");
+
+                        alert.getDialogPane().setPrefWidth(WIDTHCUTFOFF);
+                        alert.getDialogPane().setPrefHeight(HEIGHTCUTOFF);
+
+                        alert.showAndWait();
+                        done = false;
+                        continue;
+                    } else if(savedEnd.isBefore(savedStart)) {
+                        Alert alert = new Alert(AlertType.ERROR);
+
+                        alert.setTitle("Date error");
+                        alert.setHeaderText("End date error");
+                        alert.setContentText("The end of date you gave ends before the start date");
+
+                        alert.getDialogPane().setPrefWidth(WIDTHCUTFOFF);
+                        alert.getDialogPane().setPrefHeight(HEIGHTCUTOFF);
+
+                        alert.showAndWait();
+                        done = false;
+                        continue;
+                    } else {
+                        trip.setTitle(savedTitle);
+                        trip.setDestination(savedCity + ", " + savedCountry); // putting them together as one
+                        trip.setStartDate(savedStart);
+                        trip.setEndDate(savedEnd);
+                    }
 
                     if(options != null) {
                         trip.setCar(options.getCar());
@@ -111,9 +205,12 @@ public class NewController {
                     }
 
                     TripPlan.getInstance().getTrips().add(trip);
+                    Account.getCurrentAccount().addTripToAccount(trip);
                     return trip;
                 } catch (java.lang.Exception e) {
                     e.printStackTrace();
+                    System.out.println("Error in creating trip");
+                    System.exit(1);
                     return null;
                 }
             }

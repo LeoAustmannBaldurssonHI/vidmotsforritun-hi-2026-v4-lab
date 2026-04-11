@@ -69,12 +69,12 @@ public class Trip {
     public StringProperty carCostProperty() { return carCost;}
 
     // Getters
-    public String getStartDate() {
-        return startDate.toString();
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public String getEndDate() {
-        return endDate.toString();
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
     public String getTitle() {

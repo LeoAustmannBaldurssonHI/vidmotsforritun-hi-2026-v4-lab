@@ -21,6 +21,9 @@ import com.fasterxml.jackson.databind.node.*;
 import hi.verkefni.vidmot.vinnsla.Trips.Trip;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
+// Date import
+import java.time.LocalDate;
+
 public class Account {
     private final ObjectMapper map = new ObjectMapper();
     private final File file = new File("src/main/resources/data.json");
@@ -31,6 +34,7 @@ public class Account {
     private static JsonNode currentSignedAccount;
     private static boolean AccountSignedIn = false;
     private static Account currentAccount;
+    TimeManager tm = new TimeManager();
 
     /**
      * Constructs a default account.
@@ -147,10 +151,9 @@ public class Account {
                     currentSignedAccount = acc;
                     AccountSignedIn = true;
                     currentAccount =  this;
-                    System.out.println(AccountSignedIn);
+                    System.out.println("Account found: " + AccountSignedIn);
                     return true;
                 }
-                System.out.println("could not find account");
             }
             AccountSignedIn = false;
             return false;
@@ -167,6 +170,7 @@ public class Account {
             return;
         } else {
             System.out.println("System error: attempted to sign out but account cannot be found");
+            System.exit(1); // assuming there is a major system failure, we will kill the program and make the user restart
             return;
         }
     }
@@ -238,6 +242,7 @@ public class Account {
      */
     public ObservableList<Trip> getAccountTrips() {
         ObservableList<Trip> userTrips = FXCollections.observableArrayList();
+        ObservableList<Trip> tripsToRemove = FXCollections.observableArrayList(); // this list will be used to throw all trips that are past the end date
         TimeManager tm = new TimeManager();
 
         JsonNode currentAccount = getSignedAccountNode();
@@ -251,10 +256,19 @@ public class Account {
 
             System.out.println("getting trip");
 
+            LocalDate startDate = tm.parseDate(accTrips.get("startDate").asText());
+            LocalDate endDate = tm.parseDate(accTrips.get("endDate").asText());
+
             trip.setTitle(accTrips.get("title").asText());
             trip.setDestination(accTrips.get("destination").asText());
-            trip.setStartDate(tm.parseDate(accTrips.get("startDate").asText()));
-            trip.setEndDate(tm.parseDate(accTrips.get("endDate").asText()));
+            trip.setStartDate(startDate);
+            trip.setEndDate(endDate);
+
+            if(endDate.isBefore(tm.getCurrentDate())) {
+                System.out.println("Trip past the expiry date, deleting");
+                tripsToRemove.add(trip);
+                continue;
+            }
 
             JsonNode optionals = accTrips.get("optionals");
             if(optionals != null) {
@@ -282,6 +296,86 @@ public class Account {
             System.out.println("No user trips found");
             return userTrips;
         }
+
+        for (Trip expiredTrip : tripsToRemove) {
+            try {
+                removeTripFromAccount(expiredTrip);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         return userTrips;
+    }
+
+    public void addTripToAccount(Trip trip) throws IOException {
+        JsonNode signedAccount = getSignedAccountNode();
+        if (signedAccount == null) throw new IOException("Signed account not found");
+
+        JsonNode tripsNode = signedAccount.get("Trips");
+        if (!(tripsNode instanceof ArrayNode tripsArray)) {
+            throw new IllegalStateException("Trips node is not an array.");
+        }
+
+        ObjectNode tripNode = map.createObjectNode();
+        tripNode.put("title", trip.getTitle());
+        tripNode.put("destination", trip.getDestination());
+        tripNode.put("startDate", tm.formatDate(trip.getStartDate()));
+        tripNode.put("endDate", tm.formatDate(trip.getEndDate()));
+
+        ObjectNode optionals = map.createObjectNode();
+        optionals.put("hotel", trip.getHotel());
+        optionals.put("car", trip.getCar());
+        optionals.put("flights", trip.getFlight());
+        optionals.put("work", trip.getWork());
+        optionals.put("groupSize", trip.getGroupSize() == null ? "" : trip.getGroupSize());
+
+        ObjectNode cost = map.createObjectNode();
+        cost.put("hotel cost", trip.getHotelCost() == null ? "0kr" : trip.getHotelCost());
+        cost.put("flight cost", trip.getFlightCost() == null ? "0kr" : trip.getFlightCost());
+        cost.put("car cost", trip.getCarCost() == null ? "0kr" : trip.getCarCost());
+
+        optionals.set("cost", cost);
+        tripNode.set("optionals", optionals);
+
+        tripsArray.add(tripNode);
+
+        map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
+        System.out.println("trip added to the database");
+    }
+
+    public void removeTripFromAccount(Trip trip) throws IOException {
+        JsonNode signedAccount = getSignedAccountNode();
+        if (signedAccount == null) {
+            throw new IllegalStateException("No signed-in account found.");
+        }
+
+        JsonNode tripsNode = signedAccount.get("Trips");
+        if (!(tripsNode instanceof ArrayNode tripsArray)) {
+            throw new IllegalStateException("Trips node is not an array.");
+        }
+
+        String tripStartDate = tm.formatDate(trip.getStartDate());
+        String tripEndDate = tm.formatDate(trip.getEndDate());
+
+        for (int i = 0; i < tripsArray.size(); i++) {
+            JsonNode tripNode = tripsArray.get(i);
+
+            String storedTitle = tripNode.get("title").asText();
+            String storedDestination = tripNode.get("destination").asText();
+            String storedStartDate = tripNode.get("startDate").asText();
+            String storedEndDate = tripNode.get("endDate").asText();
+
+            if (storedTitle.equals(trip.getTitle())
+                    && storedDestination.equals(trip.getDestination())
+                    && storedStartDate.equals(tripStartDate)
+                    && storedEndDate.equals(tripEndDate)) {
+
+                tripsArray.remove(i);
+                map.writerWithDefaultPrettyPrinter().writeValue(file, accountRoot);
+                System.out.println("trip removed from the database");
+                return;
+            }
+        }
     }
 }

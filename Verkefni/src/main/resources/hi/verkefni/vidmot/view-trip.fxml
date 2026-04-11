@@ -11,7 +11,7 @@
    <children>
       <VBox layoutY="514.0" prefHeight="72.0" prefWidth="1000.0">
          <children>
-            <HBox fx:id="viewButtonsManagementLABELS" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="251.0">
+            <HBox fx:id="viewButtonsManagementLABELS" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="250.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Want to add a new trip?">
                      <font>
@@ -30,7 +30,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox fx:id="viewButtonsManagement" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="330.0">
+            <HBox fx:id="viewButtonsManagement" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="285.0">
                <children>
                   <Button fx:id="view_newTrip" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="New Trip">
                      <font>
@@ -65,7 +65,75 @@
             </Button>
          </children>
       </HBox>
-      <AnchorPane layoutY="73.0" prefHeight="425.0" prefWidth="1000.0" styleClass="tripImage" />
-      <AnchorPane layoutX="1.0" layoutY="72.0" prefHeight="425.0" prefWidth="1000.0" styleClass="overlay" />
+      <AnchorPane fx:id="tripCards" layoutY="60.0" prefHeight="453.0" prefWidth="1000.0">
+         <children>
+            <Label fx:id="tripCountdown" alignment="CENTER" layoutX="97.0" layoutY="6.0" prefHeight="30.0" prefWidth="790.0" styleClass="countdowner" text="{days} until this trip begins" />
+            <Label alignment="CENTER" layoutY="43.0" prefHeight="30.0" prefWidth="1000.0" styleClass="infoHeaders" text="General Information" />
+            <VBox layoutY="82.0" prefHeight="100.0" prefWidth="1000.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Title" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Destination" />
+                        <Label alignment="CENTER" layoutX="180.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Start" />
+                        <Label alignment="CENTER" layoutX="350.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="End" />
+                        <Label alignment="CENTER" layoutX="521.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Cost" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Label fx:id="viewTitleLabel" alignment="CENTER" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{title}" />
+                        <Label fx:id="viewDestinationLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{destination}" />
+                        <Label fx:id="viewStartLabel" alignment="CENTER" layoutX="180.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{start}" />
+                        <Label fx:id="viewEndLabel" alignment="CENTER" layoutX="350.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{end}" />
+                        <Label fx:id="viewTotalCostLabel" alignment="CENTER" layoutX="521.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{total cost}" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutY="213.0" prefHeight="100.0" prefWidth="1000.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Is this a work trip?" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Booked a rental car?" />
+                        <Label alignment="CENTER" layoutX="180.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Hotel booked?" />
+                        <Label alignment="CENTER" layoutX="350.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Flights booked?" />
+                        <Label alignment="CENTER" layoutX="521.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="tripCard" text="Group Size" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Label fx:id="viewWorkLabel" alignment="CENTER" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{work}" />
+                        <Label fx:id="viewCarLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{car}" />
+                        <Label fx:id="viewHotelLabel" alignment="CENTER" layoutX="180.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{hotel}" />
+                        <Label fx:id="viewFlightsLabel" alignment="CENTER" layoutX="350.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{flights}" />
+                        <Label fx:id="viewSizeLabel" alignment="CENTER" layoutX="521.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{size}" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label alignment="CENTER" layoutY="174.0" prefHeight="30.0" prefWidth="1000.0" styleClass="infoHeaders" text="Other information" />
+            <Label alignment="CENTER" layoutY="304.0" prefHeight="30.0" prefWidth="1000.0" styleClass="infoHeaders" text="Trip finance" />
+            <VBox layoutY="343.0" prefHeight="100.0" prefWidth="1000.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="30.0" prefWidth="300.0" styleClass="tripCard" text="Flight Cost" />
+                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" styleClass="tripCard" text="Hotel cost" />
+                        <Label alignment="CENTER" layoutX="180.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" styleClass="tripCard" text="Car Cost" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Label fx:id="viewFlightCostLabel" alignment="CENTER" prefHeight="30.0" prefWidth="300.0" styleClass="infoLabels" text="{flight cost}" />
+                        <Label fx:id="viewHotelCostLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" styleClass="infoLabels" text="{hotel cost}" />
+                        <Label fx:id="viewCarCostLabel" alignment="CENTER" layoutX="180.0" layoutY="10.0" prefHeight="30.0" prefWidth="300.0" styleClass="infoLabels" text="{car cost}" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

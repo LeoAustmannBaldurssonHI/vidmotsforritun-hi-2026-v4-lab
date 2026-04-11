@@ -8,6 +8,8 @@ import javafx.scene.layout.*;
 import javafx.beans.binding.*;
 
 import hi.verkefni.vidmot.vinnsla.account.Account;
+import hi.verkefni.vidmot.switcher.Switcher;
+import hi.verkefni.vidmot.switcher.View;
 
 import java.util.Optional;
 
@@ -55,7 +57,7 @@ public class AccountDialog {
             );
 
             cancelButton.getStyleClass().add(
-                    "cancelButtonDialog"
+                    "cancelDialogButton"
             );
 
             logOutButton.getStyleClass().add(
@@ -76,13 +78,21 @@ public class AccountDialog {
                 );
 
                 ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
-                ButtonType deleteCancel = new ButtonType("cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-                Button confirmButton = (Button) deleteDialog.getDialogPane().lookupButton(confirm);
-                Button deleteCancelButton = (Button) deleteDialog.getDialogPane().lookupButton(deleteCancel);
+                ButtonType deleteCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
                 deleteDialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK);
                 deleteDialog.getDialogPane().getButtonTypes().addAll(confirm, deleteCancel);
+
+                Button confirmDialogButton = (Button) deleteDialog.getDialogPane().lookupButton(confirm);
+                Button deleteCancelButton = (Button) deleteDialog.getDialogPane().lookupButton(deleteCancel);
+
+                confirmDialogButton.getStyleClass().add(
+                        "specialConfirmDialogButton"
+                );
+
+                deleteCancelButton.getStyleClass().add(
+                        "specialCancelDialogButton"
+                );
 
                 deleteDialog.setTitle("Account Deletion");
                 deleteDialog.setContentText("Warning: You're about to do something that is irrversable. If press on " +
@@ -96,7 +106,11 @@ public class AccountDialog {
                         deleteDialog.close();
                         dialog.close();
 
-                        if(acc.activeSession()) System.out.println("We have an error with the account system.");
+                        // Security check - Do we still have an active session?
+                        if(acc.activeSession()) {
+                            System.out.println("We have an error with the account system.");
+                            System.exit(1);
+                        }
 
                         done = true;
                         return;
@@ -105,7 +119,7 @@ public class AccountDialog {
                         done = false;
                         return;
                     }
-                } else if(result.isEmpty() || result.get() == cancel) {
+                } else if(deleteResult.isEmpty() || deleteResult.get() == cancel) {
                     deleteDialog.close();
                     done = true;
                 }

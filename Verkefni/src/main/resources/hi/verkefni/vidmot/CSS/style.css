@@ -51,8 +51,31 @@
 }
 
 /*
-   view-trip.fxml
+   view-trip.fxml & edit-trip.fxml
  */
+
+.countdowner {
+    -fx-background-color: #A60818;
+    -fx-text-fill: white;
+    -fx-font-weight: bolder;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-color: black;
+}
+
+.infoHeaders {
+    -fx-background-color: #4F84FF;
+    -fx-border-width: 1;
+    -fx-border-color: black;
+    -fx-font-size: 24;
+}
+
+.infoLabels {
+    -fx-background-color: #4F84FF;
+    -fx-border-width: 1;
+    -fx-border-color: black;
+}
 
 .userHeader_homeButton {
     -fx-background-image: url("Images/homePage.png");
@@ -65,25 +88,33 @@
     -fx-border-radius: 0;
 }
 
-.overlay {
-    -fx-background-color: rgba(0, 0, 0, 0.2);
-}
-
-.tripImage {
-    -fx-background-image: url("Images/airport.jpg");
-    -fx-background-repeat: no-repeat;
-    -fx-background-size: 1000 425;
-    -fx-background-insets: 0;
-    -fx-background-radius: 0;
-    -fx-opacity: 75%;
-    -fx-border-radius: 0;
+.tripCard {
+    -fx-background-color: #004794;
+    -fx-text-fill: white;
+    -fx-border-width: 1;
+    -fx-font-weight: bolder;
 }
 
 /*
  * dialogs
  */
 
-.deleteButtonDialog {
-    -fx-background-color: red;
+/* Universal dialog */
+
+.confirmDialogButton, .specialCancelDialogButton, .deleteButtonDialog, .logOutButton, .logOutButtonDialog {
+    -fx-background-color: #499AD1;
+    -fx-text-fill: black;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-color: black;
+}
+
+.cancelDialogButton, .specialConfirmDialogButton {
+    -fx-background-color: #A60818;
     -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-color: black;
 }

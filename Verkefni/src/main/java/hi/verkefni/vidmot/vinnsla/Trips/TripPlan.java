@@ -48,7 +48,7 @@ public class TripPlan {
      * Eyðir út ferðalag sem notendi byður um
      * @param trip
      */
-    public void removeTrip(Trip trip) {
+    public void removeTrip(Trip trip)  {
         plannedTrips.remove(trip);
     }
 

@@ -16,9 +16,9 @@
         "work" : false,
         "groupSize" : "2",
         "cost" : {
-          "hotel cost": "0kr",
-          "flight cost": "0kr",
-          "car cost": "0kr"
+          "hotel cost" : "0kr",
+          "flight cost" : "0kr",
+          "car cost" : "0kr"
         }
       }
     } ]
@@ -51,9 +51,9 @@
         "work" : false,
         "groupSize" : "2",
         "cost" : {
-          "hotel cost": "0kr",
-          "flight cost": "0kr",
-          "car cost": "0kr"
+          "hotel cost" : "5000kr",
+          "flight cost" : "7500kr",
+          "car cost" : "129kr"
         }
       }
     } ]

@@ -15,14 +15,24 @@ import java.util.Optional;
 import java.io.IOException;
 
 public class LoginController {
+    private final String CSS = "/hi/verkefni/vidmot/CSS/style.css";
     private final int HEIGHTCUTOFF = 50;
     private final int WIDTHCUTFOFF = 300;
+
+    private String savedUser;
 
     @FXML
     public Account loginDialog() throws IOException {
         boolean isDone = false;
+        savedUser = "";
+
         while (!isDone) {
             Dialog<ButtonType> dialog = new Dialog<>();
+
+            dialog.getDialogPane().getStylesheets().add(
+                    getClass().getResource(CSS).toExternalForm()
+            );
+
             dialog.setTitle("Log in");
 
             TextField username = new TextField();
@@ -45,6 +55,10 @@ public class LoginController {
 
             rootGrid.setHgap(10);
 
+            if(!savedUser.isEmpty()) {
+                username.setText(savedUser);
+            }
+
             username.setPrefWidth(WIDTHCUTFOFF);
             rootGrid.setPrefHeight(HEIGHTCUTOFF);
 
@@ -55,6 +69,22 @@ public class LoginController {
             ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
             dialog.getDialogPane().getButtonTypes().addAll(confirm, signUp, cancel);
+
+            Button confirmButton = (Button) dialog.getDialogPane().lookupButton(confirm);
+            Button signUpButton = (Button) dialog.getDialogPane().lookupButton(signUp);
+            Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancel);
+
+            confirmButton.getStyleClass().add(
+                    "confirmDialogButton"
+            );
+
+            signUpButton.getStyleClass().add(
+                    "confirmDialogButton"
+            );
+
+            cancelButton.getStyleClass().add(
+                    "cancelDialogButton"
+            );
 
             Optional<ButtonType> result = dialog.showAndWait();
             System.out.println(result.get());
@@ -82,6 +112,7 @@ public class LoginController {
                     if(!signInStatus) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Login failed");
+                        savedUser = attemptedUser;
                         alert.setHeaderText(null);
                         alert.setContentText("Wrong username or password.");
                         alert.showAndWait();

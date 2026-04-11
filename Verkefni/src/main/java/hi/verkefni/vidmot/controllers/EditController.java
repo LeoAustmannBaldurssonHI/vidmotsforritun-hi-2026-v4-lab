@@ -76,8 +76,10 @@ public class EditController implements DataInterface {
     }
 
     @FXML
-    public void directDelete() {
+    public void directDelete() throws IOException {
         System.out.println("user wants to delete this trip");
+
+        DeleteDialog delete = new DeleteDialog(selectedTrip);
     }
 
     @FXML
