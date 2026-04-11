@@ -264,8 +264,11 @@ public class Account {
             trip.setStartDate(startDate);
             trip.setEndDate(endDate);
 
+            // Is the current date ahead of the end date of the selected trip?
             if(endDate.isBefore(tm.getCurrentDate())) {
                 System.out.println("Trip past the expiry date, deleting");
+
+                // If so, we'll need to remove it. Adding to a list to hold onto it for now.
                 tripsToRemove.add(trip);
                 continue;
             }
@@ -297,6 +300,7 @@ public class Account {
             return userTrips;
         }
 
+        // Deletion
         for (Trip expiredTrip : tripsToRemove) {
             try {
                 removeTripFromAccount(expiredTrip);
@@ -308,6 +312,11 @@ public class Account {
         return userTrips;
     }
 
+    /**
+     * Adds an trip to the user's json file
+     * @param trip
+     * @throws IOException
+     */
     public void addTripToAccount(Trip trip) throws IOException {
         JsonNode signedAccount = getSignedAccountNode();
         if (signedAccount == null) throw new IOException("Signed account not found");
@@ -344,6 +353,11 @@ public class Account {
         System.out.println("trip added to the database");
     }
 
+    /**
+     * Removes a trip from the user's json file
+     * @param trip
+     * @throws IOException
+     */
     public void removeTripFromAccount(Trip trip) throws IOException {
         JsonNode signedAccount = getSignedAccountNode();
         if (signedAccount == null) {

@@ -47,6 +47,9 @@ public class ViewController implements DataInterface {
         return account + ", you're currently viewing: " + title;
     }
 
+    /**
+     * A helper method that sets the text of each label in one go. This is a work around with the account system since we need to log in first before we can retrieve the data about the selected trip.
+     */
     private void updateLables() {
         if(selectedTrip == null) return;
 
@@ -65,6 +68,9 @@ public class ViewController implements DataInterface {
         viewHotelCostLabel.setText(selectedTrip.getHotelCost());
     }
 
+    /**
+     * A helper method that tells the user how long until their trip starts
+     */
     private void updateTripCountdown() {
         if (selectedTrip == null || selectedTrip.getStartDate() == null) {
             tripCountdown.setText("No trip selected");
