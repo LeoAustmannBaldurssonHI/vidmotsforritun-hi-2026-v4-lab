@@ -70,19 +70,12 @@ ___
 > Búðu til tvö ný ferðalög af þinnri eigin valkosti, þú ræðir hvort þú villt setja inn einhvern optional upplýsing inn eða ekki.
 
 ## Verk 3
-> Skoðaðu annarhvor ferð og athuga ef öll upplýsingar séu rétt. Ef þeir eru, þá skaltu ekki gera neitt, ef það er mistök þá ýttu á "edit trip" til að laga þess
+> Skoðaðu annarhvor ferð og athuga ef öll upplýsingar séu rétt. Ef þeir eru, þá skaltu ekki gera neitt, ef það er mistök þá ýttu á "edit trip" til að laga þess.
+> 
+> Ef allt er í góðri standi skaltu þá að breyta upplýsingum um einn af þínnri ferðalögum.
 
 ## Verk 4
-> Breytu byrjunar dagsetningu til einhvern dags. Síðan breytu endurnardagsetninguna.
+> Eyddu ferðalagið út úr reikinguna þína.
 
 ## Verk 5
-> Eyddu einn af þessari ferðalögum.
-
-## Verk 6
-> Skráðu út úr reikinguna þína.
-
-## Verk 7
-> Skráðu inn aftur reikinguna þína, síðan áttur að eyða þína reiking.
-
-## Verk 8
-> Búðu aftur til reikinguna þína.
+> Skráðu út úr reikinguna þína. Síðna skráðu inn aftur reikinguna þína. Seinasta skrefið í þessu væri að eyða reikinguna þína út úr kerfinu, og síðan búa hann til aftur.
