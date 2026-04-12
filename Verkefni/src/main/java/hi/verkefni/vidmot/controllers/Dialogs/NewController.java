@@ -1,26 +1,29 @@
 package hi.verkefni.vidmot.controllers;
 
+// FXMl & Scene imports
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.geometry.VPos;
 
+// Binding imports
 import javafx.beans.binding.*;
 
+// Vinnsla imports
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
+import hi.verkefni.vidmot.vinnsla.Trips.*;
 
 import hi.verkefni.vidmot.switcher.*;
 
+// Date imports
 import java.time.LocalDate;
 
-import hi.verkefni.vidmot.vinnsla.Trips.*;
-
+// Alert & optional imports
 import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+// IO Imports
 import java.io.IOException;
 
 public class NewController {
@@ -105,6 +108,22 @@ public class NewController {
 
             dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL); // Tökum út default takarnar
             dialog.getDialogPane().getButtonTypes().addAll(confirm, optional, cancel); // Notum okkar frekar
+
+            Button confirmButton = (Button) dialog.getDialogPane().lookupButton(confirm);
+            Button optionalButton = (Button) dialog.getDialogPane().lookupButton(optional);
+            Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancel);
+
+            confirmButton.getStyleClass().add(
+                    "confirmDialogButton"
+            );
+
+            optionalButton.getStyleClass().add(
+                    "optionalDialogButton"
+            );
+
+            cancelButton.getStyleClass().add(
+                    "cancelDialogButton"
+            );
 
             Optional<ButtonType> result = dialog.showAndWait();
 

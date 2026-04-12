@@ -1,25 +1,30 @@
 package hi.verkefni.vidmot.controllers;
 
+// FXML & Scene imports
 import javafx.fxml.FXML;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+// Bindings imports
 import javafx.beans.binding.*;
 import javafx.beans.property.*;
 
+// Vinnsla imports
 import hi.verkefni.vidmot.vinnsla.Trips.Trip;
 import hi.verkefni.vidmot.vinnsla.Trips.TripPlan;
-
-import hi.verkefni.vidmot.switcher.Switcher;
-import hi.verkefni.vidmot.switcher.View;
-
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
+// Switcher imports
+import hi.verkefni.vidmot.switcher.Switcher;
+import hi.verkefni.vidmot.switcher.View;
+
+// Optional imports
 import java.util.Optional;
 
+// IO imports
 import java.io.IOException;
 
 public class MainController {

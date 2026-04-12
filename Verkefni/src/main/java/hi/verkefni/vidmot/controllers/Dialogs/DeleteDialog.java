@@ -1,20 +1,24 @@
 package hi.verkefni.vidmot.controllers;
 
+// FXML, Scene & Binding import
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-
 import javafx.beans.binding.*;
 
+// Vinnsla imports
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 import hi.verkefni.vidmot.vinnsla.Trips.*;
+
+// Switcher import
 import hi.verkefni.vidmot.switcher.Switcher;
 import hi.verkefni.vidmot.switcher.View;
 
+// Optional imports
 import java.util.Optional;
 
+// IO imports
 import java.io.IOException;
 
 public class DeleteDialog {
@@ -35,8 +39,8 @@ public class DeleteDialog {
             Dialog<ButtonType> dialog = new Dialog<>();
 
             dialog.setTitle("Delete trip");
-            dialog.setHeaderText(selectedTrip.getTitle());
-            dialog.setContentText("Are you sure you wanna do this?");
+            dialog.setHeaderText("Deleting: " + selectedTrip.getTitle());
+            dialog.setContentText("Are you sure that you wanna delete this trip?");
 
             ButtonType confirm = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -46,8 +50,8 @@ public class DeleteDialog {
 
             Optional<ButtonType> result = dialog.showAndWait();
             if(result.isPresent() && result.get() == confirm) {
-                TripPlan.getInstance().removeTrip(selectedTrip);
-                Account.getCurrentAccount().removeTripFromAccount(selectedTrip);
+                TripPlan.getInstance().removeTrip(selectedTrip); // static
+                Account.getCurrentAccount().removeTripFromAccount(selectedTrip); // static
                 System.out.println("Trip has been deleted");
                 done = true;
                 dialog.close();

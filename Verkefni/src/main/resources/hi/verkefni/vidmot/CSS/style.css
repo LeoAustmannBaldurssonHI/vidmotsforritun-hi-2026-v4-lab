@@ -105,9 +105,7 @@
  * dialogs
  */
 
-/* Universal dialog */
-
-.confirmDialogButton, .specialCancelDialogButton, .deleteButtonDialog, .logOutButton, .logOutButtonDialog {
+.confirmDialogButton, .optionalDialogButton, .specialCancelDialogButton, .deleteButtonDialog, .logOutButton, .logOutButtonDialog {
     -fx-background-color: #499AD1;
     -fx-text-fill: black;
     -fx-background-radius: 10;

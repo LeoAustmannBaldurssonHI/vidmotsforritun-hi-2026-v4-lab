@@ -122,7 +122,8 @@ public class Account {
         String numbers = "0123456789";
         boolean hasSpecial = false;
         boolean hasNumber = false;
-        boolean hasLetter = false;
+        boolean hasLower = false;
+        boolean hasUpper = false;
 
         if(password.length() < 6) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -134,6 +135,24 @@ public class Account {
             alert.showAndWait();
             return false;
         }
+
+        // Is the user password apart of the common password pattern? Won't put every single one, only the most common one
+        String lowerPass = password.toLowerCase();
+        System.out.println(lowerPass);
+        if(lowerPass.matches(".*password.*") || lowerPass.matches(".*qwerty.*") || lowerPass.matches(".*admin.*") || lowerPass.matches(".*1234.*") || lowerPass.matches(".*abcdef.*")) {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setWidth(400);
+
+            alert.setTitle("Password error");
+            alert.setHeaderText("Common password");
+            alert.setContentText("The password you gave is apart of a common pattern.\nThis password is weak, pick a new password to use for your account.");
+
+            alert.showAndWait();
+            return false;
+        }
+
+        boolean validPassword = false;
         for(int charCheck = 0; charCheck < password.length(); charCheck++) {
             if (specialChars.indexOf(password.charAt(charCheck)) != -1) {
                 hasSpecial = true;
@@ -141,12 +160,16 @@ public class Account {
             if (numbers.indexOf(password.charAt(charCheck)) != -1) {
                 hasNumber = true;
             }
-            if(password.contains(".*[a-zA-Z].*")) {
-                hasLetter = true;
+            if(password.matches(".*[a-z].*")) {
+                hasLower = true;
             }
+            if(password.matches(".*[A-Z].*")) {
+                hasUpper = true;
+            }
+            validPassword = hasUpper && hasLower && hasNumber && hasSpecial;
         }
 
-        if(hasSpecial && hasNumber && hasLetter) {
+        if(validPassword) {
             return true;
         } else if(!hasSpecial) {
             Alert alert = new Alert(AlertType.ERROR);
@@ -166,12 +189,21 @@ public class Account {
 
             alert.showAndWait();
             return false;
-        } else if(!hasLetter){
+        } else if(!hasLower){
             Alert alert = new Alert(AlertType.ERROR);
 
             alert.setTitle("Account creation error");
             alert.setHeaderText("Error: Missing a letter in the password");
-            alert.setContentText("Your password is missing a letter in it!");
+            alert.setContentText("Your password is missing a lowercase letter in it!");
+
+            alert.showAndWait();
+            return false;
+        } else if(!hasUpper) {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("Account creation error");
+            alert.setHeaderText("Error: Missing a letter in the password");
+            alert.setContentText("Your password is missing a uppercase letter in it!");
 
             alert.showAndWait();
             return false;
@@ -231,7 +263,15 @@ public class Account {
             System.out.println("Account already exists");
             return false;
         }
-        if (passwordValidator(password)) {
+        if(account.isBlank() || account.matches("admin")) {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("Account creation error");
+            alert.setHeaderText("Invalid username given");
+            alert.setContentText("The username you put for your account is invalid.\nThe username:" + account + " is not allowed");
+
+            alert.showAndWait();
+        } else if (passwordValidator(password)) {
             System.out.println("Valid password created");
 
             ObjectNode accountInfo = map.createObjectNode();
@@ -258,6 +298,7 @@ public class Account {
             System.out.println("Invalid password created");
             return false;
         }
+        return false;
     }
 
     /**

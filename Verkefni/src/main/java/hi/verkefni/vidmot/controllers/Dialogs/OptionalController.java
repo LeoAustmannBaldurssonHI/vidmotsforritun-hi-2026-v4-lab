@@ -55,6 +55,10 @@ public class OptionalController {
         while (!done) {
             Dialog<ButtonType> dialog = new Dialog<>();
 
+            dialog.getDialogPane().getStylesheets().add(
+                    getClass().getResource(CSS).toExternalForm()
+            );
+
             dialog.setTitle("Trip creation - Optionals");
 
             GridPane grid = new GridPane();
@@ -105,6 +109,9 @@ public class OptionalController {
             car.setText("Rental car booked?");
             work.setText("Work trip?");
             groupLabel.setText("How many people will be in your trip?");
+            flightCostLabel.setText("Flight cost");
+            hotelCostLabel.setText("Hotel cost");
+            carCostLabel.setText("Car cost");
 
             groupSize.setPrefWidth(50);
 
@@ -131,6 +138,17 @@ public class OptionalController {
 
             dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL); // Tökum út default takarnar
             dialog.getDialogPane().getButtonTypes().addAll(confirm, cancel); // Notum okkar frekar
+
+            Button confirmButton = (Button) dialog.getDialogPane().lookupButton(confirm);
+            Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancel);
+
+            confirmButton.getStyleClass().add(
+                    "confirmDialogButton"
+            );
+
+            cancelButton.getStyleClass().add(
+                    "cancelDialogButton"
+            );
 
             // debuggers
             hotelBox.selectedProperty().addListener((obs, oldVal, newVal) -> debugStatus());

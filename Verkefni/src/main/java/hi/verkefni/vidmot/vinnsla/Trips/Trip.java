@@ -188,8 +188,8 @@ public class Trip {
     }
 
     private String overflow(String input) {
-        if(input.length() > 12) {
-            return input.substring(0, 12) + "...";
+        if(input.length() > 16) {
+            return input.substring(0, 16) + "...";
         }
         return input;
     }
@@ -200,8 +200,8 @@ public class Trip {
      */
     @Override
     public String toString() {
-        return overflow(getTitle()) + "\t".repeat(2) + getDestination() + "\t".repeat(2)
-                + stringifyDate(getStartDate()) + "\t".repeat(2)
-                + stringifyDate(getEndDate()) + "\t".repeat(2) + getTotalCost();
+        return overflow(getTitle()) + "\t".repeat(3) + getDestination() + "\t".repeat(3)
+                + stringifyDate(getStartDate()) + "\t".repeat(3)
+                + stringifyDate(getEndDate()) + "\t".repeat(3) + getTotalCost();
     }
 }

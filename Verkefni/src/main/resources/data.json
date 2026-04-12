@@ -2,7 +2,7 @@
   "Accounts" : [ {
     "AccountInfo" : {
       "name" : "Leó Austmann Baldursson",
-      "password" : "icesave2006"
+      "password" : "ICEsave2005**"
     },
     "Trips" : [ {
       "title" : "Sabaton skemmtun",
@@ -17,58 +17,6 @@
         "groupSize" : "2",
         "cost" : {
           "hotel cost" : "0kr",
-          "flight cost" : "0kr",
-          "car cost" : "0kr"
-        }
-      }
-    } ]
-  }, {
-    "AccountInfo" : {
-      "name" : "Ebba Þóra Hvannberg",
-      "password" : "hbv201g"
-    },
-    "Trips" : [ ]
-  }, {
-    "AccountInfo" : {
-      "name" : "Jón Jónsson",
-      "password" : "passowrd"
-    },
-    "Trips" : [ ]
-  }, {
-    "AccountInfo" : {
-      "name" : "admin",
-      "password" : "admin"
-    },
-    "Trips" : [ {
-      "title" : "adminTesting",
-      "destination" : "admin city, moderland",
-      "startDate" : "12.06.2105",
-      "endDate" : "11.07.2106",
-      "optionals" : {
-        "hotel" : false,
-        "car" : true,
-        "flights" : true,
-        "work" : false,
-        "groupSize" : "2",
-        "cost" : {
-          "hotel cost" : "0kr",
-          "flight cost" : "7500kr",
-          "car cost" : "129kr"
-        }
-      }
-    }, {
-      "title" : "test",
-      "destination" : "test, test",
-      "startDate" : "16.04.2026",
-      "endDate" : "22.04.2026",
-      "optionals" : {
-        "hotel" : true,
-        "car" : false,
-        "flights" : false,
-        "work" : true,
-        "groupSize" : "5",
-        "cost" : {
-          "hotel cost" : "5000kr",
           "flight cost" : "0kr",
           "car cost" : "0kr"
         }

@@ -1,21 +1,26 @@
 package hi.verkefni.vidmot.controllers;
 
+// FXML & Scene imports
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.geometry.VPos;
 
+// Binding imports
 import javafx.beans.binding.*;
+import java.util.Optional;
 
+// Vinnsla imports
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
-import java.util.Optional;
+// Switcher import
+import hi.verkefni.vidmot.switcher.*;
 
+// IO Imports
 import java.io.IOException;
 
 public class SignUpController {
+    private final String CSS = "/hi/verkefni/vidmot/CSS/style.css";
     private final int HEIGHTCUTOFF = 50;
     private final int WIDTHCUTFOFF = 300;
 
@@ -27,6 +32,11 @@ public class SignUpController {
         boolean isDone = false;
         while(!isDone) {
             Dialog<ButtonType> dialog = new Dialog<>();
+
+            dialog.getDialogPane().getStylesheets().add(
+                    getClass().getResource(CSS).toExternalForm()
+            );
+
             dialog.setTitle("Sign up");
 
             TextField username = new TextField();
@@ -62,8 +72,18 @@ public class SignUpController {
 
             dialog.getDialogPane().getButtonTypes().addAll(confirm, cancel);
 
+            Button confirmButton = (Button) dialog.getDialogPane().lookupButton(confirm);
+            Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancel);
+
+            confirmButton.getStyleClass().add(
+                    "confirmDialogButton"
+            );
+
+            cancelButton.getStyleClass().add(
+                    "cancelDialogButton"
+            );
+
             Optional<ButtonType> result = dialog.showAndWait();
-            System.out.println(result.get());
 
             if(result.isEmpty() || result.get() == cancel) {
                 isDone = true;
@@ -78,7 +98,6 @@ public class SignUpController {
                     String addPassword = password.getText();
                     savedUsername = addUser;
                     savedPassword = addPassword;
-                    boolean adder = acc.newAccount(addUser, addPassword);
 
                     if(acc.accountExists(addUser)) {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -88,9 +107,11 @@ public class SignUpController {
                         continue;
                     }
 
+                    boolean adder = acc.newAccount(addUser, addPassword);
+
                     if(adder) {
-                        dialog.close();
                         isDone = true;
+                        dialog.close();
                         return acc.getSignedAccountName();
                     }
                 } catch(Exception e) {

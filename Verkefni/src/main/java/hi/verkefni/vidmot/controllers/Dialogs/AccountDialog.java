@@ -1,21 +1,23 @@
 package hi.verkefni.vidmot.controllers;
 
+// FXMl & Scene imports
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+// Binding imports
 import javafx.beans.binding.*;
 
+// Vinnsla & Switcher imports
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.switcher.Switcher;
 import hi.verkefni.vidmot.switcher.View;
 
+// Optional imports
 import java.util.Optional;
 
+// IO Imports
 import java.io.IOException;
-
-// do later...
 
 public class AccountDialog {
     private final String CSS = "/hi/verkefni/vidmot/CSS/style.css";
@@ -38,6 +40,16 @@ public class AccountDialog {
             );
 
             GridPane grid = new GridPane(); // declared early
+
+            Label warning = new Label("Choose between the two actions");
+            Label option1 = new Label("Log out: Signs out of the current account");
+            Label option2 = new Label("Delete account: Delete's the current account");
+
+            grid.add(warning, 0, 0);
+            grid.add(option1, 0, 1);
+            grid.add(option2, 0, 2);
+
+            dialog.getDialogPane().setContent(grid);
 
             dialog.setTitle("Account Management");
 
@@ -94,8 +106,10 @@ public class AccountDialog {
                         "specialCancelDialogButton"
                 );
 
+                deleteDialog.setWidth(600);
+
                 deleteDialog.setTitle("Account Deletion");
-                deleteDialog.setContentText("Warning: You're about to do something that is irrversable. If press on " +
+                deleteDialog.setContentText("Warning: You're about to do something that is irrversable. \nIf press on " +
                         "confirm, the account will be deleted from our system permanently and cannot be retrieved.");
 
                 Optional<ButtonType> deleteResult = deleteDialog.showAndWait();
