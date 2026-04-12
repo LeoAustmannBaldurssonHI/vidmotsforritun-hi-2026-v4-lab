@@ -82,7 +82,7 @@ ___
 > Skráðu út úr reikinguna þína.
 
 ## Verk 7
-> Skráðu inn aftur reikinguna þína, síðan áttur að eyða þína reiking út úr kerfinu sjálft.
+> Skráðu inn aftur reikinguna þína, síðan áttur að eyða þína reiking.
 
 ## Verk 8
 > Búðu aftur til reikinguna þína.
