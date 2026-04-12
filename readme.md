@@ -1,14 +1,13 @@
 # Java Trip Assistance (JTA)
 ___
 ## Introduction
-Þessari verkefni er byggt á gömlu verkefni frá Viðmótsforritun 2026, 
-þar sem að við áttum að hanna okkur ferðalag planner.
- Í honum var okkar gefið að þurfti að sjá "Naf", "Áætlunarstað" og "Dagsetning".
+Þetta verkefni byggir á eldri verkefni úr áfanganum Viðmótsforritun 2026, þar sem markmiðið var að hanna einfalt ferðaplanunarforrit.
+Í því verkefni þurfti að birta grunnupplýsingar eins og:
+- Titill
+- Áfangastaður
+- Dagsetning
 
-Þessari verkefni mundi byggja á að gera svoleiðis stærri vinnu á að plana ferðalögum.
-Þar sem að notendi getur skráð sér inn í kerfinu til að fá sér sinn eigin ferð
-og annar notendi fær sínar.
-
+Þessari útgáfu verður verkefnið þróað til að handla betur við stærri ferðalögum, og leyfa notendum að setja upp allskonar upplýsingum sem kemur alltaf fram þegar það er unnið við að skipulegga ferðum.
 ---
 
 ## About
@@ -18,13 +17,9 @@ og annar notendi fær sínar.
 
 - Q: Hvernig virkar það?
 > A: Manneskja skrár sér inn með þeirri eigin reiking, eða býr til nýja reiking til að komast inn í main view. Ef manneskjan ætlar að skipulega nýtt ferð þá verður ýtt á hnappan "New Trip", sem krefur notendur að slá nokkrar upplýsingum. Manneskjan getur líka skrá inn valkost upplýsingum með því að ýta á "Optionals".
-> 
 
 - Q: Ég vill eyða reikinguna mína út, er það hægt?
 > A: Já, það er hægt að gera því. Manneskjan skrár sér inn í reikingin og síðan þegar hann er komin í main-view þarf hann að ýta á hnappan sem er með "gír" mynd á sér, þarna velur hann milli að skrá sér út eða eyða reikingu út, og síðan staðfestir hann hvort að hann vill að gera þess.
-
-- Q: x
-> A: x
 
 ---
 
