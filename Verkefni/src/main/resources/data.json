@@ -56,6 +56,23 @@
           "car cost" : "129kr"
         }
       }
+    }, {
+      "title" : "t",
+      "destination" : "t, t",
+      "startDate" : "19.04.2026",
+      "endDate" : "30.04.2026",
+      "optionals" : {
+        "hotel" : false,
+        "car" : false,
+        "flights" : false,
+        "work" : false,
+        "groupSize" : "0",
+        "cost" : {
+          "hotel cost" : "0kr",
+          "flight cost" : "0kr",
+          "car cost" : "0kr"
+        }
+      }
     } ]
   } ]
 }

@@ -41,9 +41,9 @@ public class LoginController {
             Label passwordLabel = new Label();
 
             username.setPromptText("Username");
-            usernameLabel.setText("test");
+            usernameLabel.setText("Insert username");
             password.setPromptText("Password");
-            passwordLabel.setText("test2");
+            passwordLabel.setText("Insert password");
 
             GridPane rootGrid = new GridPane();
 

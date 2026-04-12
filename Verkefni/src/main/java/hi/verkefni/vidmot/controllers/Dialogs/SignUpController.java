@@ -19,6 +19,9 @@ public class SignUpController {
     private final int HEIGHTCUTOFF = 50;
     private final int WIDTHCUTFOFF = 300;
 
+    private String savedUsername;
+    private String savedPassword;
+
     @FXML
     public String signUpDialog() {
         boolean isDone = false;
@@ -32,9 +35,12 @@ public class SignUpController {
             Label passwordLabel = new Label();
 
             username.setPromptText("Username");
-            usernameLabel.setText("test");
+            usernameLabel.setText("Insert username");
             password.setPromptText("Password");
-            passwordLabel.setText("test2");
+            passwordLabel.setText("Insert password");
+
+            if(savedPassword != null) password.setText(savedPassword);
+            if(savedUsername != null) username.setText(savedUsername);
 
             GridPane rootGrid = new GridPane();
 
@@ -70,22 +76,22 @@ public class SignUpController {
                     Account acc = new Account();
                     String addUser = username.getText();
                     String addPassword = password.getText();
+                    savedUsername = addUser;
+                    savedPassword = addPassword;
                     boolean adder = acc.newAccount(addUser, addPassword);
+
+                    if(acc.accountExists(addUser)) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Signup failed");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Account with this name already exists");
+                        continue;
+                    }
 
                     if(adder) {
                         dialog.close();
                         isDone = true;
                         return acc.getSignedAccountName();
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Signup failed");
-                        alert.setHeaderText(null);
-                        if(acc.accountExists(addUser)) {
-                            alert.setContentText("Account with this name already exists");
-                        } else {
-                            alert.setContentText("Password is not valid by our standards.");
-                        }
-                        alert.showAndWait();
                     }
                 } catch(Exception e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);

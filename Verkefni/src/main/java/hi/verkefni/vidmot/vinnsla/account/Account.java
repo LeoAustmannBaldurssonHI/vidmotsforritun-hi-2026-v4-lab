@@ -24,6 +24,10 @@ import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 // Date import
 import java.time.LocalDate;
 
+// Alert import
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class Account {
     private final ObjectMapper map = new ObjectMapper();
     private final File file = new File("src/main/resources/data.json");
@@ -34,7 +38,7 @@ public class Account {
     private static JsonNode currentSignedAccount;
     private static boolean AccountSignedIn = false;
     private static Account currentAccount;
-    TimeManager tm = new TimeManager();
+    private TimeManager tm = new TimeManager();
 
     /**
      * Constructs a default account.
@@ -105,6 +109,7 @@ public class Account {
      * <p>
      * The password must meet the following security requirements: </p>
      * <ul>
+     *     <li>Must contain a letter</li>
      *   <li>At least 6 characters long</li>
      *   <li>Contains at least one special character</li>
      *   <li>Contains at least one number</li>
@@ -117,8 +122,18 @@ public class Account {
         String numbers = "0123456789";
         boolean hasSpecial = false;
         boolean hasNumber = false;
+        boolean hasLetter = false;
 
-        if(password.length() < 6) return false;
+        if(password.length() < 6) {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("Password error");
+            alert.setHeaderText("Length error");
+            alert.setContentText("Your password is too short to be valid!");
+
+            alert.showAndWait();
+            return false;
+        }
         for(int charCheck = 0; charCheck < password.length(); charCheck++) {
             if (specialChars.indexOf(password.charAt(charCheck)) != -1) {
                 hasSpecial = true;
@@ -126,13 +141,42 @@ public class Account {
             if (numbers.indexOf(password.charAt(charCheck)) != -1) {
                 hasNumber = true;
             }
+            if(password.contains(".*[a-zA-Z].*")) {
+                hasLetter = true;
+            }
         }
 
-        if(hasSpecial && hasNumber){
+        if(hasSpecial && hasNumber && hasLetter) {
             return true;
-        } else {
+        } else if(!hasSpecial) {
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("Account creation error");
+            alert.setHeaderText("Error: Missing special characters in the password");
+            alert.setContentText("Your password is missing special characters in it!");
+
+            alert.showAndWait();
+            return false;
+        } else if(!hasNumber){
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("Account creation error");
+            alert.setHeaderText("Error: Missing number in the password");
+            alert.setContentText("Your password is missing numbers in it!");
+
+            alert.showAndWait();
+            return false;
+        } else if(!hasLetter){
+            Alert alert = new Alert(AlertType.ERROR);
+
+            alert.setTitle("Account creation error");
+            alert.setHeaderText("Error: Missing a letter in the password");
+            alert.setContentText("Your password is missing a letter in it!");
+
+            alert.showAndWait();
             return false;
         }
+        return false;
     }
 
     /**

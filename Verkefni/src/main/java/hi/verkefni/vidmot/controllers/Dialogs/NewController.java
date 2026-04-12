@@ -33,7 +33,6 @@ public class NewController {
     private String savedTitle, savedDestination, savedCity, savedCountry;
     private LocalDate savedStart, savedEnd;
 
-
     public Trip createTrip() throws IOException {
         boolean done = false;
 
@@ -190,6 +189,10 @@ public class NewController {
                         trip.setDestination(savedCity + ", " + savedCountry); // putting them together as one
                         trip.setStartDate(savedStart);
                         trip.setEndDate(savedEnd);
+                        trip.setSize("0");
+                        trip.setCarCost("0kr");
+                        trip.setHotelCost("0kr");
+                        trip.setFlightCost("0kr");
                     }
 
                     if(options != null) {

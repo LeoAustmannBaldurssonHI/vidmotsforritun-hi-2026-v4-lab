@@ -74,27 +74,31 @@ public class OptionalController {
             Label car = new Label();
             Label work = new Label();
             Label cost = new Label();
-            Label hotelCost = new Label();
-            Label flightCost = new Label();
-            Label carCost = new Label();
+            Label hotelCostLabel = new Label();
+            Label flightCostLabel = new Label();
+            Label carCostLabel = new Label();
             Label groupLabel = new Label();
 
             grid.add(hotel, 0, 0);
-            grid.add(flight, 0, 1);
-            grid.add(car, 0, 2);
+            grid.add(flight, 1, 0);
+            grid.add(car, 2, 0);
             grid.add(work, 0, 3);
 
-            grid.add(hotelBox, 1, 0);
+            grid.add(hotelBox, 0, 1);
             grid.add(flightBox, 1, 1);
-            grid.add(carBox, 1, 2);
-            grid.add(workBox, 1, 3);
+            grid.add(carBox, 2, 1);
+            grid.add(workBox, 0, 4);
 
-            grid.add(groupLabel, 0, 4);
-            grid.add(groupSize, 1, 4);
+            grid.add(groupLabel, 0, 5);
+            grid.add(groupSize, 1, 5);
+            GridPane.setColumnSpan(groupSize, 2);
 
-            /*grid.add(cost, 0, 5);
-            grid.add(groupLabel, 0, 6);
-            grid.add(groupSize, 1, 6);*/
+            grid.add(hotelCostLabel, 0, 6);
+            grid.add(flightCostLabel, 1, 6);
+            grid.add(carCostLabel, 2, 6);
+            grid.add(hotelCost, 0, 7);
+            grid.add(flightCost, 1, 7);
+            grid.add(carCost, 2, 7);
 
             hotel.setText("Hotel booked?");
             flight.setText("Flights booked?");
@@ -103,6 +107,10 @@ public class OptionalController {
             groupLabel.setText("How many people will be in your trip?");
 
             groupSize.setPrefWidth(50);
+
+            hotelCost.disableProperty().bind(hotelBox.selectedProperty().not());
+            flightCost.disableProperty().bind(flightBox.selectedProperty().not());
+            carCost.disableProperty().bind(carBox.selectedProperty().not());
 
             dialog.getDialogPane().setContent(grid);
 
