@@ -8,6 +8,7 @@ ___
 - Dagsetning
 
 Þessari útgáfu verður verkefnið þróað til að handla betur við stærri ferðalögum, og leyfa notendum að setja upp allskonar upplýsingum sem kemur alltaf fram þegar það er unnið við að skipulegga ferðum.
+
 ---
 
 ## About
