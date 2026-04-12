@@ -4,23 +4,6 @@
       "name" : "Leó Austmann Baldursson",
       "password" : "ICEsave2005**"
     },
-    "Trips" : [ {
-      "title" : "Sabaton skemmtun",
-      "destination" : "Split, Króatía",
-      "startDate" : "08.06.2026",
-      "endDate" : "18.06.2026",
-      "optionals" : {
-        "hotel" : true,
-        "car" : true,
-        "flights" : true,
-        "work" : false,
-        "groupSize" : "2",
-        "cost" : {
-          "hotel cost" : "0kr",
-          "flight cost" : "0kr",
-          "car cost" : "0kr"
-        }
-      }
-    } ]
+    "Trips" : [ ]
   } ]
 }
