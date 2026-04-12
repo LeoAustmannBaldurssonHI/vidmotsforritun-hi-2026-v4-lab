@@ -121,17 +121,29 @@ public class ViewController implements DataInterface {
         }
     }
 
-    public void deleteTrip() {
-        if(acc != null) {
-            // idk?
-        }
+    @FXML
+    public void directDelete() throws IOException {
+        DeleteDialog delete = new DeleteDialog(selectedTrip);
     }
 
     /**
      * Fer til baka til main-view.fxml (eða annarsvegar ef breytt)
      */
     @FXML
-    private void goHome() {
+    private void directHome() {
         Switcher.switchTo(View.MAIN, false, null);
+    }
+
+    @FXML
+    private void directEdit() {
+        if(selectedTrip == null) return;
+
+        Switcher.switchTo(View.EDIT, false, selectedTrip);
+    }
+
+    @FXML
+    private void directNew() throws IOException {
+        NewController create = new NewController();
+        create.createTrip();
     }
 }

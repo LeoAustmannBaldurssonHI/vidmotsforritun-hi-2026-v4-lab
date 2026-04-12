@@ -3,6 +3,8 @@ package hi.verkefni.vidmot.vinnsla.Trips;
 import javafx.beans.property.*; // frekar að import allt en hafa 5 sitthvort imports.
 import java.time.LocalDate;
 
+import hi.verkefni.vidmot.vinnsla.TimeManagement.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Trip {
@@ -10,6 +12,7 @@ public class Trip {
     private LocalDate startDate, endDate;
     private BooleanProperty car, flight, hotel, work;
     private JsonNode tripNodes;
+    private TimeManager tm = new TimeManager();
 
     public Trip() {
         this.title = new SimpleStringProperty();
@@ -180,12 +183,25 @@ public class Trip {
         this.flightCost.set(flightCost);
     }
 
+    private String stringifyDate(LocalDate date) {
+        return tm.formatDate(date);
+    }
+
+    private String overflow(String input) {
+        if(input.length() > 12) {
+            return input.substring(0, 12) + "...";
+        }
+        return input;
+    }
+
     /**
      * The string method for the trip when displaying the content.
      * @return a card for out trip in the listview.
      */
     @Override
     public String toString() {
-        return getTitle() + "\t".repeat(2)+ getDestination() + "\t".repeat(2) + getStartDate() + "\t".repeat(2) + getEndDate() + "\t".repeat(2) + getTotalCost();
+        return overflow(getTitle()) + "\t".repeat(2) + getDestination() + "\t".repeat(2)
+                + stringifyDate(getStartDate()) + "\t".repeat(2)
+                + stringifyDate(getEndDate()) + "\t".repeat(2) + getTotalCost();
     }
 }

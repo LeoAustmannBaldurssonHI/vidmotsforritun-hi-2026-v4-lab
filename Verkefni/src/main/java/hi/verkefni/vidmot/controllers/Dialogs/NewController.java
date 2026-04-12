@@ -11,6 +11,8 @@ import javafx.beans.binding.*;
 import hi.verkefni.vidmot.vinnsla.account.Account;
 import hi.verkefni.vidmot.vinnsla.TimeManagement.TimeManager;
 
+import hi.verkefni.vidmot.switcher.*;
+
 import java.time.LocalDate;
 
 import hi.verkefni.vidmot.vinnsla.Trips.*;
@@ -209,6 +211,7 @@ public class NewController {
 
                     TripPlan.getInstance().getTrips().add(trip);
                     Account.getCurrentAccount().addTripToAccount(trip);
+                    Switcher.switchTo(View.MAIN, false, null);
                     return trip;
                 } catch (java.lang.Exception e) {
                     e.printStackTrace();

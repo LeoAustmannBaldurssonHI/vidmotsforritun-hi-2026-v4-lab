@@ -15,18 +15,18 @@ public class TimeManager {
     }
 
     /**
-     *
+     * Turns a local date into a string
      * @param date
-     * @return
+     * @return date in a string
      */
     public String formatDate(LocalDate date) {
         return date.format(formatter);
     }
 
     /**
-     *
+     * Ensures that the date being inputted is following the formatter.
      * @param input
-     * @return
+     * @return date
      */
     public LocalDate parseDate(String input) {
         return LocalDate.parse(input, formatter);
@@ -44,15 +44,6 @@ public class TimeManager {
         } catch (DateTimeParseException e) {
             return false;
         }
-    }
-
-    /**
-     * Returns a sorted list of dates. If the dates are out of the current time, they wlll not be accepted
-     * @param dates to sort
-     * @return sorted list of dates
-     */
-    public List<LocalDate> getSortedDates(List<LocalDate> dates) {
-        return dates.stream().filter(date -> !date.isBefore(LocalDate.now())).sorted().toList();
     }
 
     /**

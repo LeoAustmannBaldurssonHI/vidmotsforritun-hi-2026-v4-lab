@@ -11,7 +11,7 @@
    <children>
       <VBox layoutY="514.0" prefHeight="72.0" prefWidth="1000.0">
          <children>
-            <HBox fx:id="viewButtonsManagementLABELS" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="250.0">
+            <HBox fx:id="viewButtonsManagementLABELS" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="245.0">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Want to add a new trip?">
                      <font>
@@ -30,19 +30,19 @@
                   </Label>
                </children>
             </HBox>
-            <HBox fx:id="viewButtonsManagement" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="285.0">
+            <HBox fx:id="viewButtonsManagement" alignment="CENTER" prefHeight="23.0" prefWidth="1000.0" spacing="330.0">
                <children>
-                  <Button fx:id="view_newTrip" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="New Trip">
+                  <Button fx:id="view_newTrip" alignment="CENTER" mnemonicParsing="false" onAction="#directNew" styleClass="buttons" text="New Trip">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="view_deleteTrip" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="Delete Trip">
+                  <Button fx:id="view_deleteTrip" alignment="CENTER" mnemonicParsing="false" onAction="#directDelete" styleClass="buttons" text="Delete Trip">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="view_editTrip" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="Edit Trip">
+                  <Button fx:id="view_editTrip" alignment="CENTER" mnemonicParsing="false" onAction="#directEdit" styleClass="buttons" text="Edit Trip">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -58,7 +58,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="homePage" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goHome" prefHeight="69.0" prefWidth="79.0" styleClass="userHeader_homeButton" stylesheets="@CSS/style.css">
+            <Button fx:id="homePage" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#directHome" prefHeight="69.0" prefWidth="79.0" styleClass="userHeader_homeButton" stylesheets="@CSS/style.css">
                <font>
                   <Font size="18.0" />
                </font>
