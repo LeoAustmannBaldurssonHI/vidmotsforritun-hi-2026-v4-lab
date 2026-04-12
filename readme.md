@@ -53,29 +53,3 @@ ___
 > Þegar manneskjan er búin með þess og býr til nýja reiking / log inn, þá á að birtast main-view og nafni þeirra efst.
 
 ---
-
-## Notendurprófarnir
-
----
-
-### Verk 1:
-> Þegar þú opnar forritið og sér "login", farðu að búa til nýja reiking með því að velja
-> "Sign Up" hnappan. Nýja reikingurinn á að innihalda
-> - Nafnið þitt 
-> - Lykillorð af þinnri val
-> 
-> Eftir að staðfesta nýja reiking, þú átt að vera færður till main-view
-
-### Verk 2:
-> Búðu til tvö ný ferðalög af þinnri eigin valkosti, þú ræðir hvort þú villt setja inn einhvern optional upplýsing inn eða ekki.
-
-### Verk 3
-> Skoðaðu annarhvor ferð og athuga ef öll upplýsingar séu rétt. Ef þeir eru, þá skaltu ekki gera neitt, ef það er mistök þá ýttu á "edit trip" til að laga þess.
-> 
-> Ef allt er í góðri standi skaltu þá að breyta upplýsingum um einn af þínnri ferðalögum.
-
-### Verk 4
-> Eyddu ferðalagið út úr reikinguna þína.
-
-### Verk 5
-> Skráðu út úr reikinguna þína. Síðna skráðu inn aftur reikinguna þína. Seinasta skrefið í þessu væri að eyða reikinguna þína út úr kerfinu, og síðan búa hann til aftur.
