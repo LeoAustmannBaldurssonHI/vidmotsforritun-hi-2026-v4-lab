@@ -146,7 +146,7 @@ public class Account {
 
             alert.setTitle("Password error");
             alert.setHeaderText("Common password");
-            alert.setContentText("The password you gave is apart of a common pattern.\nThis password is weak, pick a new password to use for your account.");
+            alert.setContentText("The password you gave is apart of a common pattern.\nThis password is considered weak, pick a new password to use for your account.");
 
             alert.showAndWait();
             return false;
@@ -171,7 +171,7 @@ public class Account {
 
         if(validPassword) {
             return true;
-        } else if(!hasSpecial) {
+        } else if(!hasSpecial && !hasSpecial) {
             Alert alert = new Alert(AlertType.ERROR);
 
             alert.setTitle("Account creation error");
@@ -180,7 +180,7 @@ public class Account {
 
             alert.showAndWait();
             return false;
-        } else if(!hasNumber){
+        } else if(!hasNumber && !hasNumber){
             Alert alert = new Alert(AlertType.ERROR);
 
             alert.setTitle("Account creation error");
@@ -198,7 +198,7 @@ public class Account {
 
             alert.showAndWait();
             return false;
-        } else if(!hasUpper) {
+        } else if(!hasUpper && (!hasLower || !hasUpper)) {
             Alert alert = new Alert(AlertType.ERROR);
 
             alert.setTitle("Account creation error");

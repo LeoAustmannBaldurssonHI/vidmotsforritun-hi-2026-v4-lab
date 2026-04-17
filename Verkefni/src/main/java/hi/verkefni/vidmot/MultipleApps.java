@@ -28,6 +28,7 @@ public class MultipleApps extends Application {
             Scene scene = new Scene(root);
             hi.verkefni.vidmot.switcher.Switcher.setScene(scene);
 
+            stage.setResizable(false); // disable resizing
             stage.setScene(scene);
             stage.setTitle("Java Trip Assistance");
             stage.show();

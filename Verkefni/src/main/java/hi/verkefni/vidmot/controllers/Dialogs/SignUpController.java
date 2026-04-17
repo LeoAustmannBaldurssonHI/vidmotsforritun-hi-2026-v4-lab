@@ -4,6 +4,7 @@ package hi.verkefni.vidmot.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.geometry.Pos;
 
 // Binding imports
 import javafx.beans.binding.*;
@@ -49,19 +50,33 @@ public class SignUpController {
             password.setPromptText("Password");
             passwordLabel.setText("Insert password");
 
+            Label instructions = new Label(
+                    "Username cannot be blank or contain 'admin'.\n" + "Password must contain:\n" +
+                            "- an uppercase letter\n" +
+                            "- a lowercase letter\n" +
+                            "- a number\n" +
+                            "- a special character"
+            );
+
+            Label instructionsHeader = new Label("Account Sign up procedure:");
+            instructionsHeader.setAlignment(Pos.CENTER);
+
             if(savedPassword != null) password.setText(savedPassword);
             if(savedUsername != null) username.setText(savedUsername);
 
             GridPane rootGrid = new GridPane();
 
-            rootGrid.add(usernameLabel, 0, 0);
-            rootGrid.add(username, 1, 0);
+            rootGrid.add(instructions, 0, 1, 2, 1);
+            rootGrid.add(instructionsHeader, 0, 0, 2, 1);
 
-            rootGrid.add(passwordLabel, 0, 1);
-            rootGrid.add(password, 1, 1);
+            rootGrid.add(usernameLabel, 0, 3);
+            rootGrid.add(username, 1, 3);
+
+            rootGrid.add(passwordLabel, 0, 4);
+            rootGrid.add(password, 1, 4);
 
             username.setPrefWidth(WIDTHCUTFOFF);
-            rootGrid.setPrefHeight(HEIGHTCUTOFF);
+            rootGrid.setPrefHeight(300);
 
             rootGrid.setHgap(10);
 
@@ -81,6 +96,14 @@ public class SignUpController {
 
             cancelButton.getStyleClass().add(
                     "cancelDialogButton"
+            );
+
+            instructions.getStyleClass().add(
+                    "instructions"
+            );
+
+            instructionsHeader.getStyleClass().add(
+                    "instructions-header"
             );
 
             Optional<ButtonType> result = dialog.showAndWait();
