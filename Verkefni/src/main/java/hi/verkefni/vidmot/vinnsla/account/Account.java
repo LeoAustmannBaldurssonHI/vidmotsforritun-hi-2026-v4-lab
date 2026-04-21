@@ -109,17 +109,19 @@ public class Account {
      * <p>
      * The password must meet the following security requirements: </p>
      * <ul>
-     *     <li>Must contain a letter</li>
+     *     <li>Must contain an uppercase & lowercase letter</li>
      *   <li>At least 6 characters long</li>
      *   <li>Contains at least one special character</li>
      *   <li>Contains at least one number</li>
      * </ul>
-     * @param password
-     * @return true or false
+     * @param password to validate
+     * @return password validation result
      */
     private boolean passwordValidator(String password) {
         String specialChars = "!@#$%^&*()_+-=[]{}|;:'\",.<>/?";
         String numbers = "0123456789";
+
+        // Password requirements, assume that they're all not in the String itself
         boolean hasSpecial = false;
         boolean hasNumber = false;
         boolean hasLower = false;
@@ -146,7 +148,12 @@ public class Account {
 
             alert.setTitle("Password error");
             alert.setHeaderText("Common password");
-            alert.setContentText("The password you gave is apart of a common pattern.\nThis password is considered weak, pick a new password to use for your account.");
+            alert.setContentText("The password you gave is apart of a common pattern.\nThis password is considered " +
+                            "weak, pick a new password to use for your account.\n" +
+                    "Common passwords examples: password, admin, 1234, qwerty"
+            );
+
+            alert.getDialogPane().setStyle("-fx-font-weight: bold;");
 
             alert.showAndWait();
             return false;

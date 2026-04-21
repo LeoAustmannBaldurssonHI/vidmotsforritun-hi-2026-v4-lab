@@ -4,6 +4,46 @@
       "name" : "Leó Austmann Baldursson",
       "password" : "ICEsave2005**"
     },
-    "Trips" : [ ]
+    "Trips" : [ {
+      "title" : "test",
+      "destination" : "tes, qra",
+      "startDate" : "22.04.2026",
+      "endDate" : "29.04.2026",
+      "optionals" : {
+        "hotel" : true,
+        "car" : false,
+        "flights" : true,
+        "work" : false,
+        "groupSize" : "5",
+        "cost" : {
+          "hotel cost" : "124212kr",
+          "flight cost" : "521525kr",
+          "car cost" : "0kr"
+        }
+      }
+    } ]
+  }, {
+    "AccountInfo" : {
+      "name" : "test",
+      "password" : "test"
+    },
+    "Trips" : [ {
+      "title" : "test",
+      "destination" : "test, test",
+      "startDate" : "22.04.2026",
+      "endDate" : "23.04.2026",
+      "optionals" : {
+        "hotel" : false,
+        "car" : false,
+        "flights" : false,
+        "work" : false,
+        "groupSize" : "0",
+        "cost" : {
+          "hotel cost" : "0kr",
+          "flight cost" : "0kr",
+          "car cost" : "0kr"
+        }
+      }
+    } ]
   } ]
 }

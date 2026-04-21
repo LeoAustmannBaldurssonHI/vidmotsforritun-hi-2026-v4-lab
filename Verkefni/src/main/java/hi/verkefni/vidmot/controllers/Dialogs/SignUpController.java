@@ -22,7 +22,7 @@ import java.io.IOException;
 
 public class SignUpController {
     private final String CSS = "/hi/verkefni/vidmot/CSS/style.css";
-    private final int HEIGHTCUTOFF = 50;
+    private final int HEIGHTCUTOFF = 200;
     private final int WIDTHCUTFOFF = 300;
 
     private String savedUsername;
@@ -76,15 +76,20 @@ public class SignUpController {
             rootGrid.add(password, 1, 4);
 
             username.setPrefWidth(WIDTHCUTFOFF);
-            rootGrid.setPrefHeight(300);
+            rootGrid.setPrefHeight(HEIGHTCUTOFF);
 
             rootGrid.setHgap(10);
 
             dialog.getDialogPane().setContent(rootGrid);
 
-            ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.LEFT);
+            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.RIGHT);
 
+            /**
+             * TODO:
+             * Fix the button position of the dialog. As of now it's being set up as:
+             * Sign up - TAB - Cancel - Confirm
+             */
             dialog.getDialogPane().getButtonTypes().addAll(confirm, cancel);
 
             Button confirmButton = (Button) dialog.getDialogPane().lookupButton(confirm);
@@ -108,9 +113,9 @@ public class SignUpController {
 
             Optional<ButtonType> result = dialog.showAndWait();
 
-            if(result.isEmpty() || result.get() == cancel) {
-                isDone = true;
+            if(!result.isPresent()) {
                 dialog.close();
+                isDone = true;
                 return null;
             }
 
@@ -145,7 +150,7 @@ public class SignUpController {
                     e.printStackTrace();
                     alert.showAndWait();
                 }
-            } else if(result.get() == cancel) {
+            } else if(result.get() == cancel || result.isEmpty()) {
                 isDone = true; // needed or the dialog can't close
                 dialog.close();
             }

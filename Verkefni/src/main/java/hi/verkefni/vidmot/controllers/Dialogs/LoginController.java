@@ -39,11 +39,14 @@ public class LoginController {
             PasswordField password = new PasswordField();
             Label usernameLabel = new Label();
             Label passwordLabel = new Label();
+            Label instructionsLabel = new Label();
 
             username.setPromptText("Username");
             usernameLabel.setText("Insert username");
             password.setPromptText("Password");
             passwordLabel.setText("Insert password");
+            instructionsLabel.setText("Sign into your account if you have an account in our system\nNew? Press on " +
+                    "signup to get your account!");
 
             GridPane rootGrid = new GridPane();
 
@@ -52,6 +55,8 @@ public class LoginController {
 
             rootGrid.add(passwordLabel, 0, 1);
             rootGrid.add(password, 1, 1);
+
+            rootGrid.add(instructionsLabel, 0, 2, 2, 2);
 
             rootGrid.setHgap(10);
 
