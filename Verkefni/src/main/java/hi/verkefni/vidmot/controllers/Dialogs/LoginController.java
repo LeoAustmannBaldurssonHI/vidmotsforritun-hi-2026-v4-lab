@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.geometry.Pos;
 
 import javafx.beans.binding.*;
 
@@ -45,18 +46,17 @@ public class LoginController {
             usernameLabel.setText("Insert username");
             password.setPromptText("Password");
             passwordLabel.setText("Insert password");
-            instructionsLabel.setText("Sign into your account if you have an account in our system\nNew? Press on " +
-                    "signup to get your account!");
+            instructionsLabel.setText("Sign into your account or make a new one!");
 
             GridPane rootGrid = new GridPane();
 
-            rootGrid.add(usernameLabel, 0, 0);
-            rootGrid.add(username, 1, 0);
+            rootGrid.add(usernameLabel, 0, 3);
+            rootGrid.add(username, 1, 3);
 
-            rootGrid.add(passwordLabel, 0, 1);
-            rootGrid.add(password, 1, 1);
+            rootGrid.add(passwordLabel, 0, 4);
+            rootGrid.add(password, 1, 4);
 
-            rootGrid.add(instructionsLabel, 0, 2, 2, 2);
+            rootGrid.add(instructionsLabel, 0, 0, 2, 2);
 
             rootGrid.setHgap(10);
 
@@ -68,9 +68,10 @@ public class LoginController {
             rootGrid.setPrefHeight(HEIGHTCUTOFF);
 
             dialog.getDialogPane().setContent(rootGrid);
+            instructionsLabel.setAlignment(Pos.CENTER);
 
             ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-            ButtonType signUp = new ButtonType("Sign up", ButtonBar.ButtonData.OTHER);
+            ButtonType signUp = new ButtonType("Sign up", ButtonBar.ButtonData.LEFT);
             ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
             dialog.getDialogPane().getButtonTypes().addAll(confirm, signUp, cancel);
@@ -91,13 +92,26 @@ public class LoginController {
                     "cancelDialogButton"
             );
 
+            usernameLabel.getStyleClass().add(
+                    "dialogLabel"
+            );
+
+            passwordLabel.getStyleClass().add(
+                    "dialogLabel"
+            );
+
+            instructionsLabel.getStyleClass().add(
+                    "loginHeader"
+            );
+
             Optional<ButtonType> result = dialog.showAndWait();
-            System.out.println(result.get());
+
             if(result.isEmpty() || result.get() == cancel) {
                 isDone = true;
-                System.exit(0);
+                System.exit(1);
             } else if(result.get() == signUp) {
                 SignUpController signUpControl = new SignUpController();
+                savedUser = username.getText();
                 String user = signUpControl.signUpDialog();
                 if(user != null) {
                     Account acc = new Account();
@@ -130,7 +144,7 @@ public class LoginController {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
-                    alert.setContentText("Something went wrong during login.");
+                    alert.setContentText("Something went wrong during login. System will be restarting!");
                     e.printStackTrace();
                     alert.showAndWait();
                     System.exit(1);

@@ -45,6 +45,18 @@ public class AccountDialog {
             Label option1 = new Label("Log out: Signs out of the current account");
             Label option2 = new Label("Delete account: Delete's the current account");
 
+            warning.getStyleClass().add(
+                    "accountHeader"
+            );
+
+            option1.getStyleClass().add(
+                    "dialogLabel"
+            );
+
+            option2.getStyleClass().add(
+                    "dialogLabel"
+            );
+
             grid.add(warning, 0, 0);
             grid.add(option1, 0, 1);
             grid.add(option2, 0, 2);

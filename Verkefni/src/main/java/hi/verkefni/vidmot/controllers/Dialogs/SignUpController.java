@@ -76,14 +76,14 @@ public class SignUpController {
             rootGrid.add(password, 1, 4);
 
             username.setPrefWidth(WIDTHCUTFOFF);
-            rootGrid.setPrefHeight(HEIGHTCUTOFF);
+            instructions.setPrefHeight(HEIGHTCUTOFF);
 
             rootGrid.setHgap(10);
 
             dialog.getDialogPane().setContent(rootGrid);
 
             ButtonType confirm = new ButtonType("Confirm", ButtonBar.ButtonData.LEFT);
-            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.RIGHT);
+            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
             /**
              * TODO:
@@ -153,6 +153,7 @@ public class SignUpController {
             } else if(result.get() == cancel || result.isEmpty()) {
                 isDone = true; // needed or the dialog can't close
                 dialog.close();
+                continue;
             }
         }
         return null;

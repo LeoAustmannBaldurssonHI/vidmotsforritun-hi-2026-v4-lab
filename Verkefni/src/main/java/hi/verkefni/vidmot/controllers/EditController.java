@@ -41,6 +41,9 @@ public class EditController implements DataInterface {
     @FXML
     private DatePicker start, end;
 
+    @FXML
+    private AnchorPane mainPane;
+
     /**
      * combines two strings into a singular long string used for the header
      * @param title of the trip
@@ -173,7 +176,7 @@ public class EditController implements DataInterface {
             }
         });
 
-        title.textProperty().addListener((obs, oldVal, newVal) -> {
+        /* title.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isBlank()) {
                 System.out.println("New title: " + newVal);
             }
@@ -189,7 +192,7 @@ public class EditController implements DataInterface {
             if (!newVal.isBlank()) {
                 System.out.println("New group size: " + newVal);
             }
-        });
+        }); */
 
         start.valueProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal == null || end.getValue() == null) {
@@ -197,7 +200,7 @@ public class EditController implements DataInterface {
                 return;
             }
 
-            legalSafe = !newVal.isAfter(end.getValue());
+            legalSafe = !newVal.isAfter(end.getValue()) && !newVal.isBefore(tm.getCurrentDate());
             System.out.println("Start date change is allowed: " + legalSafe);
         });
 
@@ -233,7 +236,8 @@ public class EditController implements DataInterface {
             if (acc != null) {
                 currentAccount = acc.getSignedAccountName();
             } else {
-                currentAccount = "Unknown user";
+                currentAccount = "Unknown User";
+                System.exit(1);
             }
             currentTripTitle = trip.getTitle();
 

@@ -27,36 +27,54 @@
             </Button>
          </children>
       </HBox>
-      <HBox fx:id="fxButtonsMain" layoutY="512.0" prefHeight="60.0" prefWidth="1000.0">
+      <HBox fx:id="fxButtonsMain" layoutY="483.0" prefHeight="89.0" prefWidth="1000.0">
          <children>
             <StackPane prefHeight="60.0" prefWidth="333.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="211.0" styleClass="userButtonLabels" text="Want to add a trip?" textAlignment="CENTER" translateY="-20.0">
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="337.0" styleClass="userButtonLabels" text="Want to add a trip?" textAlignment="CENTER" translateY="-20.0">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="newButton_main" alignment="CENTER" mnemonicParsing="false" onAction="#openNewTrip" prefHeight="25.0" prefWidth="170.0" styleClass="buttons" text="New Trip" translateY="5.0" />
+                  <Button fx:id="newButton_main" alignment="CENTER" mnemonicParsing="false" onAction="#openNewTrip" prefHeight="29.0" prefWidth="170.0" styleClass="buttons" text="New Trip" translateY="5.0">
+                     <StackPane.margin>
+                        <Insets top="20.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font></Button>
                </children>
             </StackPane>
             <StackPane layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="334.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="211.0" styleClass="userButtonLabels" text="View the selected trip?" translateY="-20.0">
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="345.0" styleClass="userButtonLabels" text="View the selected trip?" translateY="-20.0">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="viewButton_main" mnemonicParsing="false" onAction="#viewTrip" prefHeight="25.0" prefWidth="179.0" styleClass="buttons" text="View Trip" translateY="5.0" />
+                  <Button fx:id="viewButton_main" mnemonicParsing="false" onAction="#viewTrip" prefHeight="29.0" prefWidth="179.0" styleClass="buttons" text="View Trip" translateY="5.0">
+                     <StackPane.margin>
+                        <Insets top="20.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font></Button>
                </children>
             </StackPane>
             <StackPane layoutX="311.0" layoutY="10.0" prefHeight="60.0" prefWidth="333.0">
                <children>
-                  <Label alignment="CENTER" prefWidth="211.0" styleClass="userButtonLabels" text="Edit the trip in any way?" translateY="-20.0">
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="338.0" styleClass="userButtonLabels" text="Edit the trip in any way?" translateY="-20.0">
                      <font>
-                        <Font size="16.0" />
+                        <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="editButton_main" mnemonicParsing="false" onAction="#editTrip" prefHeight="25.0" prefWidth="179.0" styleClass="buttons" text="Edit Trip" translateY="5.0" />
+                  <Button fx:id="editButton_main" mnemonicParsing="false" onAction="#editTrip" prefHeight="29.0" prefWidth="179.0" styleClass="buttons" text="Edit Trip" translateY="5.0">
+                     <StackPane.margin>
+                        <Insets top="20.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font></Button>
                </children>
             </StackPane>
          </children>
@@ -65,7 +83,7 @@
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="selectedTrip" alignment="CENTER" prefHeight="89.0" prefWidth="969.0" styleClass="userSelect_main" text="You have selected: NULL" textAlignment="CENTER" wrapText="true">
+                  <Label fx:id="selectedTrip" alignment="CENTER" prefHeight="89.0" prefWidth="969.0" styleClass="userSelect_main" text="No trip selected" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -76,32 +94,32 @@
       </VBox>
       <HBox layoutX="14.0" layoutY="64.0" prefHeight="60.0" prefWidth="969.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="64.0" prefWidth="193.0" styleClass="tripInfoLabel" text="Title" textAlignment="CENTER" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="287.0" styleClass="tripInfoLabel" text="Title" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font size="18.0" />
+                  <Font size="22.0" />
                </font>
                <HBox.margin>
                   <Insets left="3.0" />
                </HBox.margin>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="64.0" prefWidth="193.0" styleClass="tripInfoLabel" text="Destination" textAlignment="CENTER" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="260.0" styleClass="tripInfoLabel" text="Destination" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font size="18.0" />
+                  <Font size="22.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="10.0" prefHeight="64.0" prefWidth="193.0" styleClass="tripInfoLabel" text="Start Date" textAlignment="CENTER" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="10.0" prefHeight="64.0" prefWidth="140.0" styleClass="tripInfoLabel" text="Start Date" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font size="18.0" />
+                  <Font size="22.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="242.0" layoutY="10.0" prefHeight="64.0" prefWidth="193.0" styleClass="tripInfoLabel" text="End Date" textAlignment="CENTER" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="242.0" layoutY="10.0" prefHeight="60.0" prefWidth="140.0" styleClass="tripInfoLabel" text="End Date" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font size="18.0" />
+                  <Font size="22.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="358.0" layoutY="10.0" prefHeight="64.0" prefWidth="193.0" styleClass="tripInfoLabel" text="Total cost of trip (kr)" textAlignment="CENTER" wrapText="true">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="358.0" layoutY="10.0" prefHeight="60.0" prefWidth="140.0" styleClass="tripInfoLabel" text="Cost" textAlignment="CENTER" wrapText="true">
                <font>
-                  <Font size="18.0" />
+                  <Font size="22.0" />
                </font>
             </Label>
          </children>

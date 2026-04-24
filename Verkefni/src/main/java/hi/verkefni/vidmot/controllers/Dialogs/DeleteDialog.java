@@ -23,8 +23,6 @@ import java.io.IOException;
 
 public class DeleteDialog {
     private final String CSS = "/hi/verkefni/vidmot/CSS/style.css";
-    private final int HEIGHTCUTOFF = 50;
-    private final int WIDTHCUTFOFF = 300;
     private Trip selectedTrip;
 
     public DeleteDialog(Trip selectedTrip) throws IOException {
@@ -38,6 +36,10 @@ public class DeleteDialog {
         while (!done) {
             Dialog<ButtonType> dialog = new Dialog<>();
 
+            dialog.getDialogPane().getStylesheets().add(
+                    getClass().getResource(CSS).toExternalForm()
+            );
+
             dialog.setTitle("Delete trip");
             dialog.setHeaderText("Deleting: " + selectedTrip.getTitle());
             dialog.setContentText("Are you sure that you wanna delete this trip?");
@@ -47,6 +49,17 @@ public class DeleteDialog {
 
             dialog.getDialogPane().getButtonTypes().removeAll(ButtonType.OK, ButtonType.CANCEL);
             dialog.getDialogPane().getButtonTypes().addAll(confirm, cancel);
+
+            Button confirmButton = (Button) dialog.getDialogPane().lookupButton(confirm);
+            Button cancelButton = (Button) dialog.getDialogPane().lookupButton(cancel);
+
+            confirmButton.getStyleClass().add(
+                    "confirmDialogButton"
+            );
+
+            cancelButton.getStyleClass().add(
+                    "cancelDialogButton"
+            );
 
             Optional<ButtonType> result = dialog.showAndWait();
             if(result.isPresent() && result.get() == confirm) {

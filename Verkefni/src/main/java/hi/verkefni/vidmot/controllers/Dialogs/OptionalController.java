@@ -122,7 +122,6 @@ public class OptionalController {
             dialog.getDialogPane().setContent(grid);
 
             // setters
-
             hotelBox.setSelected(savedHotel);
             flightBox.setSelected(savedFlight);
             carBox.setSelected(savedCar);

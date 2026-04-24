@@ -83,8 +83,8 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>
-                  <TextField fx:id="title" prefWidth="170.0" />
-                  <TextField fx:id="destination" layoutX="10.0" layoutY="10.0" prefWidth="170.0" />
+                  <TextField fx:id="title" alignment="CENTER" prefWidth="170.0" />
+                  <TextField fx:id="destination" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefWidth="170.0" />
                   <DatePicker fx:id="start" prefHeight="25.0" prefWidth="170.0" />
                   <DatePicker fx:id="end" layoutX="451.0" layoutY="10.0" prefHeight="25.0" prefWidth="170.0" />
                   <Label fx:id="totalCostLabel" alignment="CENTER" layoutX="521.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{total cost}" />
@@ -103,9 +103,9 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>
-                  <TextField fx:id="flightCost" prefWidth="300.0" />
-                  <TextField fx:id="hotelCost" layoutX="10.0" layoutY="10.0" prefWidth="300.0" />
-                  <TextField fx:id="carCost" layoutX="360.0" layoutY="10.0" prefWidth="300.0" />
+                  <TextField fx:id="flightCost" alignment="CENTER" prefWidth="300.0" />
+                  <TextField fx:id="hotelCost" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefWidth="300.0" />
+                  <TextField fx:id="carCost" alignment="CENTER" layoutX="360.0" layoutY="10.0" prefWidth="300.0" />
                </children>
             </HBox>
          </children>
@@ -127,7 +127,7 @@
                   <Label fx:id="updateCar" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{car}" />
                   <Label fx:id="updateHotel" alignment="CENTER" layoutX="180.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{hotel}" />
                   <Label fx:id="updateFlight" alignment="CENTER" layoutX="350.0" layoutY="10.0" prefHeight="30.0" prefWidth="170.0" styleClass="infoLabels" text="{flights}" />
-                  <TextField fx:id="groupSize" prefHeight="25.0" prefWidth="170.0" />
+                  <TextField fx:id="groupSize" alignment="CENTER" prefHeight="25.0" prefWidth="170.0" />
                </children>
             </HBox>
          </children>

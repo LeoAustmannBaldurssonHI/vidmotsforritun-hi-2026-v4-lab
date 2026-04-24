@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.geometry.Pos;
 
 // Bindings imports
 import javafx.beans.binding.*;
@@ -41,6 +42,7 @@ public class MainController {
 
     private Account acc;
     private String user;
+    private TimeManager tm = new TimeManager();
 
     private BooleanProperty userLogged = new SimpleBooleanProperty(false);
 
@@ -96,10 +98,88 @@ public class MainController {
     @FXML
     public void initialize() {
         tripListView.setItems(TripPlan.getInstance().getTrips());
-        Platform.runLater(() -> ensureLog());
+        Platform.runLater(() -> {
+            ensureLog();
+            tripListView.getFocusModel().focus(-1); // disabled the automatic selection of the top trip card
+        });
 
+        tripListView.setCellFactory(list -> new ListCell<>() {
+            @Override
+            protected void updateItem(Trip trip, boolean empty) {
+                super.updateItem(trip, empty);
+
+                if(empty || trip == null) {
+                    setText(null);
+                    setGraphic(null);
+                    return;
+                }
+                GridPane grid = new GridPane();
+
+                Label title = new Label(trip.getTitle());
+                Label destination = new Label(trip.getDestination());
+                Label start = new Label(tm.formatDate(trip.getStartDate()));
+                Label end = new Label(tm.formatDate(trip.getEndDate()));
+                Label cost = new Label(trip.getTotalCost());
+
+                title.setPrefWidth(280);
+                destination.setPrefWidth(260);
+                start.setPrefWidth(140);
+                end.setPrefWidth(140);
+                cost.setPrefWidth(130);
+
+                grid.setPrefWidth(900);
+
+                // align the text to the center
+                title.setAlignment(Pos.CENTER);
+                destination.setAlignment(Pos.CENTER);
+                start.setAlignment(Pos.CENTER);
+                end.setAlignment(Pos.CENTER);
+                cost.setAlignment(Pos.CENTER);
+
+                grid.getStyleClass().add(
+                        "trip-row"
+                );
+
+                title.getStyleClass().add(
+                        "custom-cell"
+                );
+
+                destination.getStyleClass().add(
+                        "custom-cell"
+                );
+
+                start.getStyleClass().add(
+                        "custom-cell"
+                );
+
+                end.getStyleClass().add(
+                        "custom-cell"
+                );
+
+                cost.getStyleClass().add(
+                        "custom-cell"
+                );
+
+                grid.add(title, 0, 0);
+                grid.add(destination, 1, 0);
+                grid.add(start, 2, 0);
+                grid.add(end, 3, 0);
+                grid.add(cost, 4, 0);
+
+                setGraphic(grid);
+            }
+        });
+
+        // allows the system to deselect the item
+        mainPane.setOnMouseClicked(e -> {
+            if (!tripListView.isHover()) {
+                tripListView.getSelectionModel().clearSelection();
+            }
+        });
+
+        // checks if we have selected a trip with our mouse
         tripListView.getSelectionModel().selectedItemProperty().addListener((obs, oldTrip, newTrip) -> {
-            selectedTrip.setText(newTrip == null ? "You have selected:" : "You have selected: " + newTrip.getTitle());
+            selectedTrip.setText(newTrip == null ? "No trip selected" : "You have selected: " + newTrip.getTitle());
         });
 
         mainPane.visibleProperty().bind(userLogged); // changes if the layout should be visible or not
@@ -109,17 +189,17 @@ public class MainController {
          (set by the fxml document) should be taken in consideration or not. */
         mainPane.managedProperty().bind(userLogged);
 
-        // Disable properties rules
+        // Disable properties rules - view button
         viewButton_main.disableProperty().bind(
                 Bindings.isEmpty(tripListView.getItems())
                         .or(tripListView.getSelectionModel().selectedItemProperty().isNull())
         );
 
+        // Disable properties rules - edit button
         editButton_main.disableProperty().bind(
                 Bindings.isEmpty(tripListView.getItems())
                         .or(tripListView.getSelectionModel().selectedItemProperty().isNull())
         );
-
     }
 
     /**
