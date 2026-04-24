@@ -75,6 +75,11 @@
     -fx-border-radius: 0;
 }
 
+.userHeader_accButton:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
 /*
    view-trip.fxml & edit-trip.fxml
  */
